@@ -16,7 +16,7 @@ The library can be installed with `yarn`, `npm` or using a `<script>` tag.
 $ yarn add soundfont2
 ```
 
-For full installation instructions, please refer to [the documentation](https://mrtenz.github.io/soundfont2/getting-started/installation.html).
+For full installation instructions, please refer to [the documentation](https://musidi-org.github.io/soundfont3/getting-started/installation.html).
 
 ## Getting Started
 

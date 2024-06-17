@@ -23,7 +23,7 @@
     "prepublishOnly": "rm -rf ./lib ./typings && cross-env NODE_ENV=development yarn run build",
     "docs:serve": "mdbook serve",
     "docs:build": "mdbook build",
-    "docs:deploy": "pnpm run docs:build && gh-pages -d _book"
+    "docs:deploy": "pnpm run docs:build && gh-pages -d book"
   },
   "files": [
     "lib",
