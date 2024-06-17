@@ -10,5 +10,5 @@ install:
 
 script:
   - yarn run test
-  - yarn run tslint
+  - yarn run lint
   - yarn run prettier:diff
