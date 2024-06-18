@@ -3,7 +3,6 @@ import { Configuration } from 'webpack'
 import * as nodeExternals from 'webpack-node-externals'
 import * as merge from 'webpack-merge'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
-import * as webpack from 'webpack'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const sourcePath = path.resolve(__dirname, 'src')

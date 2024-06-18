@@ -1,3 +1,3 @@
-// Required for Jest to work on older Node.js versions
-// @ts-ignore
-global.TextDecoder = require('util').TextDecoder
+import { TextDecoder } from 'util'
+// @ts-expect-error TextDecoder not included directly in Node.js
+global.TextDecoder = TextDecoder

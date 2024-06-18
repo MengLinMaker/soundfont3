@@ -23,7 +23,7 @@ describe('RIFFChunk', () => {
   })
 
   it('should iterate over the chunk', () => {
-    const callback = jest.fn((iterator: ChunkIterator<any>) => {
+    const callback = jest.fn((iterator: ChunkIterator<void>) => {
       iterator.skip(1)
     })
 
