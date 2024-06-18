@@ -17,7 +17,7 @@ export const getPresetHeaders = (chunk: SF2Chunk): PresetHeader[] => {
     throw new ParseError(`Invalid size for the 'phdr' sub-chunk`);
   }
 
-  return chunk.iterate<PresetHeader>(iterator => {
+  return chunk.iterate<PresetHeader>((iterator) => {
     return {
       name: iterator.getString(),
       preset: iterator.getInt16(),

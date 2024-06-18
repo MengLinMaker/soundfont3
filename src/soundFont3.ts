@@ -120,10 +120,10 @@ export class SoundFont3 {
       if (bank) {
         const preset = bank.presets[presetNumber];
         if (preset) {
-          const presetZone = preset.zones.find(zone => this.isKeyInRange(zone, keyNumber));
+          const presetZone = preset.zones.find((zone) => this.isKeyInRange(zone, keyNumber));
           if (presetZone) {
             const instrument = presetZone.instrument;
-            const instrumentZone = instrument.zones.find(zone =>
+            const instrumentZone = instrument.zones.find((zone) =>
               this.isKeyInRange(zone, keyNumber)
             );
             if (instrumentZone) {
@@ -195,12 +195,12 @@ export class SoundFont3 {
     );
 
     return presets
-      .filter(preset => preset.header.name !== 'EOP')
-      .map(preset => {
+      .filter((preset) => preset.header.name !== 'EOP')
+      .map((preset) => {
         return {
           header: preset.header,
           globalZone: preset.globalZone,
-          zones: preset.zones.map(zone => {
+          zones: preset.zones.map((zone) => {
             return {
               keyRange: zone.keyRange,
               generators: zone.generators,
@@ -216,12 +216,8 @@ export class SoundFont3 {
    * Parse the raw instrument data (found in the preset data) to instruments.
    */
   private getInstruments(): Instrument[] {
-    const {
-      instrumentHeaders,
-      instrumentZones,
-      instrumentModulators,
-      instrumentGenerators
-    } = this.presetData;
+    const { instrumentHeaders, instrumentZones, instrumentModulators, instrumentGenerators } =
+      this.presetData;
 
     const instruments = getItemsInZone(
       instrumentHeaders,
@@ -233,12 +229,12 @@ export class SoundFont3 {
     );
 
     return instruments
-      .filter(instrument => instrument.header.name !== 'EOI')
-      .map(instrument => {
+      .filter((instrument) => instrument.header.name !== 'EOI')
+      .map((instrument) => {
         return {
           header: instrument.header,
           globalZone: instrument.globalZone,
-          zones: instrument.zones.map(zone => {
+          zones: instrument.zones.map((zone) => {
             return {
               keyRange: zone.keyRange,
               generators: zone.generators,
@@ -255,8 +251,8 @@ export class SoundFont3 {
    */
   private getSamples(): Sample[] {
     return this.presetData.sampleHeaders
-      .filter(sample => sample.name !== 'EOS')
-      .map(header => {
+      .filter((sample) => sample.name !== 'EOS')
+      .map((header) => {
         // Sample rate must be above 0
         if (header.name !== 'EOS' && header.sampleRate <= 0) {
           throw new Error(

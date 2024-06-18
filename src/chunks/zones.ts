@@ -26,7 +26,7 @@ export const getZones = (chunk: SF2Chunk, type: 'pbag' | 'ibag'): Zone[] => {
     throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
   }
 
-  return chunk.iterate<Zone>(iterator => ({
+  return chunk.iterate<Zone>((iterator) => ({
     generatorIndex: iterator.getInt16(),
     modulatorIndex: iterator.getInt16()
   }));

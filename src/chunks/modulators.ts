@@ -33,7 +33,7 @@ export const getModulators = (chunk: SF2Chunk, type: 'pmod' | 'imod'): Modulator
     throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
   }
 
-  return chunk.iterate<Modulator>(iterator => {
+  return chunk.iterate<Modulator>((iterator) => {
     return {
       source: getModulatorValue(iterator.getInt16BE()),
       id: iterator.getInt16BE(),

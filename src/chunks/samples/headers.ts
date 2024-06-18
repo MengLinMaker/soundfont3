@@ -17,7 +17,7 @@ export const getSampleHeaders = (chunk: SF2Chunk): SampleHeader[] => {
     throw new ParseError(`Invalid size for the 'shdr' sub-chunk`);
   }
 
-  return chunk.iterate<SampleHeader>(iterator => {
+  return chunk.iterate<SampleHeader>((iterator) => {
     return {
       name: iterator.getString(),
       start: iterator.getUInt32(),

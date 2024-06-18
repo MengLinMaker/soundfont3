@@ -60,7 +60,7 @@ export const getGenerators = (chunk: SF2Chunk, type: 'pgen' | 'igen'): Generator
     throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
   }
 
-  return chunk.iterate<Generator>(iterator => {
+  return chunk.iterate<Generator>((iterator) => {
     const id = iterator.getInt16();
 
     // Ignore invalid IDs

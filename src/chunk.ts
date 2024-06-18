@@ -19,7 +19,7 @@ export class SF2Chunk extends RIFFChunk {
   public constructor(chunk: RIFFChunk) {
     super(chunk.id, chunk.length, chunk.buffer, chunk.subChunks);
 
-    this.subChunks = chunk.subChunks.map(subChunk => new SF2Chunk(subChunk));
+    this.subChunks = chunk.subChunks.map((subChunk) => new SF2Chunk(subChunk));
   }
 
   /**

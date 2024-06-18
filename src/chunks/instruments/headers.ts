@@ -17,7 +17,7 @@ export const getInstrumentHeaders = (chunk: SF2Chunk): InstrumentHeader[] => {
     throw new ParseError(`Invalid size for the 'inst' sub-chunk`);
   }
 
-  return chunk.iterate<InstrumentHeader>(iterator => {
+  return chunk.iterate<InstrumentHeader>((iterator) => {
     return {
       name: iterator.getString(),
       bagIndex: iterator.getInt16()
