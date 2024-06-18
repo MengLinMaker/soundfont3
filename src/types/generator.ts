@@ -377,17 +377,17 @@ export type UnusedGenerator =
   | GeneratorType.Reserved1
   | GeneratorType.Reserved2
   | GeneratorType.Reserved3
-  | GeneratorType.EndOper;
+  | GeneratorType.EndOper
 
 /**
  * All range generators.
  */
-export type RangeGenerator = GeneratorType.KeyRange | GeneratorType.VelRange;
+export type RangeGenerator = GeneratorType.KeyRange | GeneratorType.VelRange
 
 /**
  * All index generators.
  */
-export type IndexGenerator = GeneratorType.Instrument | GeneratorType.SampleId;
+export type IndexGenerator = GeneratorType.Instrument | GeneratorType.SampleId
 
 /**
  * All value generators.
@@ -395,7 +395,7 @@ export type IndexGenerator = GeneratorType.Instrument | GeneratorType.SampleId;
 export type ValueGenerator = Exclude<
   GeneratorType,
   UnusedGenerator | RangeGenerator | IndexGenerator
->;
+>
 
 /**
  * The default value for all generator types (where applicable).
@@ -449,7 +449,7 @@ export const DEFAULT_GENERATOR_VALUES: { [key in ValueGenerator]: number } = {
   [GeneratorType.ScaleTuning]: 100,
   [GeneratorType.ExclusiveClass]: 0,
   [GeneratorType.OverridingRootKey]: -1
-};
+}
 
 /**
  * Describes a range of MIDI key numbers (for the `keyRange` generator) or MIDI velocities (for the
@@ -459,27 +459,27 @@ export interface Range {
   /**
    * Low value for the range.
    */
-  lo: number;
+  lo: number
 
   /**
    * High value for the range.
    */
-  hi: number;
+  hi: number
 }
 
 export interface Generator {
   /**
    * The ID of the generator.
    */
-  id: GeneratorType;
+  id: GeneratorType
 
   /**
    * Generator value. If the range is not specified, this should be set.
    */
-  value?: number;
+  value?: number
 
   /**
    * The range of the generator. If the value is not specified, this should be set.
    */
-  range?: Range;
+  range?: Range
 }

@@ -1,7 +1,7 @@
-import { SF2Chunk } from '~/chunk';
-import { ParseError } from '~/riff';
-import { SF_SAMPLE_HEADER_SIZE } from '~/constants';
-import { SampleHeader } from '~/types';
+import { SF2Chunk } from '~/chunk'
+import { ParseError } from '~/riff'
+import { SF_SAMPLE_HEADER_SIZE } from '~/constants'
+import { SampleHeader } from '~/types'
 
 /**
  * Get all sample headers from a `shdr` sub-chunk.
@@ -10,11 +10,11 @@ import { SampleHeader } from '~/types';
  */
 export const getSampleHeaders = (chunk: SF2Chunk): SampleHeader[] => {
   if (chunk.id !== 'shdr') {
-    throw new ParseError('Unexpected chunk ID', `'shdr'`, `'${chunk.id}'`);
+    throw new ParseError('Unexpected chunk ID', `'shdr'`, `'${chunk.id}'`)
   }
 
   if (chunk.length % SF_SAMPLE_HEADER_SIZE) {
-    throw new ParseError(`Invalid size for the 'shdr' sub-chunk`);
+    throw new ParseError(`Invalid size for the 'shdr' sub-chunk`)
   }
 
   return chunk.iterate<SampleHeader>((iterator) => {
@@ -29,6 +29,6 @@ export const getSampleHeaders = (chunk: SF2Chunk): SampleHeader[] => {
       pitchCorrection: iterator.getChar(),
       link: iterator.getInt16(),
       type: iterator.getInt16()
-    };
-  });
-};
+    }
+  })
+}

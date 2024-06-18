@@ -1,7 +1,7 @@
-import { SF2Chunk } from '~/chunk';
-import { Modulator, ControllerValue } from '~/types';
-import { ParseError } from '~/riff';
-import { SF_MODULATOR_SIZE } from '~/constants';
+import { SF2Chunk } from '~/chunk'
+import { Modulator, ControllerValue } from '~/types'
+import { ParseError } from '~/riff'
+import { SF_MODULATOR_SIZE } from '~/constants'
 
 /**
  * Get the modulator enumerator value from a 16-bit integer.
@@ -15,8 +15,8 @@ const getModulatorValue = (value: number): ControllerValue => {
     direction: (value >> 8) & 1,
     palette: (value >> 7) & 1,
     index: value & 0x7f
-  };
-};
+  }
+}
 
 /**
  * Get the modulators from either a `pmod` (presets) or `imod` (instruments) chunk.
@@ -26,11 +26,11 @@ const getModulatorValue = (value: number): ControllerValue => {
  */
 export const getModulators = (chunk: SF2Chunk, type: 'pmod' | 'imod'): Modulator[] => {
   if (chunk.id !== type) {
-    throw new ParseError('Unexpected chunk ID', `'${type}'`, `'${chunk.id}'`);
+    throw new ParseError('Unexpected chunk ID', `'${type}'`, `'${chunk.id}'`)
   }
 
   if (chunk.length % SF_MODULATOR_SIZE) {
-    throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
+    throw new ParseError(`Invalid size for the '${type}' sub-chunk`)
   }
 
   return chunk.iterate<Modulator>((iterator) => {
@@ -40,6 +40,6 @@ export const getModulators = (chunk: SF2Chunk, type: 'pmod' | 'imod'): Modulator
       value: iterator.getInt16BE(),
       valueSource: getModulatorValue(iterator.getInt16BE()),
       transform: iterator.getInt16BE()
-    };
-  });
-};
+    }
+  })
+}

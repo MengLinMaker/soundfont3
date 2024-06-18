@@ -1,12 +1,12 @@
-import * as path from 'path';
-import { Configuration } from 'webpack';
-import * as nodeExternals from 'webpack-node-externals';
-import * as merge from 'webpack-merge';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import * as webpack from 'webpack';
+import * as path from 'path'
+import { Configuration } from 'webpack'
+import * as nodeExternals from 'webpack-node-externals'
+import * as merge from 'webpack-merge'
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
+import * as webpack from 'webpack'
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-const sourcePath = path.resolve(__dirname, 'src');
+const isDevelopment = process.env.NODE_ENV !== 'production'
+const sourcePath = path.resolve(__dirname, 'src')
 
 const config: Configuration = {
   mode: isDevelopment ? 'development' : 'production',
@@ -40,7 +40,7 @@ const config: Configuration = {
     ]
   },
   devtool: 'inline-source-map'
-};
+}
 
 /**
  * Create a bundle for web browsers.
@@ -55,7 +55,7 @@ const browser: Configuration = merge.smart(config, {
   optimization: {
     minimize: true
   }
-});
+})
 
 /**
  * Create a bundle for Node.js.
@@ -67,6 +67,6 @@ const node: Configuration = merge.smart(config, {
     libraryTarget: 'commonjs2',
     filename: '[name].node.js'
   }
-});
+})
 
-export default [browser, node];
+export default [browser, node]

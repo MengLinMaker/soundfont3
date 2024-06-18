@@ -9,16 +9,16 @@
 export const memoize = <T, U>(
   originalFunction: (...originalArgs: T[]) => U
 ): ((...args: T[]) => U) => {
-  const memo: { [key: string]: U } = {};
+  const memo: { [key: string]: U } = {}
 
   return (...args: T[]) => {
-    const serializedArgs = JSON.stringify(args);
+    const serializedArgs = JSON.stringify(args)
     if (serializedArgs in memo) {
-      return memo[serializedArgs];
+      return memo[serializedArgs]
     }
 
-    const output = originalFunction(...args);
-    memo[serializedArgs] = output;
-    return output;
-  };
-};
+    const output = originalFunction(...args)
+    memo[serializedArgs] = output
+    return output
+  }
+}

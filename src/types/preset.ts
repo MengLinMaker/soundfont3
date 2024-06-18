@@ -1,50 +1,50 @@
-import { ZoneItems } from './zone';
-import { Instrument } from './instrument';
+import { ZoneItems } from './zone'
+import { Instrument } from './instrument'
 
 export interface PresetHeader {
   /**
    * The name of the preset.
    */
-  name: string;
+  name: string
 
   /**
    * The MIDI preset number which to apply to the preset.
    */
-  preset: number;
+  preset: number
 
   /**
    * The preset bank.
    */
-  bank: number;
+  bank: number
 
   /**
    * Index in the preset's zone list found in the preset bag sub-chunk.
    */
-  bagIndex: number;
+  bagIndex: number
 
   /**
    * Reserved for future implementation.
    */
-  library: number;
-  genre: number;
-  morphology: number;
+  library: number
+  genre: number
+  morphology: number
 }
 
 export interface PresetZone extends ZoneItems {
   /**
    * The instrument for the preset zone.
    */
-  instrument: Instrument;
+  instrument: Instrument
 }
 
 export interface Preset {
   /**
    * The preset header.
    */
-  header: PresetHeader;
+  header: PresetHeader
 
   /**
    * The preset zones.
    */
-  zones: PresetZone[];
+  zones: PresetZone[]
 }

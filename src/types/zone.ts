@@ -1,5 +1,5 @@
-import { Modulator } from './modulator';
-import { Generator, GeneratorType, Range } from './generator';
+import { Modulator } from './modulator'
+import { Generator, GeneratorType, Range } from './generator'
 
 /**
  * Describes the generator and modulator index for a preset or instrument zone, defined to play
@@ -13,36 +13,36 @@ export interface Zone {
   /**
    * The index of the preset's or instrument's list of generators in the PGEN or IGEN sub-chunk.
    */
-  generatorIndex: number;
+  generatorIndex: number
 
   /**
    * The index of the preset's or instrument's list of modulators in the PMOD or IMOD sub-chunk.
    */
-  modulatorIndex: number;
+  modulatorIndex: number
 }
 
-export type ZoneMap<T extends Modulator | Generator> = { [key in GeneratorType]?: T };
+export type ZoneMap<T extends Modulator | Generator> = { [key in GeneratorType]?: T }
 
 export interface ZoneItems {
   /**
    * The key range for the zone.
    */
-  keyRange?: Range;
+  keyRange?: Range
 
   /**
    * The modulators in the zone.
    */
-  modulators: ZoneMap<Modulator>;
+  modulators: ZoneMap<Modulator>
 
   /**
    * The generators in the zone.
    */
-  generators: ZoneMap<Generator>;
+  generators: ZoneMap<Generator>
 }
 
 export interface ZoneItemsWithReference<R> extends ZoneItems {
   /**
    * Generic reference to an item in the zone.
    */
-  reference: R;
+  reference: R
 }

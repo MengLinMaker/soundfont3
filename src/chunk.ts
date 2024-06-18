@@ -1,6 +1,6 @@
-import { ParseError, RIFFChunk } from './riff';
-import { MetaData, PresetData } from './types';
-import { SF_INFO_CHUNKS, SF_VERSION_LENGTH } from './constants';
+import { ParseError, RIFFChunk } from './riff'
+import { MetaData, PresetData } from './types'
+import { SF_INFO_CHUNKS, SF_VERSION_LENGTH } from './constants'
 import {
   getGenerators,
   getInstrumentHeaders,
@@ -8,18 +8,18 @@ import {
   getPresetHeaders,
   getSampleHeaders,
   getZones
-} from './chunks';
+} from './chunks'
 
 export class SF2Chunk extends RIFFChunk {
   /**
    * All sub-chunks of this `SF2Chunk` as `SF2Chunk`.
    */
-  public readonly subChunks: SF2Chunk[];
+  public readonly subChunks: SF2Chunk[]
 
   public constructor(chunk: RIFFChunk) {
-    super(chunk.id, chunk.length, chunk.buffer, chunk.subChunks);
+    super(chunk.id, chunk.length, chunk.buffer, chunk.subChunks)
 
-    this.subChunks = chunk.subChunks.map((subChunk) => new SF2Chunk(subChunk));
+    this.subChunks = chunk.subChunks.map((subChunk) => new SF2Chunk(subChunk))
   }
 
   /**
@@ -28,29 +28,29 @@ export class SF2Chunk extends RIFFChunk {
    */
   public getMetaData(): MetaData {
     if (this.id !== 'LIST') {
-      throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`);
+      throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
     const info = this.subChunks.reduce<{ [key in SF_INFO_CHUNKS]?: string }>((target, chunk) => {
       if (chunk.id === 'ifil' || chunk.id === 'iver') {
         // ifil and iver length must be 4 bytes
         if (chunk.length !== SF_VERSION_LENGTH) {
-          throw new ParseError(`Invalid size for the '${chunk.id}' sub-chunk`);
+          throw new ParseError(`Invalid size for the '${chunk.id}' sub-chunk`)
         }
-        target[chunk.id as SF_INFO_CHUNKS] = `${chunk.getInt16()}.${chunk.getInt16(2)}`;
+        target[chunk.id as SF_INFO_CHUNKS] = `${chunk.getInt16()}.${chunk.getInt16(2)}`
       } else {
-        target[chunk.id as SF_INFO_CHUNKS] = chunk.getString();
+        target[chunk.id as SF_INFO_CHUNKS] = chunk.getString()
       }
 
-      return target;
-    }, {});
+      return target
+    }, {})
 
     if (!info.ifil) {
-      throw new ParseError(`Missing required 'ifil' sub-chunk`);
+      throw new ParseError(`Missing required 'ifil' sub-chunk`)
     }
 
     if (!info.INAM) {
-      throw new ParseError(`Missing required 'INAM' sub-chunk`);
+      throw new ParseError(`Missing required 'INAM' sub-chunk`)
     }
 
     return {
@@ -65,7 +65,7 @@ export class SF2Chunk extends RIFFChunk {
       copyright: info.ICOP,
       comments: info.ICMT,
       createdBy: info.ISFT
-    };
+    }
   }
 
   /**
@@ -74,15 +74,15 @@ export class SF2Chunk extends RIFFChunk {
    */
   public getSampleData(): Uint8Array {
     if (this.id !== 'LIST') {
-      throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`);
+      throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
-    const sampleChunk = this.subChunks[0];
+    const sampleChunk = this.subChunks[0]
     if (sampleChunk.id !== 'smpl') {
-      throw new ParseError('Invalid chunk signature', `'smpl'`, `'${sampleChunk.id}'`);
+      throw new ParseError('Invalid chunk signature', `'smpl'`, `'${sampleChunk.id}'`)
     }
 
-    return sampleChunk.buffer;
+    return sampleChunk.buffer
   }
 
   /**
@@ -91,7 +91,7 @@ export class SF2Chunk extends RIFFChunk {
    */
   public getPresetData(): PresetData {
     if (this.id !== 'LIST') {
-      throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`);
+      throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
     return {
@@ -104,6 +104,6 @@ export class SF2Chunk extends RIFFChunk {
       instrumentModulators: getModulators(this.subChunks[6], 'imod'),
       instrumentGenerators: getGenerators(this.subChunks[7], 'igen'),
       sampleHeaders: getSampleHeaders(this.subChunks[8])
-    };
+    }
   }
 }

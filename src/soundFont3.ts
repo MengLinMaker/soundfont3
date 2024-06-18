@@ -8,11 +8,11 @@ import {
   PresetData,
   Sample,
   ZoneItems
-} from './types';
-import { SF2Chunk } from './chunk';
-import { parseBuffer, ParseError } from './riff';
-import { getItemsInZone } from './chunks';
-import { memoize } from './utils';
+} from './types'
+import { SF2Chunk } from './chunk'
+import { parseBuffer, ParseError } from './riff'
+import { getItemsInZone } from './chunks'
+import { memoize } from './utils'
 
 export class SoundFont3 {
   /**
@@ -22,48 +22,48 @@ export class SoundFont3 {
    * @deprecated Replaced with `new SoundFont3(buffer: Uint8Array);`
    */
   public static from(buffer: Uint8Array): SoundFont3 {
-    return new SoundFont3(buffer);
+    return new SoundFont3(buffer)
   }
 
   /**
    * The raw RIFF chunk data.
    */
-  public readonly chunk: SF2Chunk;
+  public readonly chunk: SF2Chunk
 
   /**
    * The meta data.
    */
-  public readonly metaData: MetaData;
+  public readonly metaData: MetaData
 
   /**
    * The raw sample data.
    */
-  public readonly sampleData: Uint8Array;
+  public readonly sampleData: Uint8Array
 
   /**
    * The parsed samples.
    */
-  public readonly samples: Sample[];
+  public readonly samples: Sample[]
 
   /**
    * The unparsed preset data.
    */
-  public readonly presetData: PresetData;
+  public readonly presetData: PresetData
 
   /**
    * The parsed instuments.
    */
-  public readonly instruments: Instrument[];
+  public readonly instruments: Instrument[]
 
   /**
    * The parsed presets.
    */
-  public readonly presets: Preset[];
+  public readonly presets: Preset[]
 
   /**
    * The parsed banks.
    */
-  public readonly banks: Bank[];
+  public readonly banks: Bank[]
 
   /**
    * Load a SoundFont3 file from a `Uint8Array` or a `SF2Chunk`. The recommended way is to use a
@@ -74,27 +74,23 @@ export class SoundFont3 {
    */
   public constructor(chunk: Uint8Array | SF2Chunk) {
     if (!(chunk instanceof SF2Chunk)) {
-      const parsedBuffer = parseBuffer(chunk);
-      chunk = new SF2Chunk(parsedBuffer);
+      const parsedBuffer = parseBuffer(chunk)
+      chunk = new SF2Chunk(parsedBuffer)
     }
 
     if (chunk.subChunks.length !== 3) {
-      throw new ParseError(
-        'Invalid sfbk structure',
-        '3 chunks',
-        `${chunk.subChunks.length} chunks`
-      );
+      throw new ParseError('Invalid sfbk structure', '3 chunks', `${chunk.subChunks.length} chunks`)
     }
 
-    this.chunk = chunk;
-    this.metaData = chunk.subChunks[0].getMetaData();
-    this.sampleData = chunk.subChunks[1].getSampleData();
-    this.presetData = chunk.subChunks[2].getPresetData();
+    this.chunk = chunk
+    this.metaData = chunk.subChunks[0].getMetaData()
+    this.sampleData = chunk.subChunks[1].getSampleData()
+    this.presetData = chunk.subChunks[2].getPresetData()
 
-    this.samples = this.getSamples();
-    this.instruments = this.getInstruments();
-    this.presets = this.getPresets();
-    this.banks = this.getBanks();
+    this.samples = this.getSamples()
+    this.instruments = this.getInstruments()
+    this.presets = this.getPresets()
+    this.banks = this.getBanks()
   }
 
   /**
@@ -116,20 +112,20 @@ export class SoundFont3 {
   ): Key | null {
     // Get a memoized version of the function
     return memoize((keyNumber: number, bankNumber: number, presetNumber: number): Key | null => {
-      const bank = this.banks[bankNumber];
+      const bank = this.banks[bankNumber]
       if (bank) {
-        const preset = bank.presets[presetNumber];
+        const preset = bank.presets[presetNumber]
         if (preset) {
-          const presetZone = preset.zones.find((zone) => this.isKeyInRange(zone, keyNumber));
+          const presetZone = preset.zones.find((zone) => this.isKeyInRange(zone, keyNumber))
           if (presetZone) {
-            const instrument = presetZone.instrument;
+            const instrument = presetZone.instrument
             const instrumentZone = instrument.zones.find((zone) =>
               this.isKeyInRange(zone, keyNumber)
-            );
+            )
             if (instrumentZone) {
-              const sample = instrumentZone.sample;
-              const generators = { ...presetZone.generators, ...instrumentZone.generators };
-              const modulators = { ...presetZone.modulators, ...instrumentZone.modulators };
+              const sample = instrumentZone.sample
+              const generators = { ...presetZone.generators, ...instrumentZone.generators }
+              const modulators = { ...presetZone.modulators, ...instrumentZone.modulators }
 
               return {
                 keyNumber,
@@ -138,14 +134,14 @@ export class SoundFont3 {
                 sample,
                 generators,
                 modulators
-              };
+              }
             }
           }
         }
       }
 
-      return null;
-    })(memoizedKeyNumber, memoizedBankNumber, memoizedPresetNumber);
+      return null
+    })(memoizedKeyNumber, memoizedBankNumber, memoizedPresetNumber)
   }
 
   /**
@@ -158,7 +154,7 @@ export class SoundFont3 {
     return (
       zone.keyRange === undefined ||
       (zone.keyRange.lo <= keyNumber && zone.keyRange.hi >= keyNumber)
-    );
+    )
   }
 
   /**
@@ -166,24 +162,24 @@ export class SoundFont3 {
    */
   private getBanks(): Bank[] {
     return this.presets.reduce<Bank[]>((target, preset) => {
-      const bankNumber = preset.header.bank;
+      const bankNumber = preset.header.bank
 
       if (!target[bankNumber]) {
         target[bankNumber] = {
           presets: []
-        };
+        }
       }
 
-      target[bankNumber].presets[preset.header.preset] = preset;
-      return target;
-    }, []);
+      target[bankNumber].presets[preset.header.preset] = preset
+      return target
+    }, [])
   }
 
   /**
    * Parse the raw preset data to presets.
    */
   private getPresets(): Preset[] {
-    const { presetHeaders, presetZones, presetGenerators, presetModulators } = this.presetData;
+    const { presetHeaders, presetZones, presetGenerators, presetModulators } = this.presetData
 
     const presets = getItemsInZone(
       presetHeaders,
@@ -192,7 +188,7 @@ export class SoundFont3 {
       presetGenerators,
       this.instruments,
       GeneratorType.Instrument
-    );
+    )
 
     return presets
       .filter((preset) => preset.header.name !== 'EOP')
@@ -206,10 +202,10 @@ export class SoundFont3 {
               generators: zone.generators,
               modulators: zone.modulators,
               instrument: zone.reference
-            };
+            }
           })
-        };
-      });
+        }
+      })
   }
 
   /**
@@ -217,7 +213,7 @@ export class SoundFont3 {
    */
   private getInstruments(): Instrument[] {
     const { instrumentHeaders, instrumentZones, instrumentModulators, instrumentGenerators } =
-      this.presetData;
+      this.presetData
 
     const instruments = getItemsInZone(
       instrumentHeaders,
@@ -226,7 +222,7 @@ export class SoundFont3 {
       instrumentGenerators,
       this.samples,
       GeneratorType.SampleId
-    );
+    )
 
     return instruments
       .filter((instrument) => instrument.header.name !== 'EOI')
@@ -240,10 +236,10 @@ export class SoundFont3 {
               generators: zone.generators,
               modulators: zone.modulators,
               sample: zone.reference
-            };
+            }
           })
-        };
-      });
+        }
+      })
   }
 
   /**
@@ -257,26 +253,26 @@ export class SoundFont3 {
         if (header.name !== 'EOS' && header.sampleRate <= 0) {
           throw new Error(
             `Illegal sample rate of ${header.sampleRate} hz in sample '${header.name}'`
-          );
+          )
         }
 
         // Original pitch cannot be between 128 and 254
         if (header.originalPitch >= 128 && header.originalPitch <= 254) {
-          header.originalPitch = 60;
+          header.originalPitch = 60
         }
 
-        header.startLoop -= header.start;
-        header.endLoop -= header.start;
+        header.startLoop -= header.start
+        header.endLoop -= header.start
 
         // Turns the Uint8Array into a Int16Array
         const data = new Int16Array(
           new Uint8Array(this.sampleData.subarray(header.start * 2, header.end * 2)).buffer
-        );
+        )
 
         return {
           header,
           data
-        };
-      });
+        }
+      })
   }
 }

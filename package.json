@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "eslint ./src",
     "test": "jest",
-    "prettier": "prettier --write --config ./.prettierrc --list-different 'src/**/*.ts'",
+    "prettier": "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
     "build": "tsc --project tsconfig.json --declaration --declarationDir typings --emitDeclarationOnly && webpack",
     "prepublishOnly": "rm -rf ./lib ./typings && cross-env NODE_ENV=development yarn run build",
     "docs:serve": "mdbook serve",
@@ -63,7 +63,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "prettier --write --config ./.prettierrc --list-different 'src/**/*.ts'",
+      "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
       "git add"
     ]
   },

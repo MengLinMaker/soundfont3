@@ -1,2 +1,2 @@
-export * from './buffer';
-export * from './memoize';
+export * from './buffer'
+export * from './memoize'

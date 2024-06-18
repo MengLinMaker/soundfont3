@@ -1,4 +1,4 @@
-import type { Config } from 'jest';
+import type { Config } from 'jest'
 const config: Config = {
   testEnvironment: 'node',
   preset: 'ts-jest',
@@ -8,5 +8,5 @@ const config: Config = {
     '~/(.*)': '<rootDir>/src/$1'
   },
   setupFiles: ['<rootDir>/jest.setup.ts']
-};
-module.exports = config;
+}
+module.exports = config

@@ -1,33 +1,33 @@
-import { ChunkIterator } from './chunkIterator';
-import { getStringFromBuffer } from '~/utils';
+import { ChunkIterator } from './chunkIterator'
+import { getStringFromBuffer } from '~/utils'
 
 export class RIFFChunk {
   /**
    * The chunk ID (fourCC).
    */
-  public readonly id: string;
+  public readonly id: string
 
   /**
    * The length of the chunk.
    */
-  public readonly length: number;
+  public readonly length: number
 
   /**
    * The raw buffer of the chunk.
    */
-  public readonly buffer: Uint8Array;
+  public readonly buffer: Uint8Array
 
   /**
    * The sub-chunks of the chunk. If the chunk is not a RIFF or LIST chunk, this will be an empty
    * array.
    */
-  public readonly subChunks: RIFFChunk[];
+  public readonly subChunks: RIFFChunk[]
 
   public constructor(id: string, length: number, buffer: Uint8Array, subChunks: RIFFChunk[]) {
-    this.id = id;
-    this.length = length;
-    this.buffer = buffer;
-    this.subChunks = subChunks;
+    this.id = id
+    this.length = length
+    this.buffer = buffer
+    this.subChunks = subChunks
   }
 
   /**
@@ -38,7 +38,7 @@ export class RIFFChunk {
    * @param {number} [length]
    */
   public getString(position: number = 0, length?: number): string {
-    return getStringFromBuffer(this.getBuffer(position, length || this.length - position));
+    return getStringFromBuffer(this.getBuffer(position, length || this.length - position))
   }
 
   /**
@@ -47,7 +47,7 @@ export class RIFFChunk {
    * @param {number} [position]
    */
   public getInt16(position: number = 0): number {
-    return this.buffer[position++] | (this.buffer[position] << 8);
+    return this.buffer[position++] | (this.buffer[position] << 8)
   }
 
   /**
@@ -62,7 +62,7 @@ export class RIFFChunk {
         (this.buffer[position++] << 16) |
         (this.buffer[position] << 24)) >>>
       0
-    );
+    )
   }
 
   /**
@@ -71,7 +71,7 @@ export class RIFFChunk {
    * @param {number} [position]
    */
   public getByte(position: number = 0): number {
-    return this.buffer[position];
+    return this.buffer[position]
   }
 
   /**
@@ -80,7 +80,7 @@ export class RIFFChunk {
    * @param {number} [position]
    */
   public getChar(position: number = 0): number {
-    return (this.buffer[position] << 24) >> 24;
+    return (this.buffer[position] << 24) >> 24
   }
 
   /**
@@ -89,7 +89,7 @@ export class RIFFChunk {
    * @param {number} [start] - The position where to start iterating. Defaults to 0.
    */
   public iterator<T>(start: number = 0): ChunkIterator<T> {
-    return new ChunkIterator<T>(this, start);
+    return new ChunkIterator<T>(this, start)
   }
 
   /**
@@ -101,9 +101,9 @@ export class RIFFChunk {
    * @param {number} [start] - The optional index where to start iterating over the chunk
    */
   public iterate<T>(callback: (iterator: ChunkIterator<T>) => T | null, start: number = 0): T[] {
-    const iterator = new ChunkIterator<T>(this, start);
-    iterator.iterate(callback);
-    return iterator.target;
+    const iterator = new ChunkIterator<T>(this, start)
+    iterator.iterate(callback)
+    return iterator.target
   }
 
   /**
@@ -114,6 +114,6 @@ export class RIFFChunk {
    * @param {number} length
    */
   private getBuffer(start: number, length: number): Uint8Array {
-    return this.buffer.subarray(start, start + length);
+    return this.buffer.subarray(start, start + length)
   }
 }

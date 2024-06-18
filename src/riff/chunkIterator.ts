@@ -1,24 +1,24 @@
-import { RIFFChunk } from './riffChunk';
-import { getStringFromBuffer } from '~/utils';
+import { RIFFChunk } from './riffChunk'
+import { getStringFromBuffer } from '~/utils'
 
 /**
  * A utility class to quickly iterate over a buffer.
  */
 export class ChunkIterator<T> {
-  public readonly target: T[] = [];
-  private readonly chunk: RIFFChunk;
-  private position: number = 0;
+  public readonly target: T[] = []
+  private readonly chunk: RIFFChunk
+  private position: number = 0
 
   public constructor(chunk: RIFFChunk, start: number = 0) {
-    this.chunk = chunk;
-    this.position = start;
+    this.chunk = chunk
+    this.position = start
   }
 
   /**
    * Get the position from the iterator.
    */
   public get currentPosition(): number {
-    return this.position;
+    return this.position
   }
 
   /**
@@ -28,9 +28,9 @@ export class ChunkIterator<T> {
    */
   public iterate(callback: (iterator: ChunkIterator<T>) => T | null) {
     while (this.position < this.chunk.length) {
-      const object = callback(this);
+      const object = callback(this)
       if (object) {
-        this.target.push(object);
+        this.target.push(object)
       }
     }
   }
@@ -42,23 +42,23 @@ export class ChunkIterator<T> {
    *   is assumed
    */
   public getString(length: number = 20): string {
-    const text = getStringFromBuffer(this.getBuffer(this.position, length));
-    this.position += length;
-    return text;
+    const text = getStringFromBuffer(this.getBuffer(this.position, length))
+    this.position += length
+    return text
   }
 
   /**
    * Get a signed 16-bit integer from the chunk.
    */
   public getInt16(): number {
-    return this.chunk.buffer[this.position++] | (this.chunk.buffer[this.position++] << 8);
+    return this.chunk.buffer[this.position++] | (this.chunk.buffer[this.position++] << 8)
   }
 
   /**
    * Get a signed 16-bit integer from the chunk in the big-endian format.
    */
   public getInt16BE(): number {
-    return (this.getInt16() << 16) >> 16;
+    return (this.getInt16() << 16) >> 16
   }
 
   /**
@@ -71,21 +71,21 @@ export class ChunkIterator<T> {
         (this.chunk.buffer[this.position++] << 16) |
         (this.chunk.buffer[this.position++] << 24)) >>>
       0
-    );
+    )
   }
 
   /**
    * Get a single byte from the chunk.
    */
   public getByte(): number {
-    return this.chunk.buffer[this.position++];
+    return this.chunk.buffer[this.position++]
   }
 
   /**
    * Get a signed char from the chunk.
    */
   public getChar(): number {
-    return (this.chunk.buffer[this.position++] << 24) >> 24;
+    return (this.chunk.buffer[this.position++] << 24) >> 24
   }
 
   /**
@@ -94,7 +94,7 @@ export class ChunkIterator<T> {
    * @param {number} length
    */
   public skip(length: number): void {
-    this.position += length;
+    this.position += length
   }
 
   /**
@@ -104,6 +104,6 @@ export class ChunkIterator<T> {
    * @param {number} length
    */
   private getBuffer(start: number, length: number): Uint8Array {
-    return this.chunk.buffer.subarray(start, start + length);
+    return this.chunk.buffer.subarray(start, start + length)
   }
 }

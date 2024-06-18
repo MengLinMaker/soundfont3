@@ -1,33 +1,33 @@
-import { ZoneItems } from './zone';
-import { Sample } from './sample';
+import { ZoneItems } from './zone'
+import { Sample } from './sample'
 
 export interface InstrumentHeader {
   /**
    * The name of the instrument.
    */
-  name: string;
+  name: string
 
   /**
    * Index in the instrument's zone list found in the instrument bag sub-chunk.
    */
-  bagIndex: number;
+  bagIndex: number
 }
 
 export interface InstrumentZone extends ZoneItems {
   /**
    * The sample for the instrument zone.
    */
-  sample: Sample;
+  sample: Sample
 }
 
 export interface Instrument {
   /**
    * The instrument header.
    */
-  header: InstrumentHeader;
+  header: InstrumentHeader
 
   /**
    * The instrument zones.
    */
-  zones: InstrumentZone[];
+  zones: InstrumentZone[]
 }

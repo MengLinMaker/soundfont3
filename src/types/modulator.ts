@@ -1,4 +1,4 @@
-import { GeneratorType } from './generator';
+import { GeneratorType } from './generator'
 
 export enum ControllerType {
   /**
@@ -121,28 +121,28 @@ export interface ControllerValue {
   /**
    * The type of modulator.
    */
-  type: ControllerType;
+  type: ControllerType
 
   /**
    * The polarity of the modulator.
    */
-  polarity: ControllerPolarity;
+  polarity: ControllerPolarity
 
   /**
    * The direction of the modulator.
    */
-  direction: ControllerDirection;
+  direction: ControllerDirection
 
   /**
    * The controller palette used for the modulator.
    */
-  palette: ControllerPalette;
+  palette: ControllerPalette
 
   /**
    * The index of the general or MIDI controller. If the palette is set to `GeneralController`,
    * this refers to a type in the `Controller` type. Otherwise, its a MIDI continuous controller.
    */
-  index: Controller | number;
+  index: Controller | number
 }
 
 export enum TransformType {
@@ -165,29 +165,29 @@ export interface Modulator {
   /**
    * Destination generator.
    */
-  id: GeneratorType;
+  id: GeneratorType
 
   /**
    * Source modulator.
    */
-  source: ControllerValue;
+  source: ControllerValue
 
   /**
    * Degree of modulation.
    */
-  value: number;
+  value: number
 
   /**
    * Source controls value of first.
    *
    * TODO: Description is unclear. Should be improved.
    */
-  valueSource: ControllerValue;
+  valueSource: ControllerValue
 
   /**
    * Transform applied to source.
    */
-  transform: TransformType;
+  transform: TransformType
 }
 
 /**
@@ -404,4 +404,4 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
     },
     transform: TransformType.Linear
   }
-];
+]
