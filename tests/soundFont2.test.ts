@@ -9,7 +9,7 @@ let soundFont: SoundFont3;
 
 beforeAll(async () => {
   const buffer = await readFile(path.join(__dirname, 'fonts/valid.sf2'));
-  soundFont = SoundFont3.from(buffer);
+  soundFont = new SoundFont3(buffer);
 });
 
 describe('SoundFont3', () => {
