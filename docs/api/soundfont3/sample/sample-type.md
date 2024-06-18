@@ -35,7 +35,7 @@ A sample with two channels, where this sample is the left channel.
 
 * Value `8`
 
-This sample type is not fully defined in the SoundFont2 specification and is likely not used.
+This sample type is not fully defined in the SoundFont3 specification and is likely not used.
 
 ## `SampleType.RomMono`
 
@@ -59,4 +59,4 @@ A sample, stored in the ROM, where this sample is the left channel.
 
 * Value `0x8008` (or `32776`)
 
-This sample type is not fully defined in the SoundFont2 specification and is likely not used.
+This sample type is not fully defined in the SoundFont3 specification and is likely not used.

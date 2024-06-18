@@ -4,4 +4,4 @@
 
 * [Installation](installation.md)
 * [Basic Usage](basic-usage.md)
-* [SoundFont2 Structure](soundfont2-structure.md)
+* [SoundFont3 Structure](SoundFont3-structure.md)

@@ -1,6 +1,6 @@
-# SoundFont2 Structure
+# SoundFont3 Structure
 
-This section explains a bit about the general SoundFont2 structure. It's not necessarily required to know this information in order to use the library, but it may make it easier to understand how the library and SoundFonts work.
+This section explains a bit about the general SoundFont3 structure. It's not necessarily required to know this information in order to use the library, but it may make it easier to understand how the library and SoundFonts work.
 
 ## Table of Contents
 
@@ -25,13 +25,13 @@ Multiple preset zones can refer to the same instrument and multiple instrument z
 
 ## RIFF Chunks
 
-A SoundFont2 file is a RIFF (Resource Interchange File Format) file, which contains multiple chunks. Those chunks are identified by a [FourCC (four-character code)](https://en.wikipedia.org/wiki/FourCC). If an identifier is not for characters long, it will be padded by spaces. For example, "foo" would be read as "foo ".
+A SoundFont3 file is a RIFF (Resource Interchange File Format) file, which contains multiple chunks. Those chunks are identified by a [FourCC (four-character code)](https://en.wikipedia.org/wiki/FourCC). If an identifier is not for characters long, it will be padded by spaces. For example, "foo" would be read as "foo ".
 
-Every SoundFont2 file should have at least three top-level sub-chunks: an `INFO` chunk containing metadata, a `sdta` chunk containing Wave Audio (WAV) samples and a `pdta` header containing the preset, instrument and sample headers.
+Every SoundFont3 file should have at least three top-level sub-chunks: an `INFO` chunk containing metadata, a `sdta` chunk containing Wave Audio (WAV) samples and a `pdta` header containing the preset, instrument and sample headers.
 
-All the raw (unparsed) data is available in the `SoundFont2` class, as `metaData`, `sampleData` and `presetData`.
+All the raw (unparsed) data is available in the `SoundFont3` class, as `metaData`, `sampleData` and `presetData`.
 
-![SoundFont2 RIFF chunks](https://i.imgur.com/BL8FvcC.png)
+![SoundFont3 RIFF chunks](https://i.imgur.com/BL8FvcC.png)
 
 ### `INFO` Chunk
 

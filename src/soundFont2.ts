@@ -14,15 +14,15 @@ import { parseBuffer, ParseError } from './riff';
 import { getItemsInZone } from './chunks';
 import { memoize } from './utils';
 
-export class SoundFont2 {
+export class SoundFont3 {
   /**
-   * Create a new `SoundFont2` instance from a raw input buffer.
+   * Create a new `SoundFont3` instance from a raw input buffer.
    *
    * @param {Uint8Array} buffer
-   * @deprecated Replaced with `new SoundFont2(buffer: Uint8Array);`
+   * @deprecated Replaced with `new SoundFont3(buffer: Uint8Array);`
    */
-  public static from(buffer: Uint8Array): SoundFont2 {
-    return new SoundFont2(buffer);
+  public static from(buffer: Uint8Array): SoundFont3 {
+    return new SoundFont3(buffer);
   }
 
   /**
@@ -66,8 +66,8 @@ export class SoundFont2 {
   public readonly banks: Bank[];
 
   /**
-   * Load a SoundFont2 file from a `Uint8Array` or a `SF2Chunk`. The recommended way is to use a
-   * Uint8Array, loading a SoundFont2 from a `SF2Chunk` only exists for backwards compatibility and
+   * Load a SoundFont3 file from a `Uint8Array` or a `SF2Chunk`. The recommended way is to use a
+   * Uint8Array, loading a SoundFont3 from a `SF2Chunk` only exists for backwards compatibility and
    * will likely be removed in a future version.
    *
    * @param {Uint8Array|SF2Chunk} chunk

@@ -11,11 +11,11 @@ const sourcePath = path.resolve(__dirname, 'src');
 const config: Configuration = {
   mode: isDevelopment ? 'development' : 'production',
   entry: {
-    SoundFont2: path.resolve(sourcePath, 'index.ts')
+    SoundFont3: path.resolve(sourcePath, 'index.ts')
   },
   output: {
     path: path.resolve(__dirname, 'lib'),
-    library: 'SoundFont2'
+    library: 'SoundFont3'
   },
   resolve: {
     extensions: ['.ts'],

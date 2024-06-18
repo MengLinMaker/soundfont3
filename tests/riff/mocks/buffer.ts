@@ -1,4 +1,4 @@
-// Note: This is not a valid SoundFont2 buffer
+// Note: This is not a valid SoundFont3 buffer
 const buffer = new Uint8Array(32);
 const riffLength = buffer.length - 4;
 

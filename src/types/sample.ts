@@ -1,5 +1,5 @@
 /**
- * SoundFont2 samples are in the WAV format, meaning that they consist of a signed 16-bit array,
+ * SoundFont3 samples are in the WAV format, meaning that they consist of a signed 16-bit array,
  * instead of a unsigned 8-bit array, which is read by default. The sample data in the `smpl`
  * sub-chunk is parsed as Int16Array before creating a sample.
  */

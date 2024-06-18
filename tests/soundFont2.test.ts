@@ -1,21 +1,21 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
-import { SoundFont2 } from '../src';
+import { SoundFont3 } from '../src';
 import { ParseError } from '../src/riff';
 
 const readFile = promisify(fs.readFile);
-let soundFont: SoundFont2;
+let soundFont: SoundFont3;
 
 beforeAll(async () => {
   const buffer = await readFile(path.join(__dirname, 'fonts/valid.sf2'));
-  soundFont = SoundFont2.from(buffer);
+  soundFont = SoundFont3.from(buffer);
 });
 
-describe('SoundFont2', () => {
+describe('SoundFont3', () => {
   it('should not parse invalid SoundFonts', async () => {
     const buffer = await readFile(path.join(__dirname, 'fonts/invalid.sf2'));
-    expect(() => new SoundFont2(buffer)).toThrow(ParseError);
+    expect(() => new SoundFont3(buffer)).toThrow(ParseError);
   });
 
   it('should parse metadata', () => {

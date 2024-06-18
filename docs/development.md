@@ -20,7 +20,7 @@ The library uses Node.js, TypeScript and Webpack for development, Jest to run un
 1. Clone the repository.
 
   ```bash
-  $ git clone git@github.com:Mrtenz/soundfont2.git
+  $ git clone git@github.com:Mrtenz/SoundFont3.git
   ```
   
 2. Install the dependencies.
@@ -53,7 +53,7 @@ $ yarn run tslint
 
 ## Code Style
 
-The library uses Prettier to ensure a consistent code style. The Prettier settings can be found in [this file](https://github.com/Mrtenz/soundfont2/blob/master/.prettierrc). It is automatically run before committing, but you can also run Prettier manually.
+The library uses Prettier to ensure a consistent code style. The Prettier settings can be found in [this file](https://github.com/Mrtenz/SoundFont3/blob/master/.prettierrc). It is automatically run before committing, but you can also run Prettier manually.
 
 ```bash
 $ yarn run prettier:diff
