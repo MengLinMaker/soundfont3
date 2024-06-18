@@ -1,29 +1,31 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import { promisify } from 'util'
+import { join } from 'path'
 import { SoundFont3 } from '../src'
 import { ParseError } from '../src/riff'
+import { readFileSync } from 'fs'
 
-const readFile = promisify(fs.readFile)
-let soundFont: SoundFont3
+const buffer = readFileSync(join(__dirname, 'fonts/piano.sf2'))
+const soundFont = new SoundFont3(buffer)
 
-beforeAll(async () => {
-  const buffer = await readFile(path.join(__dirname, 'fonts/valid.sf2'))
-  soundFont = new SoundFont3(buffer)
-})
-
-describe('SoundFont3', () => {
+describe('SoundFont2', () => {
   it('should not parse invalid SoundFonts', async () => {
-    const buffer = await readFile(path.join(__dirname, 'fonts/invalid.sf2'))
+    const buffer = readFileSync(join(__dirname, 'fonts/invalid.sf2'))
     expect(() => new SoundFont3(buffer)).toThrow(ParseError)
   })
 
   it('should parse metadata', () => {
     const metaData = soundFont.metaData
-    expect(metaData.product).toBe('Jest')
-    expect(metaData.copyright).toBe('Copyright (c) Maarten Zuidhoorn')
-    expect(metaData.comments).toBe('This SoundFont is made for testing purposes.')
-    expect(metaData.soundEngine).toBe('EMU8000')
-    expect(metaData.createdBy).toBe('Polyphone')
+    expect(metaData).toStrictEqual({
+      version: '2.1',
+      soundEngine: 'EMU8000',
+      name: 'Yamaha-Grand-Lite',
+      rom: undefined,
+      romVersion: undefined,
+      creationDate: undefined,
+      author: undefined,
+      product: undefined,
+      copyright: 'Creative Commons',
+      comments: undefined,
+      createdBy: 'Polyphone'
+    })
   })
 })
