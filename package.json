@@ -17,7 +17,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint '**/*.ts'",
-    "test": "jest",
+    "test": "jest --coverage",
     "prettier": "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
     "build": "tsc --project tsconfig.json --declaration --declarationDir typings --emitDeclarationOnly && webpack",
     "prepublishOnly": "rm -rf ./lib ./typings && cross-env NODE_ENV=development yarn run build",
@@ -31,7 +31,6 @@
     "typings"
   ],
   "devDependencies": {
-    "@babel/core": "^7.24.7",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
@@ -41,7 +40,6 @@
     "@types/webpack": "^4.41.38",
     "@types/webpack-merge": "^4.1.5",
     "@types/webpack-node-externals": "^1.7.1",
-    "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.3.0",
     "cross-env": "^5.2.1",
     "eslint": "^9.5.0",
@@ -51,6 +49,7 @@
     "lint-staged": "^8.2.1",
     "node-web-audio-api": "^0.21.1",
     "prettier": "^3.3.2",
+    "riff-file": "^1.0.3",
     "smplr": "^0.15.1",
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
