@@ -4,10 +4,10 @@ import { ParseError } from '../src/riff'
 import { readFileSync } from 'fs'
 import { Soundfont2Sampler } from 'smplr'
 import { bufferToDataUrl } from './bufferToDataUrl'
+import { RIFFFile } from 'riff-file'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
-const soundFont = new SoundFont3(buffer)
 
 describe('SoundFont2', () => {
   it('should not parse invalid SoundFonts', async () => {
@@ -15,7 +15,17 @@ describe('SoundFont2', () => {
     expect(() => new SoundFont3(buffer)).toThrow(ParseError)
   })
 
+  it('should parse as a RIFF file', () => {
+    const riff = new RIFFFile()
+    riff.setSignature(buffer)
+    const expectedRiffSignaturePath = join(__dirname, 'fonts/piano.sf2.riff.signature.json')
+    const expectedRiffSignature = readFileSync(expectedRiffSignaturePath).toString()
+    const riffSignature = JSON.stringify(riff.signature, null, 2)
+    expect(riffSignature).toStrictEqual(expectedRiffSignature)
+  })
+
   it('should parse metadata', () => {
+    const soundFont = new SoundFont3(buffer)
     const metaData = soundFont.metaData
     expect(metaData).toStrictEqual({
       version: '2.1',
