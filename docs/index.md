@@ -6,11 +6,8 @@ hero:
   tagline: Parser for Node.js and Web
   actions:
     - theme: brand
-      text: Install
-      link: /routes/1.%20Guide/1.1.%20Install.html
-    - theme: alt
-      text: Developer
-      link: /routes/3.%20Development/3.1.%20Onboarding.html
+      text: Get Started
+      link: /routes/1.%20Guide/README.html
 
 features:
   - title: Reduce bandwidth
