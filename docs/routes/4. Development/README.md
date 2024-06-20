@@ -1,15 +1,18 @@
 ---
 prev:
-  text: 3.1. Onboarding
-  link: /routes/3.%20Development/3.1.%20Onboarding.html
+  text: 3. SF 3 Spec
+  link: /routes/3.%20SF%203%20Spec/README.html
 next:
   text: Home
   link: /
 ---
 
-# Todo
+# Development
+::: tip Purpose
+To provide guidelines to contribution and outline roadmap.
+:::
 
-These are things that will likely be implemented in the future.
+## Roadmap
 
 * Comply to the full [SoundFont 2.04 specification](http://www.synthfont.com/sfspec24.pdf).
   * Add support for 24-bit data samples.
