@@ -1,4 +1,0 @@
-[book]
-src = "./docs"
-title = "Soundfont3"
-description = "A SoundFont3 parser for Node.js and web browsers"

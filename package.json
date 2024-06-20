@@ -22,6 +22,7 @@
     "build": "tsc --project tsconfig.json --declaration --declarationDir typings --emitDeclarationOnly && webpack",
     "prepublishOnly": "rm -rf ./lib ./typings && cross-env NODE_ENV=development yarn run build",
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist",
+    "docs:start": "vitepress build docs && vitepress preview docs",
     "docs:dev": "vitepress dev docs"
   },
   "files": [
