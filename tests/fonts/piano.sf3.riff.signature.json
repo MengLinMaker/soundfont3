@@ -1,0 +1,111 @@
+{
+  "chunkId": "RIFF",
+  "chunkSize": 1637567,
+  "format": "sfbk",
+  "subChunks": [
+    {
+      "chunkId": "LIST",
+      "chunkSize": 114,
+      "format": "INFO",
+      "subChunks": [
+        {
+          "chunkId": "ifil",
+          "chunkSize": 4,
+          "chunkData": {
+            "start": 32,
+            "end": 36
+          }
+        },
+        {
+          "chunkId": "INAM",
+          "chunkSize": 18,
+          "chunkData": {
+            "start": 44,
+            "end": 62
+          }
+        },
+        {
+          "chunkId": "isng",
+          "chunkSize": 8,
+          "chunkData": {
+            "start": 70,
+            "end": 78
+          }
+        },
+        {
+          "chunkId": "ISFT",
+          "chunkSize": 10,
+          "chunkData": {
+            "start": 86,
+            "end": 96
+          }
+        },
+        {
+          "chunkId": "ICOP",
+          "chunkSize": 18,
+          "chunkData": {
+            "start": 104,
+            "end": 122
+          }
+        },
+        {
+          "chunkId": "iver",
+          "chunkSize": 4,
+          "chunkData": {
+            "start": 130,
+            "end": 134
+          }
+        },
+        {
+          "chunkId": "LIST",
+          "chunkSize": 1630899,
+          "format": "sdta",
+          "subChunks": [
+            {
+              "chunkId": "smpl",
+              "chunkSize": 1630887,
+              "chunkData": {
+                "start": 154,
+                "end": 1631042
+              }
+            },
+            {
+              "chunkId": "IST~",
+              "chunkSize": 1879048217,
+              "chunkData": {
+                "start": 1631050,
+                "end": 1880679268
+              }
+            }
+          ]
+        },
+        {
+          "chunkId": "IST~",
+          "chunkSize": 1879048217,
+          "chunkData": {
+            "start": 1631050,
+            "end": 1880679268
+          }
+        }
+      ]
+    },
+    {
+      "chunkId": "LIST",
+      "chunkSize": 1630899,
+      "format": "sdta",
+      "subChunks": []
+    },
+    {
+      "chunkId": "IST~",
+      "chunkSize": 1879048217,
+      "chunkData": {
+        "start": 1631050,
+        "end": 1880679268
+      }
+    }
+  ],
+  "chunkData": {
+    "start": 0,
+    "end": 1637567
+  }
+}
