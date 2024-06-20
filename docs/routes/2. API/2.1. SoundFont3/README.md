@@ -1,3 +1,12 @@
+---
+prev:
+  text: 1.3. SF2 structure
+  link: /routes/1.%20Guide/1.3.%20SF2%20structure.html
+next:
+  text: 2.1.1. Key
+  link: /routes/2.%20API/2.1.%20SoundFont3/2.1.1.%20Key.html
+---
+
 # API Structure
 
 ## Overview
