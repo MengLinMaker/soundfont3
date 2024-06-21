@@ -8,6 +8,10 @@ import { RIFFFile } from 'riff-file'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
+const soundFont = new SoundFont3(buffer)
+
+const expectedPresetDataPath = join(__dirname, 'fonts/piano.sf2.presetData.json')
+const expectedPresetData = JSON.parse(readFileSync(expectedPresetDataPath).toString())
 
 describe('SoundFont2', () => {
   it('should not parse invalid SoundFonts', async () => {
@@ -19,13 +23,11 @@ describe('SoundFont2', () => {
     const riff = new RIFFFile()
     riff.setSignature(buffer)
     const expectedRiffSignaturePath = join(__dirname, 'fonts/piano.sf2.riff.signature.json')
-    const expectedRiffSignature = readFileSync(expectedRiffSignaturePath).toString()
-    const riffSignature = JSON.stringify(riff.signature, null, 2)
-    expect(riffSignature).toStrictEqual(expectedRiffSignature)
+    const expectedRiffSignature = JSON.parse(readFileSync(expectedRiffSignaturePath).toString())
+    expect(riff.signature).toStrictEqual(expectedRiffSignature)
   })
 
   it('should parse metadata', () => {
-    const soundFont = new SoundFont3(buffer)
     const metaData = soundFont.metaData
     expect(metaData).toStrictEqual({
       version: '2.1',
@@ -42,9 +44,53 @@ describe('SoundFont2', () => {
     })
   })
 
+  it('should parse presetHeaders', () => {
+    const presetHeaders = soundFont.presetData.presetHeaders
+    expect(presetHeaders).toStrictEqual(expectedPresetData.presetHeaders)
+  })
+
+  it('should parse presetZones', () => {
+    const presetZones = soundFont.presetData.presetZones
+    expect(presetZones).toStrictEqual(expectedPresetData.presetZones)
+  })
+
+  it('should parse presetModulators', () => {
+    const presetModulators = soundFont.presetData.presetModulators
+    expect(presetModulators).toStrictEqual(expectedPresetData.presetModulators)
+  })
+
+  it('should parse presetGenerators', () => {
+    const presetGenerators = soundFont.presetData.presetGenerators
+    expect(presetGenerators).toStrictEqual(expectedPresetData.presetGenerators)
+  })
+
+  it('should parse instrumentHeaders', () => {
+    const instrumentHeaders = soundFont.presetData.instrumentHeaders
+    expect(instrumentHeaders).toStrictEqual(expectedPresetData.instrumentHeaders)
+  })
+
+  it('should parse instrumentZones', () => {
+    const instrumentZones = soundFont.presetData.instrumentZones
+    expect(instrumentZones).toStrictEqual(expectedPresetData.instrumentZones)
+  })
+
+  it('should parse instrumentModulators', () => {
+    const instrumentModulators = soundFont.presetData.instrumentModulators
+    expect(instrumentModulators).toStrictEqual(expectedPresetData.instrumentModulators)
+  })
+
+  it('should parse instrumentGenerators', () => {
+    const instrumentGenerators = soundFont.presetData.instrumentGenerators
+    expect(instrumentGenerators).toStrictEqual(expectedPresetData.instrumentGenerators)
+  })
+
+  it('should parse sampleHeaders', () => {
+    const sampleHeaders = soundFont.presetData.sampleHeaders
+    expect(sampleHeaders).toStrictEqual(expectedPresetData.sampleHeaders)
+  })
+
   it('should load into "smplr"', async () => {
     const context = new AudioContext()
-
     const sampler = new Soundfont2Sampler(context, {
       url: bufferToDataUrl(buffer),
       createSoundfont: (data) => new SoundFont3(data)
