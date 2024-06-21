@@ -1,11 +1,11 @@
 {
   "chunkId": "RIFF",
-  "chunkSize": 1637567,
+  "chunkSize": 1811154,
   "format": "sfbk",
   "subChunks": [
     {
       "chunkId": "LIST",
-      "chunkSize": 114,
+      "chunkSize": 102,
       "format": "INFO",
       "subChunks": [
         {
@@ -49,63 +49,122 @@
           }
         },
         {
-          "chunkId": "iver",
-          "chunkSize": 4,
-          "chunkData": {
-            "start": 130,
-            "end": 134
-          }
-        },
-        {
           "chunkId": "LIST",
-          "chunkSize": 1630899,
+          "chunkSize": 1804498,
           "format": "sdta",
           "subChunks": [
             {
               "chunkId": "smpl",
-              "chunkSize": 1630887,
+              "chunkSize": 1804486,
               "chunkData": {
-                "start": 154,
-                "end": 1631042
+                "start": 142,
+                "end": 1804628
               }
             },
             {
-              "chunkId": "IST~",
-              "chunkSize": 1879048217,
-              "chunkData": {
-                "start": 1631050,
-                "end": 1880679268
-              }
+              "chunkId": "LIST",
+              "chunkSize": 6526,
+              "format": "pdta",
+              "subChunks": [
+                {
+                  "chunkId": "phdr",
+                  "chunkSize": 76,
+                  "chunkData": {
+                    "start": 1804648,
+                    "end": 1804724
+                  }
+                },
+                {
+                  "chunkId": "pbag",
+                  "chunkSize": 36,
+                  "chunkData": {
+                    "start": 1804732,
+                    "end": 1804768
+                  }
+                },
+                {
+                  "chunkId": "pmod",
+                  "chunkSize": 10,
+                  "chunkData": {
+                    "start": 1804776,
+                    "end": 1804786
+                  }
+                },
+                {
+                  "chunkId": "pgen",
+                  "chunkSize": 116,
+                  "chunkData": {
+                    "start": 1804794,
+                    "end": 1804910
+                  }
+                },
+                {
+                  "chunkId": "inst",
+                  "chunkSize": 176,
+                  "chunkData": {
+                    "start": 1804918,
+                    "end": 1805094
+                  }
+                },
+                {
+                  "chunkId": "ibag",
+                  "chunkSize": 872,
+                  "chunkData": {
+                    "start": 1805102,
+                    "end": 1805974
+                  }
+                },
+                {
+                  "chunkId": "imod",
+                  "chunkSize": 10,
+                  "chunkData": {
+                    "start": 1805982,
+                    "end": 1805992
+                  }
+                },
+                {
+                  "chunkId": "igen",
+                  "chunkSize": 3728,
+                  "chunkData": {
+                    "start": 1806000,
+                    "end": 1809728
+                  }
+                },
+                {
+                  "chunkId": "shdr",
+                  "chunkSize": 1426,
+                  "chunkData": {
+                    "start": 1809736,
+                    "end": 1811162
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "chunkId": "IST~",
-          "chunkSize": 1879048217,
-          "chunkData": {
-            "start": 1631050,
-            "end": 1880679268
-          }
+          "chunkId": "LIST",
+          "chunkSize": 6526,
+          "format": "pdta",
+          "subChunks": []
         }
       ]
     },
     {
       "chunkId": "LIST",
-      "chunkSize": 1630899,
+      "chunkSize": 1804498,
       "format": "sdta",
       "subChunks": []
     },
     {
-      "chunkId": "IST~",
-      "chunkSize": 1879048217,
-      "chunkData": {
-        "start": 1631050,
-        "end": 1880679268
-      }
+      "chunkId": "LIST",
+      "chunkSize": 6526,
+      "format": "pdta",
+      "subChunks": []
     }
   ],
   "chunkData": {
     "start": 0,
-    "end": 1637567
+    "end": 1811154
   }
 }

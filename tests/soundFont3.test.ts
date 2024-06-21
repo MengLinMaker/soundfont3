@@ -1,8 +1,5 @@
 import { join } from 'path'
-import { SoundFont3 } from '../src'
 import { readFileSync } from 'fs'
-import { Soundfont2Sampler } from 'smplr'
-import { bufferToDataUrl } from './bufferToDataUrl'
 import { RIFFFile } from 'riff-file'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf3')
@@ -13,9 +10,8 @@ describe('SoundFont3', () => {
     const riff = new RIFFFile()
     riff.setSignature(buffer)
     const expectedRiffSignaturePath = join(__dirname, 'fonts/piano.sf3.riff.signature.json')
-    const expectedRiffSignature = readFileSync(expectedRiffSignaturePath).toString()
-    const riffSignature = JSON.stringify(riff.signature, null, 2)
-    expect(riffSignature).toStrictEqual(expectedRiffSignature)
+    const expectedRiffSignature = JSON.parse(readFileSync(expectedRiffSignaturePath).toString())
+    expect(riff.signature).toStrictEqual(expectedRiffSignature)
   })
 
   // it('should parse metadata', () => {
