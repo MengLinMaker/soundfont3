@@ -26,8 +26,12 @@ export class SF2Chunk extends RIFFChunk {
    * Get meta data from the chunk. This assumes the chunk is a LIST chunk, containing INFO
    * sub-chunks.
    */
+  private validMetaDataChunkId(): boolean {
+    return this.id === 'LIST'
+  }
+
   public getMetaData(): MetaData {
-    if (this.id !== 'LIST') {
+    if (!this.validMetaDataChunkId()) {
       throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
@@ -73,7 +77,7 @@ export class SF2Chunk extends RIFFChunk {
    * LIST chunk containing a smpl sub-chunk.
    */
   public getSampleData(): Uint8Array {
-    if (this.id !== 'LIST') {
+    if (!this.validMetaDataChunkId()) {
       throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
@@ -90,7 +94,7 @@ export class SF2Chunk extends RIFFChunk {
    * preset data sub-chunks.
    */
   public getPresetData(): PresetData {
-    if (this.id !== 'LIST') {
+    if (!this.validMetaDataChunkId()) {
       throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
