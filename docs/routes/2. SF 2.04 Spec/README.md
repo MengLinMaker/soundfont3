@@ -3,8 +3,8 @@ prev:
   text: 1.2. Play SoundFont
   link: /routes/1.%20Guide/1.2.%20Play%20SoundFont.html
 next:
-  text: 3. SF 3 Spec
-  link: /routes/3.%20SF%203%20Spec/README.html
+  text: 2.1. SF 2.04 Spec
+  link: /routes/2.%20SF%202.04%20Spec/2.1.%20Metadata.html
 ---
 
 # SoundFont 2.04 Specification
@@ -22,100 +22,97 @@ SoundFonts are [RIFF](https://johnloomis.org/cpe102/asgn/asgn1/riff.html) files.
 </div>
 
  Multiple `preset zones` can reference one `instrument`.
- 
+
  Likewise, multiple `instrument zones` can reference one `sample`.
 
 ## What is RIFF
+RIFF is like JSON but binary - store nested binaries. It is a standard for other file formats like [WAV](https://en.wikipedia.org/wiki/WAV).
 
-RIFF files consists of nested chunks of data - like JSON but binary:
+Data is stored in chunks with metadata:
 
 ```C
 char[4]            chunkId =      "RIFF";
-uint32             chunkBytes =   21772728;
+uint32_t           chunkBytes =   21772728;
 byte[chunkBytes]   chunkData =    <anotherChunk>;
-
-// 4 bytes
-// 4 bytes
-// 'chunkBytes' bytes
+char[4]            format         "sfbk"; // If subchunk exists
 ```
 
-Only chunks with `chunkId` `RIFF` and `LIST` can have subchunks.
-
-## SoundFont minimal RIFF
-Every SoundFont2 have these three chunks:
-* `INFO` chunk containing metadata.
-* `sdta` chunk containing Wave Audio (WAV).
-* `pdta` header containing the preset, instrument and sample headers.
-
-All the raw (unparsed) data is available in the `SoundFont3` class, as `metaData`, `sampleData` and `presetData`.
-
-![SoundFont2 RIFF chunks](https://i.imgur.com/BL8FvcC.png)
+* `chunkId` is a [four-character code (FourCC)](https://en.wikipedia.org/wiki/FourCC) totalling 4 bytes.
+  * Only chunks with id `RIFF` and `LIST` can have subchunks.
+* `chunkBytes` is the amount of bytes in a chunk.
+* `chunkData` could be a a subchunk or contain data.
 
 ## SoundFont RIFF structure
-**Structure with corresponding api:**
+Every SoundFont2 contain three nested top chunks:
 
-`sfbk` - Top level RIFF file format - `SoundFont3`
+ChunkId `RIFF`, format `sfbk` - RIFF file declaration
 
-&nbsp;
+* ChunkId `LIST`
+* Format `INFO`
+* Contains ***`SoundFont3.metadata`*** and:
+  * ChunkId `LIST`
+  * Format `sdta`
+  * Contains ***`SoundFont3.sampleData`*** and:
+    * ChunkId `LIST`
+    * Format `pdta`
+    * Contains ***`SoundFont3.presetData`***
 
-  * ***`INFO` - Metadata - `SoundFont3.metaData`***
+## Metadata
+Accessible thorugh `SoundFont3.metaData`
 
-    * `ifil` - SoundFont version - `SoundFont3.metaData.version`
+* `ifil` - SoundFont version - `SoundFont3.metaData.version`
 
-    * `isng` - Sound engine - `SoundFont3.metaData.soundEngine`
+* `isng` - Sound engine - `SoundFont3.metaData.soundEngine`
 
-    * `INAM` - SoundFont name - `SoundFont3.metaData.name`
+* `INAM` - SoundFont name - `SoundFont3.metaData.name`
 
-      *The other sub-chunks are optional*
+  ***The other leaf chunks are optional***
 
-    * `irom` - Sound ROM samples reference - `SoundFont3.metaData.rom`
-  
-    * `iver` - Sound ROM revision - `SoundFont3.metaData.romVersion`
+* `irom` - Sound ROM samples reference - `SoundFont3.metaData.rom`
 
-    * `ICRD` - Creation mm/dd/yy - `SoundFont3.metaData.creationDate`
-  
-    * `IENG` - SoundFont author - `SoundFont3.metaData.author`
-  
-    * `IPDR` - For this product - `SoundFont3.metaData.product`
-  
-    * `ICOP` - Copyright - `SoundFont3.metaData.copyright`
-  
-    * `ICMT` - Comments - `SoundFont3.metaData.comments`
-  
-    * `ISFT` - Tool created SoundFont - `SoundFont3.metaData.createdBy`
-  
-&nbsp;
+* `iver` - Sound ROM revision - `SoundFont3.metaData.romVersion`
 
-  * ***`sdta` - sample data.***
+* `ICRD` - Creation mm/dd/yy - `SoundFont3.metaData.creationDate`
 
-    * `smpl` - 16-bit WAV - `SoundFont3.sampleData`
-  
-    * `sm24` - Plus 8-bit WAV
-    
-&nbsp;
+* `IENG` - SoundFont author - `SoundFont3.metaData.author`
 
-  * ***`pdta` - Preset tree - `SoundFont3.presetData`***
+* `IPDR` - For this product - `SoundFont3.metaData.product`
 
-    *Preset data*
+* `ICOP` - Copyright - `SoundFont3.metaData.copyright`
 
-    * `phdr` - Headers - `SoundFont3.presetData.presetHeaders`
-  
-    * `pbag` - Zone indices - `SoundFont3.presetData.presetZones`
-  
-    * `pmod` - Modulators - `SoundFont3.presetData.presetModulators`
-  
-    * `pgen` - Generators - `SoundFont3.presetData.presetGenerators`
+* `ICMT` - Comments - `SoundFont3.metaData.comments`
 
-    *Instrument data*
+* `ISFT` - Tool created SoundFont - `SoundFont3.metaData.createdBy`
 
-    * `inst` - Headers - `SoundFont3.presetData.instrumentHeaders`
-      
-    * `ibag` - Zone indices - `SoundFont3.presetData.instrumentZones`
-      
-    * `imod` -  Modulators - `SoundFont3.presetData.instrumentModulators`
-      
-    * `igen` - Generators - `SoundFont3.presetData.instrumentGenerators`
+## Sample data
 
-    *Sample data*
+* `smpl` - 16-bit WAV - `SoundFont3.sampleData`
 
-    * `shdr` - Headers - `SoundFont3.presetData.sampleHeaders`
+* `sm24` - Plus 8-bit WAV
+
+## Preset data
+Available through `SoundFont3.presetData`
+
+**Preset metadata:**
+
+* `phdr` - Headers - `SoundFont3.presetData.presetHeaders`
+
+* `pbag` - Zone indices - `SoundFont3.presetData.presetZones`
+
+* `pmod` - Modulators - `SoundFont3.presetData.presetModulators`
+
+* `pgen` - Generators - `SoundFont3.presetData.presetGenerators`
+
+**Instrument metadata:**
+
+* `inst` - Headers - `SoundFont3.presetData.instrumentHeaders`
+
+* `ibag` - Zone indices - `SoundFont3.presetData.instrumentZones`
+
+* `imod` -  Modulators - `SoundFont3.presetData.instrumentModulators`
+
+* `igen` - Generators - `SoundFont3.presetData.instrumentGenerators`
+
+**Sample metadata:**
+
+* `shdr` - Headers - `SoundFont3.presetData.sampleHeaders`
