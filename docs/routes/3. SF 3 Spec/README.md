@@ -8,6 +8,7 @@ next:
 ---
 
 # SoundFont3 Structure
+
 ::: tip Purpose
 To understand the library API through SoundFont3 tools from [MuseScore/sftools](https://github.com/musescore/sftools).
 

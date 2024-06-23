@@ -8,6 +8,7 @@ next:
 ---
 
 # Guide
+
 ::: tip Purpose
 The guide section provides fast copy and paste solutions, intended for developers new to this library.
 :::
@@ -41,13 +42,16 @@ const { SoundFont3 } = require('SoundFont3')
 ```
 
 ## SoundFont3 compatability
+
 ::: warning Caution
 While SoundFont2 is a standard, **SoundFont3 is non-standard**. The only difference is compressed audio samples. However, this is no guarantee that another library will implement this correctly.
 :::
 
 ### Compatible tools
-* [sf3convert](https://github.com/musidi-org/sftools) - CLI converter from `.sf2` to `.sf3`
+
+- [sf3convert](https://github.com/musidi-org/sftools) - CLI converter from `.sf2` to `.sf3`
 
 ### Non compatible tools
-* [Polyphone](https://github.com/davy7125/polyphone) - SoundFont editor with `.sf2` and `.sf3` support.
-  * Sample needs padding so number of bytes are even as required by [SoundFont 2.0.4](http://www.synthfont.com/sfspec24.pdf)
+
+- [Polyphone](https://github.com/davy7125/polyphone) - SoundFont editor with `.sf2` and `.sf3` support.
+  - Sample needs padding so number of bytes are even as required by [SoundFont 2.0.4](http://www.synthfont.com/sfspec24.pdf)

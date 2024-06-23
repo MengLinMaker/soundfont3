@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "SoundFont3"
+  name: 'SoundFont3'
   tagline: Parser for Node.js and Web
   actions:
     - theme: brand
@@ -19,6 +19,7 @@ features:
 &nbsp;
 
 ## Purpose
+
 ::: warning Problem
 Large SoundFont2 files use bandwidth and loads slowly, especially quality ones like [salamander.sf2](https://musical-artifacts.com/artifacts/483)
 :::
@@ -32,6 +33,7 @@ If only we had JavaScript/TypeSscript SoundFont3 parser...
 :::
 
 ## Disclaimer
-The original parser, created by [Mrtenz](https://github.com/Mrtenz), adheres to the [SoundFont 2.01](http://www.synthfont.com/SFSPEC21.PDF) specification, with the goal of achieving compliance with [SoundFont 2.04](http://www.synthfont.com/sfspec24.pdf). This [fork](https://github.com/musidi-org/soundfont3) is focused on a different goal - parsing SoundFont3. 
+
+The original parser, created by [Mrtenz](https://github.com/Mrtenz), adheres to the [SoundFont 2.01](http://www.synthfont.com/SFSPEC21.PDF) specification, with the goal of achieving compliance with [SoundFont 2.04](http://www.synthfont.com/sfspec24.pdf). This [fork](https://github.com/musidi-org/soundfont3) is focuses on a different goal - parsing SoundFont3.
 
 This library is not production ready, hence the version 0.x.x. Some SoundFonts may be parsed incorrectly and the API may have breaking changes in the future. The first production release 1.0.0 and beyond will follow semantic versioning.
