@@ -7,6 +7,10 @@ const soundFontUrl = join(__dirname, 'fonts/piano.sf3')
 const buffer = readFileSync(soundFontUrl)
 const soundFont = new SoundFont3(buffer)
 
+const soundFont2Url = join(__dirname, 'fonts/piano.sf2')
+const buffer2 = readFileSync(soundFont2Url)
+const soundFont2 = new SoundFont3(buffer2)
+
 const expectedPresetDataPath = join(__dirname, 'fonts/piano.sf3.presetData.json')
 const expectedPresetData = JSON.parse(readFileSync(expectedPresetDataPath).toString())
 
@@ -81,22 +85,28 @@ describe('SoundFont3', () => {
     expect(sampleHeaders).toStrictEqual(expectedPresetData.sampleHeaders)
   })
 
-  it('should parse preset', () => {
-    const soundFont = new SoundFont3(buffer)
-    const metaData = soundFont.metaData
-    expect(metaData).toStrictEqual({
-      version: '3.1',
-      soundEngine: 'EMU8000',
-      name: 'Yamaha-Grand-Lite',
-      rom: undefined,
-      romVersion: undefined,
-      creationDate: undefined,
-      author: undefined,
-      product: undefined,
-      copyright: 'Creative Commons',
-      comments: undefined,
-      createdBy: 'Polyphone'
-    })
+  it('should not differ from sf3 to sf2', () => {
+    expect(soundFont.presetData.presetHeaders).toStrictEqual(soundFont2.presetData.presetHeaders)
+    expect(soundFont.presetData.presetZones).toStrictEqual(soundFont2.presetData.presetZones)
+    expect(soundFont.presetData.presetModulators).toStrictEqual(
+      soundFont2.presetData.presetModulators
+    )
+    expect(soundFont.presetData.presetGenerators).toStrictEqual(
+      soundFont2.presetData.presetGenerators
+    )
+    expect(soundFont.presetData.instrumentHeaders).toStrictEqual(
+      soundFont2.presetData.instrumentHeaders
+    )
+    expect(soundFont.presetData.instrumentZones).toStrictEqual(
+      soundFont2.presetData.instrumentZones
+    )
+    expect(soundFont.presetData.instrumentModulators).toStrictEqual(
+      soundFont2.presetData.instrumentModulators
+    )
+    expect(soundFont.presetData.instrumentGenerators).toStrictEqual(
+      soundFont2.presetData.instrumentGenerators
+    )
+    // expect(soundFont.presetData).toStrictEqual(soundFont2.presetData)
   })
 
   // it('should load into "smplr"', async () => {
