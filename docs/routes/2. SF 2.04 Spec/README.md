@@ -43,6 +43,7 @@ byte[chunkBytes]   chunkData =    <anotherChunk>;
 * `chunkBytes` is the amount of bytes in a chunk.
 * `format` specifies format type since `chunkId` is already used for tracking subchunks.
 * `chunkData` could be a a subchunk or contain data.
+* All chunks must contain even number of bytes.
 
 ## SoundFont RIFF structure
 Every SoundFont2 contain three nested top chunks:
