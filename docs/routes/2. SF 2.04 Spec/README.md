@@ -14,16 +14,7 @@ To understand the library API according to [SoundFont 2.04](http://www.synthfont
 This section will alternate between specification summary and API documentation.
 :::
 
-SoundFonts are [RIFF](https://johnloomis.org/cpe102/asgn/asgn1/riff.html) files. They contain metadata. The main data is arranged in the following format:
-
-<div style="background:WhiteSmoke;padding:1em;border-radius:0.5em;">
-
-![General Structure](https://i.imgur.com/c2Gud3u.png)
-</div>
-
- Multiple `preset zones` can reference one `instrument`.
-
- Likewise, multiple `instrument zones` can reference one `sample`.
+SoundFonts are [RIFF](https://johnloomis.org/cpe102/asgn/asgn1/riff.html) files containing WAV samples, preset information and metadata. SoundFonts interact with [MIDI](https://en.wikipedia.org/wiki/General_MIDI) to create a sound.
 
 ## What is RIFF
 RIFF is like JSON but binary - store nested binaries. It is a standard for other file formats like [WAV](https://en.wikipedia.org/wiki/WAV).
@@ -59,6 +50,8 @@ ChunkId `RIFF`, format `sfbk` - RIFF file declaration
     * ChunkId `LIST`
     * Format `pdta`
     * Contains ***`SoundFont3.presetData`***
+
+Raw SoundFont RIFF chunks are accessed through `SoundFont3.chunk`.
 
 ## Metadata
 Accessible thorugh `SoundFont3.metaData`
