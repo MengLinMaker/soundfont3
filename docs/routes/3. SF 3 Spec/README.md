@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 2. SF 2.04 Spec
-  link: /routes/2.%20SF%202.04%20Spec/README.html
+  text: 2.3. Preset data
+  link: /routes/2.%20SF%202.04%20Spec/2.3.%20Preset%20data.html
 next:
   text: 4. Development
   link: /routes/4.%20Development/README.html
