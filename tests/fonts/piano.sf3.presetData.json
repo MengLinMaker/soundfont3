@@ -10,7 +10,7 @@
       "morphology": 0
     },
     {
-      "name": "",
+      "name": "EOP",
       "preset": 0,
       "bank": 0,
       "bagIndex": 8,
@@ -264,7 +264,7 @@
       "bagIndex": 186
     },
     {
-      "name": "",
+      "name": "EOI",
       "bagIndex": 217
     }
   ],
