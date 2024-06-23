@@ -31,15 +31,17 @@ RIFF is like JSON but binary - store nested binaries. It is a standard for other
 Data is stored in chunks with metadata:
 
 ```C
-char[4]            chunkId =      "RIFF";
-uint32_t           chunkBytes =   21772728;
+char[4]            chunkId =      "RIFF"; // 4 byte
+uint32_t           chunkBytes =   21772728; // 4 byte
+char[4]            format         "sfbk"; // 4 byte if subchunk exists
 byte[chunkBytes]   chunkData =    <anotherChunk>;
-char[4]            format         "sfbk"; // If subchunk exists
 ```
 
 * `chunkId` is a [four-character code (FourCC)](https://en.wikipedia.org/wiki/FourCC) totalling 4 bytes.
-  * Only chunks with id `RIFF` and `LIST` can have subchunks.
+  * Only trunk chunks with id `RIFF` and `LIST` can have subchunks, hence 12 byte metadata.
+  * Leaf chunks have 8 byte metadata since format is not required.
 * `chunkBytes` is the amount of bytes in a chunk.
+* `format` specifies format type since `chunkId` is already used for tracking subchunks.
 * `chunkData` could be a a subchunk or contain data.
 
 ## SoundFont RIFF structure
@@ -64,7 +66,7 @@ Accessible thorugh `SoundFont3.metaData`
 
 * `isng` - Sound engine - `SoundFont3.metaData.soundEngine`
 
-* `INAM` - SoundFont name - `SoundFont3.metaData.name`
+* `INAM` - SoundFont bank - `SoundFont3.metaData.name`
 
   ***The other leaf chunks are optional***
 
