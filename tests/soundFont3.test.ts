@@ -86,27 +86,16 @@ describe('SoundFont3', () => {
   })
 
   it('should not differ from sf3 to sf2', () => {
-    expect(soundFont.presetData.presetHeaders).toStrictEqual(soundFont2.presetData.presetHeaders)
-    expect(soundFont.presetData.presetZones).toStrictEqual(soundFont2.presetData.presetZones)
-    expect(soundFont.presetData.presetModulators).toStrictEqual(
-      soundFont2.presetData.presetModulators
-    )
-    expect(soundFont.presetData.presetGenerators).toStrictEqual(
-      soundFont2.presetData.presetGenerators
-    )
-    expect(soundFont.presetData.instrumentHeaders).toStrictEqual(
-      soundFont2.presetData.instrumentHeaders
-    )
-    expect(soundFont.presetData.instrumentZones).toStrictEqual(
-      soundFont2.presetData.instrumentZones
-    )
-    expect(soundFont.presetData.instrumentModulators).toStrictEqual(
-      soundFont2.presetData.instrumentModulators
-    )
-    expect(soundFont.presetData.instrumentGenerators).toStrictEqual(
-      soundFont2.presetData.instrumentGenerators
-    )
-    // expect(soundFont.presetData).toStrictEqual(soundFont2.presetData)
+    const preset = soundFont.presetData
+    const preset2 = soundFont2.presetData
+    expect(preset.presetHeaders).toStrictEqual(preset2.presetHeaders)
+    expect(preset.presetZones).toStrictEqual(preset2.presetZones)
+    expect(preset.presetModulators).toStrictEqual(preset2.presetModulators)
+    expect(preset.presetGenerators).toStrictEqual(preset2.presetGenerators)
+    expect(preset.instrumentHeaders).toStrictEqual(preset2.instrumentHeaders)
+    expect(preset.instrumentZones).toStrictEqual(preset2.instrumentZones)
+    expect(preset.instrumentModulators).toStrictEqual(preset2.instrumentModulators)
+    expect(preset.instrumentGenerators).toStrictEqual(preset2.instrumentGenerators)
   })
 
   // it('should load into "smplr"', async () => {
