@@ -10,9 +10,17 @@ next:
 # SoundFont3 Structure
 
 ::: tip Purpose
-To understand the library API through SoundFont3 tools from [MuseScore/sftools](https://github.com/musescore/sftools).
+To understand SoundFont3 through [MuseScore/sftools](https://github.com/musescore/sftools) (unmaintained).
 
-This section will alternate between specification summary and API documentation.
+This section requires a [basic understanding of SoundFont 2.04](/routes/2.%20SF%202.04%20Spec/README.html).
 :::
 
-<Badge type="danger" text="Section incomplete" />
+SoundFont3 was originally created by MuseScore. WAV samples are replaced with OGG VORBIS to achieve up to 10x lossy compression.
+
+Unfortunately their implementation is non-compliant with SoundFont2:
+* `phdr` chunk does not end with `EOP`
+* `inst` chunk does not end with `EOI`
+* `shdr` chunk does not end with `EOS`
+* `shdr.startLoop` and `shdr.endLoop` are clearly out of range of `shdr.start` and `shdr.end`
+
+**A fork is created to fix these issues: [sf3tools](https://github.com/musidi-org/sftools).**
