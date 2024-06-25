@@ -38,7 +38,7 @@ export class SoundFont3 {
   /**
    * The raw sample data.
    */
-  public readonly sampleData: Uint8Array
+  public readonly sampleData: Int16Array
 
   /**
    * The parsed samples.
@@ -265,9 +265,7 @@ export class SoundFont3 {
         header.endLoop -= header.start
 
         // Turns the Uint8Array into a Int16Array
-        const data = new Int16Array(
-          new Uint8Array(this.sampleData.subarray(header.start * 2, header.end * 2)).buffer
-        )
+        const data = this.sampleData.subarray(2 * header.start, header.end * 2)
 
         return {
           header,
