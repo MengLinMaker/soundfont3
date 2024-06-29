@@ -13,6 +13,8 @@ import { SF2Chunk } from './chunk'
 import { parseBuffer, ParseError } from './riff'
 import { getItemsInZone } from './chunks'
 import { memoize } from './utils'
+import { pcm16BufferToWav } from './wav'
+import { writeFileSync } from 'fs'
 
 export class SoundFont3 {
   /**
@@ -142,6 +144,26 @@ export class SoundFont3 {
 
       return null
     })(memoizedKeyNumber, memoizedBankNumber, memoizedPresetNumber)
+  }
+
+  /**
+   * Extract samples from SoundFont to folder
+   * @param folderPath {string} - folder to dump samples.
+   * @returns SoundFont3 - enable chained commands
+   */
+  public async sampleToAudioFile(folderPath: string) {
+    const soundFontVersion = Number(this.metaData.version)
+    if (soundFontVersion >= 2 && soundFontVersion < 3) {
+      this.samples.forEach((sample) => {
+        const wavFile = pcm16BufferToWav(sample.header.sampleRate, sample.data)
+        writeFileSync(`${folderPath}/${sample.header.name}.wav`, wavFile)
+      })
+    } else if (soundFontVersion >= 3 && soundFontVersion < 4) {
+      this.samples.forEach((sample) => {
+        writeFileSync(`${folderPath}/${sample.header.name}.ogg`, sample.data)
+      })
+    }
+    return this
   }
 
   /**
