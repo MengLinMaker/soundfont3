@@ -1,9 +1,9 @@
 import { join } from 'path'
-import { SoundFont3 } from '../src'
+import { SoundFont3 } from '../src/soundFont3'
 import { ParseError } from '../src/riff'
 import { readFileSync } from 'fs'
 import { Soundfont2Sampler } from 'smplr'
-import { bufferToDataUrl } from './bufferToDataUrl'
+import { bufferToDataUrl } from '../src/bufferToDataUrl'
 import { RIFFFile } from 'riff-file'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf2')

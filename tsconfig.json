@@ -8,15 +8,10 @@
     "target": "es2017",
     "noEmitOnError": true,
     "strict": true,
-    "paths": {
-      "~/*": [
-        "*"
-      ]
-    }
   },
   "include": [
     "src"
-  ],
+, "tests"  ],
   "exclude": [
     "node_modules"
   ]

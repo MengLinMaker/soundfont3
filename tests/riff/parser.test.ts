@@ -1,5 +1,11 @@
-import { getChunk, getChunkId, getChunkLength, getSubChunks, parseBuffer } from '../parser'
-import buffer from './mocks/buffer'
+import {
+  getChunk,
+  getChunkId,
+  getChunkLength,
+  getSubChunks,
+  parseBuffer
+} from '../../src/riff/parser'
+import buffer from './buffer.mock'
 
 describe('Parser', () => {
   it('should parse a chunk ID', () => {

@@ -1,6 +1,6 @@
-import { ParseError } from '../parseError'
-import { parseBuffer } from '../parser'
-import buffer from './mocks/buffer'
+import { ParseError } from '../../src/riff'
+import { parseBuffer } from '../../src/riff'
+import buffer from './buffer.mock'
 
 describe('ChunkIterator', () => {
   it('should increase the position on reading', () => {
