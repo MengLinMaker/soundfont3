@@ -1,5 +1,6 @@
 import buffer from './mocks/buffer'
-import { ChunkIterator, parseBuffer } from '../../src/riff'
+import { ChunkIterator } from '../chunkIterator'
+import { parseBuffer } from '../parser'
 
 const chunk = parseBuffer(buffer)
 

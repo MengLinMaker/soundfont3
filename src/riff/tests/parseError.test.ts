@@ -1,4 +1,4 @@
-import { ParseError } from '../../src/riff'
+import { ParseError } from '../parseError'
 
 describe('ParseError', () => {
   it('should have a message without expected and received result', () => {

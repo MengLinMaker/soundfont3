@@ -1,4 +1,4 @@
-import { getChunk, getChunkId, getChunkLength, getSubChunks, parseBuffer } from '../../src/riff'
+import { getChunk, getChunkId, getChunkLength, getSubChunks, parseBuffer } from '../parser'
 import buffer from './mocks/buffer'
 
 describe('Parser', () => {

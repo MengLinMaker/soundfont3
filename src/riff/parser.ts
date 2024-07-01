@@ -1,5 +1,5 @@
 import { ParseError } from './parseError'
-import { getStringFromBuffer } from '~/utils/buffer'
+import { getStringFromBuffer } from './utils'
 import { RIFFChunk } from './riffChunk'
 
 /**

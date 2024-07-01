@@ -1,5 +1,5 @@
+import { parseBuffer } from '../parser'
 import buffer from './mocks/buffer'
-import { parseBuffer } from '../../src/riff'
 
 const chunk = parseBuffer(buffer)
 

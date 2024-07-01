@@ -1,5 +1,5 @@
 import { ChunkIterator } from './chunkIterator'
-import { getStringFromBuffer } from '~/utils'
+import { getStringFromBuffer } from './utils'
 
 export class RIFFChunk {
   /**

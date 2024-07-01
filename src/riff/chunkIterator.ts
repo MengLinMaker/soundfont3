@@ -1,5 +1,5 @@
 import { RIFFChunk } from './riffChunk'
-import { getStringFromBuffer } from '~/utils'
+import { getStringFromBuffer } from './utils'
 
 /**
  * A utility class to quickly iterate over a buffer.
