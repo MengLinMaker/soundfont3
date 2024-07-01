@@ -13,10 +13,10 @@ export const dataViewWriteString = (view: DataView, offset: number, string: stri
 }
 
 /**
- * Writes a RIFF header buffer
- * @param {string} chunkId - 4 character code
- * @param {Buffer} contentBuffer - Subchunk buffer
- * @param {number} paddingMax - Maximum pad for even RIFF byte
+ * Writes a RIFF sub chunk buffer.
+ * @param {SF_SUB_CHUNKS_ID} chunkId - 4 character code chunk id.
+ * @param {Buffer} contentBuffer - Subchunk buffer.
+ * @param {number} paddingMax - Maximum pad for even RIFF byte.
  * @return {Buffer} Chunk buffer
  */
 export const writeRiffSubChunk = (
@@ -39,10 +39,10 @@ export const writeRiffSubChunk = (
 }
 
 /**
- * Writes a RIFF header buffer
- * @param {string} chunkId - 4 character code
- * @param {Buffer} contentBuffer - Subchunk buffer
- * @return {Buffer} Chunk buffer
+ * Writes a RIFF top chunk buffer.
+ * @param {SF_TOP_CHUNKS_ID} chunkId - 4 character code chunk id.
+ * @param {SF_TOP_CHUNKS_FORMAT} format - 4 character code format.
+ * @return {Buffer} Chunk buffer.
  */
 export const writeRiffTopChunk = (
   chunkId: SF_TOP_CHUNKS_ID,

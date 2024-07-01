@@ -14,7 +14,7 @@ const soundFont2 = new SoundFont3(buffer2)
 const expectedPresetDataPath = join(__dirname, 'fonts/piano.sf3.presetData.json')
 const expectedPresetData = JSON.parse(readFileSync(expectedPresetDataPath).toString())
 
-describe('SoundFont3', () => {
+describe('Parse SoundFont3', () => {
   it('should parse as a RIFF file', () => {
     const riff = new RIFFFile()
     riff.setSignature(buffer)

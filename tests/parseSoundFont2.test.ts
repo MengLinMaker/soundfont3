@@ -13,7 +13,7 @@ const soundFont = new SoundFont3(buffer)
 const expectedPresetDataPath = join(__dirname, 'fonts/piano.sf2.presetData.json')
 const expectedPresetData = JSON.parse(readFileSync(expectedPresetDataPath).toString())
 
-describe('SoundFont2', () => {
+describe('Parse SoundFont2', () => {
   it('should not parse invalid SoundFonts', async () => {
     const buffer = readFileSync(join(__dirname, 'fonts/invalid.sf2'))
     expect(() => new SoundFont3(buffer)).toThrow(ParseError)
