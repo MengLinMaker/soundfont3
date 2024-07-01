@@ -1,7 +1,7 @@
-import { SF2Chunk } from '~/chunk'
-import { ParseError } from '~/riff'
-import { SF_PRESET_HEADER_SIZE } from '~/constants'
-import { PresetHeader } from '~/types'
+import { SF2Chunk } from '../chunk'
+import { ParseError } from '../riff'
+import { SF_PRESET_HEADER_SIZE } from '../constants'
+import { PresetHeader } from '../types'
 
 /**
  * Get all preset headers from a `phdr` sub-chunk.

@@ -1,7 +1,7 @@
-import { SF2Chunk } from '~/chunk'
-import { ParseError } from '~/riff'
-import { Generator, GeneratorType } from '~/types'
-import { SF_GENERATOR_SIZE } from '~/constants'
+import { SF2Chunk } from '../../chunk'
+import { ParseError } from '../../riff'
+import { Generator, GeneratorType } from '../../types'
+import { SF_GENERATOR_SIZE } from '../../constants'
 
 /**
  * An array of GeneratorTypes that cannot be specified for presets. If one of these generator types

@@ -1,7 +1,7 @@
-import { SF2Chunk } from '~/chunk'
-import { Modulator, ControllerValue } from '~/types'
-import { ParseError } from '~/riff'
-import { SF_MODULATOR_SIZE } from '~/constants'
+import { SF2Chunk } from '../../chunk'
+import { Modulator, ControllerValue } from '../../types'
+import { ParseError } from '../../riff'
+import { SF_MODULATOR_SIZE } from '../../constants'
 
 /**
  * Get the modulator enumerator value from a 16-bit integer.

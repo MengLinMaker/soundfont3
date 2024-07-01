@@ -1,6 +1,6 @@
-import { SF2Chunk } from '~/chunk'
-import { ParseError } from '~/riff'
-import { SF_BAG_SIZE } from '~/constants'
+import { SF2Chunk } from '../../chunk'
+import { ParseError } from '../../riff'
+import { SF_BAG_SIZE } from '../../constants'
 import {
   Generator,
   GeneratorType,
@@ -9,7 +9,7 @@ import {
   ZoneItems,
   ZoneItemsWithReference,
   ZoneMap
-} from '~/types'
+} from '../../types'
 
 /**
  * Get the preset or instrument zones from a chunk.
