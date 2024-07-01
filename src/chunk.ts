@@ -1,6 +1,6 @@
 import { ParseError, RIFFChunk } from './riff'
 import { MetaData, PresetData } from './types'
-import { SF_INFO_CHUNKS, SF_VERSION_LENGTH } from './constants'
+import { SF_INFO_CHUNKS_ID, SF_VERSION_LENGTH } from './constants'
 import {
   getGenerators,
   getInstrumentHeaders,
@@ -35,15 +35,15 @@ export class SF2Chunk extends RIFFChunk {
       throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
-    const info = this.subChunks.reduce<{ [key in SF_INFO_CHUNKS]?: string }>((target, chunk) => {
+    const info = this.subChunks.reduce<{ [key in SF_INFO_CHUNKS_ID]?: string }>((target, chunk) => {
       if (chunk.id === 'ifil' || chunk.id === 'iver') {
         // ifil and iver length must be 4 bytes
         if (chunk.length !== SF_VERSION_LENGTH) {
           throw new ParseError(`Invalid size for the '${chunk.id}' sub-chunk`)
         }
-        target[chunk.id as SF_INFO_CHUNKS] = `${chunk.getInt16()}.${chunk.getInt16(2)}`
+        target[chunk.id as SF_INFO_CHUNKS_ID] = `${chunk.getInt16()}.${chunk.getInt16(2)}`
       } else {
-        target[chunk.id as SF_INFO_CHUNKS] = chunk.getString()
+        target[chunk.id as SF_INFO_CHUNKS_ID] = chunk.getString()
       }
 
       return target
