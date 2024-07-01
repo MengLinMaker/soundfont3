@@ -1,14 +1,4 @@
-/**
- * Inserts a string into buffer at offset.
- * @param view {DataView} -DataView of a buffer.
- * @param offset {number} - offset in DataView.
- * @param string {string} - string to insert into DataView.
- */
-const dataViewWriteString = (view: DataView, offset: number, string: string) => {
-  for (let i = 0; i < string.length; i++) {
-    view.setUint8(offset + i, string.charCodeAt(i))
-  }
-}
+import { dataViewWriteString } from './write'
 
 /**
  * Converts a pcm int16 audio data to WAV file as a buffer.
