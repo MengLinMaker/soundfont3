@@ -5,6 +5,7 @@ import { SoundFont3 } from '../src/soundFont3'
 import { readFileSync } from 'fs'
 import { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
 import { writeSampleDataChunk } from '../src/write/writeSampleDataChunk'
+import { writeSoundFont } from '../src/writeSoundFont'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
@@ -70,5 +71,13 @@ describe('Write SoundFont2', () => {
     expect(format).toBe(expectedFormat)
 
     expect(subBuffer).toStrictEqual(expectedBuffer)
+  })
+
+  it('should write same parsable SoundFont', async () => {
+    const newSoundFontBuffer = writeSoundFont(soundFont)
+    const newSoundFont = new SoundFont3(newSoundFontBuffer)
+
+    expect(newSoundFont.metaData).toStrictEqual(soundFont.metaData)
+    expect(newSoundFont.presetData).toStrictEqual(soundFont.presetData)
   })
 })
