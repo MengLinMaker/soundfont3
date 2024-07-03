@@ -1,5 +1,6 @@
-import { PresetData, SF_PDTA_CHUNKS_ID } from '..'
-import { writeRiffSubChunk, writeRiffTopChunk } from './utils'
+import { SF_PDTA_CHUNKS_ID } from '../../constants'
+import { PresetData } from '../../types'
+import { writeRiffSubChunk, writeRiffTopChunk } from '.'
 
 /**
  * Writes a preset data chunk buffer.

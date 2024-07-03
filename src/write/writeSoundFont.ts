@@ -1,8 +1,10 @@
-import { SoundFont3 } from '.'
-import { writeMetaDataChunk } from './write/writeMetaDataChunk'
-import { writeRiffTopChunk } from './write/utils'
-import { writeSampleDataChunk } from './write/writeSampleDataChunk'
-import { writePresetDataChunk } from './write/writePresetDataChunk'
+import { SoundFont3 } from '..'
+import {
+  writeMetaDataChunk,
+  writePresetDataChunk,
+  writeRiffTopChunk,
+  writeSampleDataChunk
+} from './soundFont'
 
 /**
  * Writes a sample data chunk buffer.

@@ -1,13 +1,15 @@
-import { MetaData } from '../src/types/metaData'
-import { writePresetDataChunk } from '../src/write/writePresetDataChunk'
-import { writeMetaDataChunk } from '../src/write/writeMetaDataChunk'
 import { join } from 'path'
-import { SoundFont3 } from '../src/soundFont3'
 import { readFileSync } from 'fs'
+import { SoundFont3 } from '../src'
+import {
+  writeRiffSubChunk,
+  writeMetaDataChunk,
+  writeSampleDataChunk,
+  writePresetDataChunk
+} from '../src/write/soundFont'
+import { writeSoundFont } from '../src/write'
 import { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
-import { writeSampleDataChunk } from '../src/write/writeSampleDataChunk'
-import { writeSoundFont } from '../src/writeSoundFont'
-import { writeRiffSubChunk } from '../src/write'
+import { MetaData } from '../src/types'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
 const buffer = readFileSync(soundFontUrl)

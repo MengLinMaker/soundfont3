@@ -1,4 +1,4 @@
-import { dataViewWriteString } from './write'
+import { dataViewWriteString } from '../utils'
 
 /**
  * Converts a pcm int16 audio data to WAV file as a buffer.
