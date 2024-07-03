@@ -1,3 +1,4 @@
+import { MetaData } from '../src/types/metaData'
 import { writePresetDataChunk } from '../src/write/writePresetDataChunk'
 import { writeMetaDataChunk } from '../src/write/writeMetaDataChunk'
 import { join } from 'path'
@@ -16,6 +17,173 @@ describe('Write SoundFont2', () => {
   it('Only accept even padding', async () => {
     const someBuffer = Buffer.from('')
     expect(() => writeRiffSubChunk('ICMT', someBuffer, 1)).toThrow(Error)
+  })
+
+  it('should write all metaData info', async () => {
+    const metaData: MetaData = {
+      version: '2.10',
+      soundEngine: 'a',
+      name: 'b',
+      rom: 'c',
+      romVersion: '1.1',
+      creationDate: 'd',
+      author: 'e',
+      product: 'f',
+      copyright: 'g',
+      comments: 'h',
+      createdBy: 'i'
+    }
+    const expectedBuffer = Buffer.from(
+      new Int8Array([
+        76,
+        73,
+        83,
+        84, // 'LIST'
+        126,
+        0,
+        0,
+        0, // 126 byte
+        73,
+        78,
+        70,
+        79, // 'INFO'
+
+        105,
+        102,
+        105,
+        108, // 'ifil'
+        4,
+        0,
+        0,
+        0, // 4 byte
+        2,
+        0, // Version major 2
+        10,
+        0, // Version minor 10
+
+        105,
+        115,
+        110,
+        103, // 'isng'
+        6,
+        0,
+        0,
+        0, // 6 byte
+        97,
+        0,
+        0,
+        0,
+        0,
+        0, // "a" with 5 byte pad
+
+        73,
+        78,
+        65,
+        77, // 'INAM'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        98,
+        0, // "b" with 1 byte pad
+
+        105,
+        114,
+        111,
+        109, // 'irom'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        99,
+        0, // "c" with 1 byte pad
+
+        105,
+        118,
+        101,
+        114, // 'iver'
+        4,
+        0,
+        0,
+        0, // 4 byte
+        0,
+        1, // Version major 1
+        0,
+        1, // Version minor 1
+
+        73,
+        67,
+        82,
+        68, // 'ICRD'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        100,
+        0, // "d" with 1 byte pad
+
+        73,
+        69,
+        78,
+        71, // 'IENG'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        101,
+        0, // "e" with 1 byte pad
+
+        73,
+        80,
+        82,
+        68, // 'IPDR'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        102,
+        0, // "f" with 1 byte pad
+
+        73,
+        67,
+        79,
+        80, // 'ICOP'
+        6,
+        0,
+        0,
+        0, // 6 byte
+        103,
+        0,
+        0,
+        0,
+        0,
+        0, // "g" with 5 byte pad
+
+        73,
+        67,
+        77,
+        84, // 'ICMT'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        104,
+        0, // "h" with 1 byte pad
+
+        73,
+        83,
+        70,
+        84, // 'ISFT'
+        2,
+        0,
+        0,
+        0, // 2 byte
+        105,
+        0 // "i" with 1 byte pad
+      ])
+    )
+    const metaDataBuffer = writeMetaDataChunk(metaData)
+    expect(metaDataBuffer).toStrictEqual(expectedBuffer)
   })
 
   it('should write metaData', async () => {
