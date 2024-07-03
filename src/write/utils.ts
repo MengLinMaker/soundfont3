@@ -24,7 +24,6 @@ export const writeRiffSubChunk = (
   contentBuffer: Buffer,
   paddingMax: number = 0
 ) => {
-  if (chunkId.length !== 4) throw Error('ChunkId must be 4 characters: FourCC.')
   if (paddingMax % 2 !== 0) throw Error('Max padding must be even number')
 
   if (paddingMax > 0) {
@@ -49,8 +48,6 @@ export const writeRiffTopChunk = (
   format: SF_TOP_CHUNKS_FORMAT,
   contentBuffer: Buffer
 ) => {
-  if (chunkId.length !== 4) throw Error('ChunkId must be 4 characters: FourCC.')
-
   const instView = new DataView(new ArrayBuffer(12))
   dataViewWriteString(instView, 0, chunkId)
   instView.setUint32(4, 4 + contentBuffer.byteLength, true)

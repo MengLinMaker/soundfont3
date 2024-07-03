@@ -6,12 +6,18 @@ import { readFileSync } from 'fs'
 import { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
 import { writeSampleDataChunk } from '../src/write/writeSampleDataChunk'
 import { writeSoundFont } from '../src/writeSoundFont'
+import { writeRiffSubChunk } from '../src/write'
 
 const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
 const soundFont = new SoundFont3(buffer)
 
 describe('Write SoundFont2', () => {
+  it('Only accept even padding', async () => {
+    const someBuffer = Buffer.from('')
+    expect(() => writeRiffSubChunk('ICMT', someBuffer, 1)).toThrow(Error)
+  })
+
   it('should write metaData', async () => {
     const metaDataBuffer = writeMetaDataChunk(soundFont.metaData)
     const metaDataChunk = soundFont.chunk.subChunks[0]
