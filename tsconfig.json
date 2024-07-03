@@ -1,18 +1,42 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/",
-    "sourceMap": true,
-    "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true,
-    "module": "commonjs",
-    "target": "es2017",
-    "noEmitOnError": true,
+    /* Base Options */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "allowJs": false,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    /* Max Strictness */
     "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    // "exactOptionalPropertyTypes": true,
+    // "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+    // "noUncheckedIndexedAccess": true,
+    // "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+
+    "baseUrl": "src",
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "module": "NodeNext",
+    "noEmit": true,
+    "noEmitOnError": true,
+
+    /* Browser Types */
+    "lib": ["ESNext", "DOM"],
+
+    /* Build Library */
+    "declaration": true
   },
-  "include": [
-    "src"
-, "tests"  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
 }
