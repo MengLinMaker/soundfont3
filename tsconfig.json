@@ -24,7 +24,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
 
-    "baseUrl": "src",
+    "baseUrl": "/",
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
     "module": "NodeNext",
