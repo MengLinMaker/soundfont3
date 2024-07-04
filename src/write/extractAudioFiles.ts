@@ -17,7 +17,7 @@ export const extractAudioFiles = (soundFont: SoundFont3, folderPath: string) => 
     })
   } else if (soundFontVersion >= 3 && soundFontVersion < 4) {
     soundFont.samples.forEach((sample) => {
-      writeFileSync(`${folderPath}/${sample.header.name}.ogg`, sample.data)
+      writeFileSync(`${folderPath}/${sample.header.name}.ogg`, Buffer.from(sample.data))
     })
   }
   return
