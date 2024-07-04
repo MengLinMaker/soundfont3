@@ -2,9 +2,8 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 import { Soundfont2Sampler } from 'smplr'
 import { RIFFFile } from 'riff-file'
-import { SoundFont3 } from '../src'
+import { SoundFont3, bufferToDataUrl, extractAudioFiles } from '../src'
 import { ParseError } from '../src/riff'
-import { bufferToDataUrl } from '../src/write'
 
 const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
@@ -87,6 +86,10 @@ describe('Parse SoundFont2', () => {
   it('should parse sampleHeaders', () => {
     const sampleHeaders = soundFont.presetData.sampleHeaders
     expect(sampleHeaders).toStrictEqual(expectedPresetData.sampleHeaders)
+  })
+
+  it('should extract audio files', () => {
+    extractAudioFiles(soundFont, join(__dirname, 'fonts/sf2/wav'))
   })
 
   it('should load into "smplr"', async () => {

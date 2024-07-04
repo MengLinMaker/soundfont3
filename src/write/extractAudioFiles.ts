@@ -4,8 +4,8 @@ import { pcm16BufferToWav } from './convert'
 
 /**
  * Extract samples from SoundFont to folder
- * @param folderPath {string} - folder to dump samples.
- * @returns SoundFont3 - enable chained commands
+ * @param {SoundFont3} soundFont - folder to dump samples.
+ * @param {string} folderPath - folder to dump samples.
  */
 export const extractAudioFiles = (soundFont: SoundFont3, folderPath: string) => {
   const soundFontVersion = Number(soundFont.metaData.version)
@@ -20,5 +20,5 @@ export const extractAudioFiles = (soundFont: SoundFont3, folderPath: string) => 
       writeFileSync(`${folderPath}/${sample.header.name}.ogg`, sample.data)
     })
   }
-  return this
+  return
 }
