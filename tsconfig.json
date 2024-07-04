@@ -7,7 +7,6 @@
     "allowJs": false,
     "moduleDetection": "force",
     "isolatedModules": true,
-
     /* Max Strictness */
     "strict": true,
     "allowUnreachableCode": false,
@@ -23,20 +22,26 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-
+    /* Bundle Config */
     "baseUrl": "/",
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
     "module": "NodeNext",
     "noEmit": true,
     "noEmitOnError": true,
-
     /* Browser Types */
-    "lib": ["ESNext", "DOM"],
-
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     /* Build Library */
     "declaration": true
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
