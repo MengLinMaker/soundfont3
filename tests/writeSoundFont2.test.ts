@@ -11,7 +11,7 @@ import { writeSoundFont } from '../src/write'
 import { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
 import { MetaData } from '../src/types'
 
-const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
+const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
 const soundFont = new SoundFont3(buffer)
 

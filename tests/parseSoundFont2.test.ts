@@ -6,11 +6,11 @@ import { SoundFont3 } from '../src'
 import { ParseError } from '../src/riff'
 import { bufferToDataUrl } from '../src/write'
 
-const soundFontUrl = join(__dirname, 'fonts/piano.sf2')
+const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
 const soundFont = new SoundFont3(buffer)
 
-const expectedPresetDataPath = join(__dirname, 'fonts/piano.sf2.presetData.json')
+const expectedPresetDataPath = join(__dirname, 'fonts/sf2/piano.sf2.presetData.json')
 const expectedPresetData = JSON.parse(readFileSync(expectedPresetDataPath).toString())
 
 describe('Parse SoundFont2', () => {
@@ -22,7 +22,7 @@ describe('Parse SoundFont2', () => {
   it('should parse as a RIFF file', () => {
     const riff = new RIFFFile()
     riff.setSignature(buffer)
-    const expectedRiffSignaturePath = join(__dirname, 'fonts/piano.sf2.riff.signature.json')
+    const expectedRiffSignaturePath = join(__dirname, 'fonts/sf2/piano.sf2.riff.signature.json')
     const expectedRiffSignature = JSON.parse(readFileSync(expectedRiffSignaturePath).toString())
     expect(riff.signature).toStrictEqual(expectedRiffSignature)
   })
