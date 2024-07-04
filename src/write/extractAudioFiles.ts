@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { SoundFont3 } from '..'
 import { pcm16BufferToWav } from './convert'
 
@@ -9,6 +9,7 @@ import { pcm16BufferToWav } from './convert'
  */
 export const extractAudioFiles = (soundFont: SoundFont3, folderPath: string) => {
   const soundFontVersion = Number(soundFont.metaData.version)
+  if (!existsSync(folderPath)) mkdirSync(folderPath)
   if (soundFontVersion >= 2 && soundFontVersion < 3) {
     soundFont.samples.forEach((sample) => {
       const wavFile = pcm16BufferToWav(sample.header.sampleRate, sample.data)
