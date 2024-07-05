@@ -1,7 +1,7 @@
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { RIFFFile } from 'riff-file'
-import { SoundFont3, extractAudioFiles } from '../src'
+import { SoundFont3, extractAudioFiles, toSoundFont2, writeSoundFont } from '../src'
 
 const soundFontUrl = join(__dirname, 'fonts/sf3/piano.sf3')
 const buffer = readFileSync(soundFontUrl)
@@ -100,6 +100,11 @@ describe('Parse SoundFont3', () => {
 
   it('should extract audio files', () => {
     extractAudioFiles(soundFont, join(__dirname, 'fonts/sf3/ogg'))
+  })
+
+  it('should convert to SoundFont2', () => {
+    const soundFont2 = toSoundFont2(soundFont)
+    writeSoundFont(soundFont2)
   })
 
   // it('should load into "smplr"', async () => {
