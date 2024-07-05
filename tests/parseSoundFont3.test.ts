@@ -1,7 +1,7 @@
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { RIFFFile } from 'riff-file'
-import { SoundFont3 } from '../src/soundFont3'
+import { SoundFont3, extractAudioFiles } from '../src'
 
 const soundFontUrl = join(__dirname, 'fonts/sf3/piano.sf3')
 const buffer = readFileSync(soundFontUrl)
@@ -96,6 +96,10 @@ describe('Parse SoundFont3', () => {
     expect(preset.instrumentZones).toStrictEqual(preset2.instrumentZones)
     expect(preset.instrumentModulators).toStrictEqual(preset2.instrumentModulators)
     expect(preset.instrumentGenerators).toStrictEqual(preset2.instrumentGenerators)
+  })
+
+  it('should extract audio files', () => {
+    extractAudioFiles(soundFont, join(__dirname, 'fonts/sf3/ogg'))
   })
 
   // it('should load into "smplr"', async () => {
