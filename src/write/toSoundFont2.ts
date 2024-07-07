@@ -4,7 +4,6 @@ import { SampleHeader, SoundFont3, writeSoundFont } from '..'
 
 export const toSoundFont2 = (
   _soundFont: SoundFont3,
-  sampleRate: 16000 | 22050 | 24000 | 32000 | 44100 | 48000 = 44100,
   folderPath = `soundfont-${crypto.randomUUID()}`
 ) => {
   const soundFont = structuredClone(_soundFont)
@@ -22,9 +21,12 @@ export const toSoundFont2 = (
     const fileName = `${folderPath}/${sample.header.name}`
     const oggBuffer = Buffer.from(sample.data)
     writeFileSync(`${fileName}.ogg`, oggBuffer)
-    execSync(`ffmpeg -y -i "${fileName}.ogg" -ar ${sampleRate} -ac 1 "${fileName}.wav"`, {
-      stdio: 'ignore'
-    })
+    execSync(
+      `ffmpeg -y -i "${fileName}.ogg" -ar ${sample.header.sampleRate} -ac 1 "${fileName}.wav"`,
+      {
+        stdio: 'ignore'
+      }
+    )
     const wavFileBuffer = readFileSync(`${fileName}.wav`)
     // Remove 44 byte header plus 34 byte extra
     const wavBuffer = wavFileBuffer.slice(44 + 34, wavFileBuffer.byteLength)
