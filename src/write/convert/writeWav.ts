@@ -1,3 +1,4 @@
+import { SampleData } from '../../types'
 import { dataViewWriteString } from '../utils'
 
 /**
@@ -6,7 +7,7 @@ import { dataViewWriteString } from '../utils'
  * @param pcm16Buffer {Int16Array} - pcm int16 audio data.
  * @returns wavFileBuffer - WAV RIFF file as binary.
  */
-export function pcm16BufferToWav(sampleRate: number, pcm16Buffer: Int16Array) {
+export function pcm16BufferToWav(sampleRate: number, pcm16Buffer: SampleData) {
   const channelCount = 1
 
   const headerBuffer = new ArrayBuffer(44)

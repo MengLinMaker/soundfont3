@@ -3,7 +3,7 @@
  * instead of a unsigned 8-bit array, which is read by default. The sample data in the `smpl`
  * sub-chunk is parsed as Int16Array before creating a sample.
  */
-export type SampleData = Int16Array
+export type SampleData = Int16Array | Uint8Array
 
 /**
  * The sample type, found in the `type` field in the header.

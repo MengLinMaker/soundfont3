@@ -62,7 +62,7 @@ export class SoundFont3 {
   /**
    * The raw sample data.
    */
-  public sampleData: Int16Array
+  public readonly sampleData: Uint8Array
 
   /**
    * The parsed samples.
@@ -288,15 +288,20 @@ export class SoundFont3 {
         header.startLoop -= header.start
         header.endLoop -= header.start
 
-        let data = this.sampleData.subarray(2 * header.start, 2 * header.end)
         const soundFontVersion = Number(this.metaData.version)
         if (soundFontVersion >= 3 && soundFontVersion < 4) {
-          data = this.sampleData.subarray(header.start, header.end)
+          const data = this.sampleData.subarray(header.start, header.end)
+          return {
+            header,
+            data
+          }
         }
 
         return {
           header,
-          data
+          data: new Int16Array(
+            new Uint8Array(this.sampleData.subarray(header.start * 2, header.end * 2)).buffer
+          )
         }
       })
   }

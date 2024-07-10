@@ -76,7 +76,7 @@ export class SF2Chunk extends RIFFChunk {
    * Get the sample data as a unsigned 8-bit buffer from the chunk. This assumes the chunk is a
    * LIST chunk containing a smpl sub-chunk.
    */
-  public getSampleData(): Int16Array {
+  public getSampleData(): Uint8Array {
     if (!this.validMetaDataChunkId()) {
       throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
@@ -86,7 +86,7 @@ export class SF2Chunk extends RIFFChunk {
       throw new ParseError('Invalid chunk signature', `'smpl'`, `'${sampleChunk.id}'`)
     }
 
-    return new Int16Array(sampleChunk.buffer)
+    return new Uint8Array(sampleChunk.buffer)
   }
 
   /**

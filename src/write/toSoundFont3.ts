@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSy
 import { execSync } from 'child_process'
 import { SampleHeader, SoundFont3, writeSoundFont } from '..'
 import { pcm16BufferToWav } from './convert'
+import { SoundFont2Raw } from './utils'
 
 type ToSoundFont3Config =
   | {
@@ -30,7 +31,7 @@ export const toSoundFont3 = (
   if (typeof document !== 'undefined') throw Error('WebCodecs not supported yet.')
   if (!existsSync(folderPath)) mkdirSync(folderPath)
 
-  const soundFont = structuredClone(_soundFont)
+  const soundFont = structuredClone(_soundFont) as never as SoundFont2Raw
   const soundFontVersion = Number(soundFont.metaData.version)
 
   let audioType = 'wav'
@@ -69,5 +70,5 @@ export const toSoundFont3 = (
   soundFont.metaData.version = '3.1'
   soundFont.sampleData = new Int16Array(sampleBuffer)
   soundFont.presetData.sampleHeaders = sampleHeaders
-  return new SoundFont3(writeSoundFont(soundFont))
+  return new SoundFont3(Buffer.from(writeSoundFont(soundFont)))
 }
