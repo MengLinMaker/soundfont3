@@ -185,11 +185,11 @@ describe('Write SoundFont2', () => {
       ])
     )
     const metaDataBuffer = writeMetaDataChunk(metaData)
-    expect(metaDataBuffer).toStrictEqual(expectedBuffer)
+    expect(Buffer.from(metaDataBuffer)).toStrictEqual(expectedBuffer)
   })
 
   it('should write metaData', async () => {
-    const metaDataBuffer = writeMetaDataChunk(soundFont.metaData)
+    const metaDataBuffer = Buffer.from(writeMetaDataChunk(soundFont.metaData))
     const metaDataChunk = soundFont.chunk.subChunks[0]
     const subBuffer = metaDataBuffer.slice(8, metaDataBuffer.length)
     const expectedBuffer = Buffer.from(metaDataChunk.buffer.slice(0, metaDataChunk.length))
@@ -209,7 +209,7 @@ describe('Write SoundFont2', () => {
   })
 
   it('should write sampleData', async () => {
-    const sampleDataBuffer = writeSampleDataChunk(soundFont.sampleData)
+    const sampleDataBuffer = Buffer.from(writeSampleDataChunk(soundFont.sampleData))
     const expectedBuffer = Buffer.from(soundFont.chunk.subChunks[1].subChunks[0].buffer)
     // Slice 12 bytes from 'sdta', then slice 8 bytes from 'smpl'
     const subBuffer = sampleDataBuffer.slice(20, sampleDataBuffer.length)
@@ -219,8 +219,8 @@ describe('Write SoundFont2', () => {
     expect(chunkId).toBe(expectedChunkId)
 
     const chunkLength = sampleDataBuffer.readUInt32LE(16)
-    expect(chunkLength).toBe(expectedBuffer.length)
-    expect(chunkLength).toBe(subBuffer.length)
+    expect(chunkLength).toBe(expectedBuffer.byteLength)
+    expect(chunkLength).toBe(subBuffer.byteLength)
 
     const expectedFormat: SF_TOP_CHUNKS_FORMAT = 'sdta'
     const format = sampleDataBuffer.slice(8, 12).toString()
@@ -230,7 +230,7 @@ describe('Write SoundFont2', () => {
   })
 
   it('should write presetData', async () => {
-    const presetDataBuffer = writePresetDataChunk(soundFont.presetData)
+    const presetDataBuffer = Buffer.from(writePresetDataChunk(soundFont.presetData))
     const expectedBuffer = soundFont.chunk.subChunks[2].buffer
     const subBuffer = presetDataBuffer.slice(8, presetDataBuffer.length)
 
@@ -250,7 +250,7 @@ describe('Write SoundFont2', () => {
   })
 
   it('should write same parsable SoundFont', async () => {
-    const newSoundFontBuffer = writeSoundFont(soundFont)
+    const newSoundFontBuffer = Buffer.from(writeSoundFont(soundFont))
     const newSoundFont = new SoundFont3(newSoundFontBuffer)
 
     expect(newSoundFont.metaData).toStrictEqual(soundFont.metaData)
