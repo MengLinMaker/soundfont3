@@ -106,24 +106,4 @@ describe('Parse SoundFont3', () => {
     const soundFont2 = toSoundFont2(soundFont)
     writeSoundFont(soundFont2)
   })
-
-  // it('should load into "smplr"', async () => {
-  //   const context = new AudioContext()
-  //   const sampler = new Soundfont2Sampler(context, {
-  //     url: bufferToDataUrl(buffer),
-  //     createSoundfont: (data) => new SoundFont3(data)
-  //   })
-  //   sampler.load.then(() => {
-  //     sampler.loadInstrument(sampler.instrumentNames[0])
-  //     expect(sampler.instrumentNames).toStrictEqual([
-  //       'Sal-L1',
-  //       'Sal-L2',
-  //       'Sal-L3',
-  //       'Sal-L4',
-  //       'Sal-L5',
-  //       'Sal-L6',
-  //       'Sal-L7'
-  //     ])
-  //   })
-  // })
 })

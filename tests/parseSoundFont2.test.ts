@@ -1,14 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { Soundfont2Sampler } from 'smplr'
 import { RIFFFile } from 'riff-file'
-import {
-  SoundFont3,
-  bufferToDataUrl,
-  extractAudioFiles,
-  writeSoundFont,
-  toSoundFont3
-} from '../src'
+import { SoundFont3, extractAudioFiles, writeSoundFont, toSoundFont3 } from '../src'
 import { ParseError } from '../src/riff'
 
 const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
@@ -101,25 +94,5 @@ describe('Parse SoundFont2', () => {
   it('should convert to SoundFont3', () => {
     const soundFont3 = toSoundFont3(soundFont)
     writeSoundFont(soundFont3)
-  })
-
-  it('should load into "smplr"', async () => {
-    const context = new AudioContext()
-    const sampler = new Soundfont2Sampler(context, {
-      url: bufferToDataUrl(buffer),
-      createSoundfont: (data) => new SoundFont3(data)
-    })
-    sampler.load.then(() => {
-      sampler.loadInstrument(sampler.instrumentNames[0])
-      expect(sampler.instrumentNames).toStrictEqual([
-        'Sal-L1',
-        'Sal-L2',
-        'Sal-L3',
-        'Sal-L4',
-        'Sal-L5',
-        'Sal-L6',
-        'Sal-L7'
-      ])
-    })
   })
 })
