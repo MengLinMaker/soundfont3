@@ -1,7 +1,7 @@
 module.exports = {
   purge: {
     enabled: process.env.NODE_ENV === 'production',
-    content: ['./docs/**/*.js', './docs/**/*.vue', './docs/**/*.ts'],
+    content: ['./docs/.vitepress/**/*.vue'],
     options: {
       safelist: ['html', 'body']
     }
