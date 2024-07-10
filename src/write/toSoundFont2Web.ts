@@ -2,6 +2,7 @@ import { SoundFont3 } from '../soundFont3'
 import { SampleHeader } from '../types'
 import { writeSoundFont } from './writeSoundFont'
 import { SoundFont2Raw, concatBuffer } from './utils'
+import decode from 'audio-decode'
 
 function floatTo16BitPCM(input: Float32Array) {
   const view = new DataView(new ArrayBuffer(input.length * 2))
@@ -21,9 +22,8 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   const sampleHeaders: SampleHeader[] = []
   let sampleBuffer = new Int8Array()
   let sampleOffset = 0
-  const decode = await import('audio-decode')
   for (const sample of soundFont.samples) {
-    const audioBuffer = await decode.default(new Int8Array(sample.data).buffer)
+    const audioBuffer = await decode(new Int8Array(sample.data).buffer)
     const wavBuffer = floatTo16BitPCM(audioBuffer.getChannelData(0))
     const padBuffer = new ArrayBuffer(2 - (wavBuffer.byteLength % 2))
 
