@@ -1,6 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import './tailwind.css'
-import Player from '../../components/player.vue'
+import Player from './components/player.vue'
 
 export default {
   ...DefaultTheme,

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 // @ts-expect-error File import will not have TypeScript definition.
-import soundFontUrl3 from '../../tests/fonts/sf3/piano.sf3?url'
+import soundFontUrl3 from '../../../../tests/fonts/sf3/piano.sf3?url'
 // @ts-expect-error File import will not have TypeScript definition.
-import soundFontUrl2 from '../../tests/fonts/sf2/piano.sf2?url'
+import soundFontUrl2 from '../../../../tests/fonts/sf2/piano.sf2?url'
 import { Soundfont2Sampler } from "smplr"
-import { SoundFont3 } from "../../src/soundFont3"
+import { SoundFont3 } from "../../../../src/soundFont3"
 import { ref } from 'vue'
-import { toSoundFont2Web } from '../../src/write/toSoundFont2Web'
+import { toSoundFont2Web } from '../../../../src/write/toSoundFont2Web'
 
 let contextStarted = ref(false)
 let sampler: Soundfont2Sampler
