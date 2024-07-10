@@ -25,18 +25,14 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   for (const sample of soundFont.samples) {
     const audioBuffer = await decode.default(new Int8Array(sample.data).buffer)
     const wavBuffer = floatTo16BitPCM(audioBuffer.getChannelData(0))
-
     const padBuffer = new ArrayBuffer(2 - (wavBuffer.byteLength % 2))
+
     sample.header.start = sampleOffset
     sample.header.end = sampleOffset + wavBuffer.byteLength / 2
     const sampleLen = sample.header.end - sample.header.start
     const loopLen = sample.header.endLoop - sample.header.startLoop
     sample.header.endLoop = sampleLen - 128
     sample.header.startLoop = sampleLen - loopLen - 128
-    console.log(
-      (sample.header.startLoop / sampleLen).toFixed(3),
-      (sample.header.endLoop / sampleLen).toFixed(2)
-    )
 
     sampleBuffer = concatBuffer(concatBuffer(sampleBuffer, wavBuffer), padBuffer)
     sampleOffset += wavBuffer.byteLength / 2 + padBuffer.byteLength
