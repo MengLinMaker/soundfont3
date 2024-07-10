@@ -42,7 +42,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Doc', link: '/routes/1.%20Guide/1.1.%20Install.html' },
+      { text: 'Doc', link: '/routes/1.%20Guide/README.html' },
       { text: 'v0.0.1 (alpha)', link: '' }
     ],
 
