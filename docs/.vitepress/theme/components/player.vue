@@ -3,18 +3,23 @@
 import soundFontUrl3 from '../../../../tests/fonts/sf3/piano.sf3?url'
 import { Soundfont2Sampler } from "smplr"
 import { SoundFont3 } from "../../../../src/soundFont3"
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { toSoundFont2Web } from '../../../../src/write/toSoundFont2Web'
 
-let contextStarted = ref(false)
+let contextStarted = ref(0)
 let sampler: Soundfont2Sampler
-const startPlayer = async () => {
-  console.log('AudioContext started')
-  contextStarted.value = true
+let soundFont: SoundFont3
+
+onMounted(async () => {
   const res = await fetch(soundFontUrl3)
   const soundFontBuffer = new Uint8Array(await res.arrayBuffer())
-  const soundFont = await toSoundFont2Web(new SoundFont3(soundFontBuffer))
+  soundFont = await toSoundFont2Web(new SoundFont3(soundFontBuffer))
+  contextStarted.value = 1
+})
 
+const startPlayer = async () => {
+  contextStarted.value = 2
+  console.log('AudioContext started')
   sampler = new Soundfont2Sampler(new AudioContext(), {
     url: '',
     createSoundfont: () => soundFont as any
@@ -27,7 +32,15 @@ const startPlayer = async () => {
 </script>
 
 <template>
-  <div v-if="contextStarted" class="flex gap-3 text-center">
+  <div v-if="contextStarted.valueOf() === 0"
+    class="border font-bold text-center border-gray-600 rounded-lg p-3 animate-pulse">
+    Loading synth...
+  </div>
+  <div v-else-if="contextStarted.valueOf() === 1" @mousedown="startPlayer()"
+    class="border font-bold text-center border-gray-600 hover:opacity-80 active:!opacity-50 rounded-lg p-3">
+    Start synth
+  </div>
+  <div v-else class="flex gap-3 text-center">
     <div @mousedown="sampler.start({ note: 84, duration: 5 })"
       class="border grow border-red-600 hover:opacity-80 active:!opacity-50 rounded-lg p-3">
       C6
@@ -48,9 +61,5 @@ const startPlayer = async () => {
       class="border grow border-violet-600 hover:opacity-80 active:!opacity-50 rounded-lg p-3">
       A7
     </div>
-  </div>
-  <div v-else @click="contextStarted = true; startPlayer()"
-    class="border font-bold text-center border-gray-600 hover:opacity-80 active:!opacity-50 rounded-lg p-3">
-    Start Example Synth
   </div>
 </template>
