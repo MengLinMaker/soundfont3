@@ -1,13 +1,16 @@
+# Dependency
 node_modules/
-coverage
-.env
-.DS_Store
 
-# Webpack
-lib
-typings
+# Test
+coverage
+
+# Build
+dist
 
 # Docs
-book
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+# System
+.env
+.DS_Store
