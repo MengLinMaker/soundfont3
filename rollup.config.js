@@ -1,5 +1,6 @@
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
+import terser from '@rollup/plugin-terser'
 
 const name = 'SoundFont3'
 const outDir = 'dist'
@@ -13,16 +14,20 @@ const bundle = config => ({
 
 export default [
   bundle({
-    plugins: [esbuild()],
+    plugins: [esbuild(), terser()],
     output: [
       {
         dir: `${outDir}/${name}.js`,
         format: 'cjs',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
         sourcemap: true,
       },
       {
         dir: `${outDir}/${name}.mjs`,
-        format: 'es',
+        format: 'esm',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
         sourcemap: true,
       },
     ],
@@ -32,6 +37,8 @@ export default [
     output: {
       dir: `${outDir}/${name}.d.ts`,
       format: 'es',
+      preserveModules: true,
+      preserveModulesRoot: 'src'
     },
   }),
 ]
