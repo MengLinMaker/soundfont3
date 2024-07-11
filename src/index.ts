@@ -1,2 +1,2 @@
 export * from './soundFont3'
-export * from './write/toSoundFont2Web'
+export * from './write'

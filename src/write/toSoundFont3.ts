@@ -1,5 +1,3 @@
-import { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } from 'fs'
-import { execSync } from 'child_process'
 import { SoundFont3 } from '../soundFont3'
 import { writeSoundFont } from './writeSoundFont'
 import { SampleHeader } from '../types/sample'
@@ -22,7 +20,7 @@ type ToSoundFont3Config =
 /**
  * Convert samples to SF3
  */
-export const toSoundFont3 = (
+export const toSoundFont3 = async (
   _soundFont: SoundFont3,
   config: ToSoundFont3Config = {
     bitrate: 32,
@@ -32,6 +30,10 @@ export const toSoundFont3 = (
   folderPath = `soundfont-${crypto.randomUUID()}`
 ) => {
   if (typeof document !== 'undefined') throw Error('WebCodecs not supported yet.')
+
+  const { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } =
+    await import('fs')
+  const { execSync } = await import('child_process')
   if (!existsSync(folderPath)) mkdirSync(folderPath)
 
   const soundFont = structuredClone(_soundFont) as never as SoundFont2Raw

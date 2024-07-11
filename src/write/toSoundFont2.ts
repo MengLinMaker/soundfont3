@@ -1,11 +1,9 @@
-import { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } from 'fs'
-import { execSync } from 'child_process'
 import { SoundFont3 } from '../soundFont3'
 import { writeSoundFont } from './writeSoundFont'
 import { SampleHeader } from '../types/sample'
 import { concatBuffer, SoundFont2Raw } from './utils'
 
-export const toSoundFont2 = (
+export const toSoundFont2 = async (
   _soundFont: SoundFont3,
   folderPath = `soundfont-${crypto.randomUUID()}`
 ) => {
@@ -14,6 +12,9 @@ export const toSoundFont2 = (
   const soundFontVersion = Number(soundFont.metaData.version)
   if (soundFontVersion < 3) return _soundFont
 
+  const { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } =
+    await import('fs')
+  const { execSync } = await import('child_process')
   if (!existsSync(folderPath)) mkdirSync(folderPath)
 
   const sampleHeaders: SampleHeader[] = []

@@ -1,5 +1,4 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import { SoundFont3 } from '..'
+import { SoundFont3 } from '../soundFont3'
 import { pcm16BufferToWav } from './convert'
 
 /**
@@ -7,7 +6,9 @@ import { pcm16BufferToWav } from './convert'
  * @param {SoundFont3} soundFont - folder to dump samples.
  * @param {string} folderPath - folder to dump samples.
  */
-export const extractAudioFiles = (soundFont: SoundFont3, folderPath: string) => {
+export const extractAudioFiles = async (soundFont: SoundFont3, folderPath: string) => {
+  const { existsSync, mkdirSync, writeFileSync } = await import('fs')
+
   const soundFontVersion = Number(soundFont.metaData.version)
   if (!existsSync(folderPath)) mkdirSync(folderPath)
   if (soundFontVersion >= 2 && soundFontVersion < 3) {

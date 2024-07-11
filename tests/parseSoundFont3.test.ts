@@ -103,8 +103,8 @@ describe('Parse SoundFont3', () => {
     extractAudioFiles(soundFont, join(__dirname, 'fonts/sf3/ogg'))
   })
 
-  it('should convert to SoundFont2', () => {
-    const soundFont2 = toSoundFont2(soundFont)
+  it('should convert to SoundFont2', async () => {
+    const soundFont2 = await toSoundFont2(soundFont)
     writeSoundFont(soundFont2)
   })
 })
