@@ -1,6 +1,6 @@
 {
   "name": "soundfont3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A SoundFont3 parser for Node.js and web browsers",
   "main": "dist/SoundFont3.js",
   "module": "dist/SoundFont3.mjs",
