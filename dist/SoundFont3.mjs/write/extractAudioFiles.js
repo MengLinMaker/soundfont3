@@ -1,2 +1,22 @@
-import{pcm16BufferToWav as e}from"./convert/writeWav.js";const a=async(a,t)=>{const{existsSync:s,mkdirSync:r,writeFileSync:o}=await import("fs"),m=Number(a.metaData.version);if(s(t)||r(t),m>=2&&m<3)for(const s of a.presetData.sampleHeaders){if("EOS"===s.name)break;const r=a.sampleData.slice(2*s.start,2*s.end),m=e(s.sampleRate,r);o(`${t}/${s.name}.wav`,m)}else m>=3&&m<4&&a.samples.forEach((e=>{o(`${t}/${e.header.name}.ogg`,Buffer.from(e.data))}))};export{a as extractAudioFiles};
-//# sourceMappingURL=extractAudioFiles.js.map
+import { pcm16BufferToWav } from './convert/writeWav.js';
+
+const extractAudioFiles = async (soundFont, folderPath) => {
+  const { existsSync, mkdirSync, writeFileSync } = await import('fs');
+  const soundFontVersion = Number(soundFont.metaData.version);
+  if (!existsSync(folderPath)) mkdirSync(folderPath);
+  if (soundFontVersion >= 2 && soundFontVersion < 3) {
+    for (const header of soundFont.presetData.sampleHeaders) {
+      if (header.name === "EOS") break;
+      const data = soundFont.sampleData.slice(2 * header.start, 2 * header.end);
+      const wavFile = pcm16BufferToWav(header.sampleRate, data);
+      writeFileSync(`${folderPath}/${header.name}.wav`, wavFile);
+    }
+  } else if (soundFontVersion >= 3 && soundFontVersion < 4) {
+    soundFont.samples.forEach((sample) => {
+      writeFileSync(`${folderPath}/${sample.header.name}.ogg`, Buffer.from(sample.data));
+    });
+  }
+  return;
+};
+
+export { extractAudioFiles };

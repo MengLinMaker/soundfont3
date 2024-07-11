@@ -1,2 +1,31 @@
-import{ParseError as t}from"../../riff/parseError.js";import{SF_MODULATOR_SIZE as e}from"../../constants.js";const r=t=>({type:t>>10&63,polarity:t>>9&1,direction:t>>8&1,palette:t>>7&1,index:127&t}),n=(n,o)=>{if(n.id!==o)throw new t("Unexpected chunk ID",`'${o}'`,`'${n.id}'`);if(n.length%e)throw new t(`Invalid size for the '${o}' sub-chunk`);return n.iterate((t=>({source:r(t.getInt16BE()),id:t.getInt16BE(),value:t.getInt16BE(),valueSource:r(t.getInt16BE()),transform:t.getInt16BE()})))};export{n as getModulators};
-//# sourceMappingURL=modulators.js.map
+import { ParseError } from '../../riff/parseError.js';
+import { SF_MODULATOR_SIZE } from '../../constants.js';
+
+const getModulatorValue = (value) => {
+  return {
+    type: value >> 10 & 63,
+    polarity: value >> 9 & 1,
+    direction: value >> 8 & 1,
+    palette: value >> 7 & 1,
+    index: value & 127
+  };
+};
+const getModulators = (chunk, type) => {
+  if (chunk.id !== type) {
+    throw new ParseError("Unexpected chunk ID", `'${type}'`, `'${chunk.id}'`);
+  }
+  if (chunk.length % SF_MODULATOR_SIZE) {
+    throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
+  }
+  return chunk.iterate((iterator) => {
+    return {
+      source: getModulatorValue(iterator.getInt16BE()),
+      id: iterator.getInt16BE(),
+      value: iterator.getInt16BE(),
+      valueSource: getModulatorValue(iterator.getInt16BE()),
+      transform: iterator.getInt16BE()
+    };
+  });
+};
+
+export { getModulators };

@@ -1,2 +1,26 @@
-"use strict";var r=require("../riff/parseError.js"),e=require("../constants.js");exports.getPresetHeaders=t=>{if("phdr"!==t.id)throw new r.ParseError("Invalid chunk ID","'phdr'",`'${t.id}'`);if(t.length%e.SF_PRESET_HEADER_SIZE)throw new r.ParseError("Invalid size for the 'phdr' sub-chunk");return t.iterate((r=>({name:r.getString(),preset:r.getInt16(),bank:r.getInt16(),bagIndex:r.getInt16(),library:r.getUInt32(),genre:r.getUInt32(),morphology:r.getUInt32()})))};
-//# sourceMappingURL=presets.js.map
+'use strict';
+
+var parseError = require('../riff/parseError.js');
+var constants = require('../constants.js');
+
+const getPresetHeaders = (chunk) => {
+  if (chunk.id !== "phdr") {
+    throw new parseError.ParseError("Invalid chunk ID", `'phdr'`, `'${chunk.id}'`);
+  }
+  if (chunk.length % constants.SF_PRESET_HEADER_SIZE) {
+    throw new parseError.ParseError(`Invalid size for the 'phdr' sub-chunk`);
+  }
+  return chunk.iterate((iterator) => {
+    return {
+      name: iterator.getString(),
+      preset: iterator.getInt16(),
+      bank: iterator.getInt16(),
+      bagIndex: iterator.getInt16(),
+      library: iterator.getUInt32(),
+      genre: iterator.getUInt32(),
+      morphology: iterator.getUInt32()
+    };
+  });
+};
+
+exports.getPresetHeaders = getPresetHeaders;

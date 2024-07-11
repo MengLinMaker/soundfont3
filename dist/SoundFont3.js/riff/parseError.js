@@ -1,2 +1,9 @@
-"use strict";class r extends Error{constructor(r,e,s){super(`${r}${e&&s?`, expected ${e}, received ${s}`:""}`)}}exports.ParseError=r;
-//# sourceMappingURL=parseError.js.map
+'use strict';
+
+class ParseError extends Error {
+  constructor(message, expected, received) {
+    super(`${message}${expected && received ? `, expected ${expected}, received ${received}` : ``}`);
+  }
+}
+
+exports.ParseError = ParseError;

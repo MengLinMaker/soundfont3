@@ -1,2 +1,46 @@
-import{ParseError as r}from"./parseError.js";import{getStringFromBuffer as t}from"./utils.js";import{RIFFChunk as s}from"./riffChunk.js";const n=t=>{const n=u(t);if("RIFF"!==n)throw new r("Invalid file format","RIFF",n);const o=u(t,8);if("sfbk"!==o)throw new r("Invalid signature","sfbk",o);const a=t.subarray(8),f=e(a.subarray(4));return new s(n,a.length,a,f)},o=(r,t)=>{const n=u(r,t),o=a(r,t+4);let f=[];return"RIFF"!==n&&"LIST"!==n||(f=e(r.subarray(t+12))),new s(n,o,r.subarray(t+8),f)},a=(r,t)=>((r=r.subarray(t,t+4))[0]|r[1]<<8|r[2]<<16|r[3]<<24)>>>0,e=r=>{const t=[];let s=0;for(;s<=r.length-8;){const n=o(r,s);t.push(n),s+=8+n.length,s=s%2?s+1:s}return t},u=(r,s=0)=>t(r.subarray(s,s+4));export{o as getChunk,u as getChunkId,a as getChunkLength,e as getSubChunks,n as parseBuffer};
-//# sourceMappingURL=parser.js.map
+import { ParseError } from './parseError.js';
+import { getStringFromBuffer } from './utils.js';
+import { RIFFChunk } from './riffChunk.js';
+
+const parseBuffer = (buffer) => {
+  const id = getChunkId(buffer);
+  if (id !== "RIFF") {
+    throw new ParseError("Invalid file format", "RIFF", id);
+  }
+  const signature = getChunkId(buffer, 8);
+  if (signature !== "sfbk") {
+    throw new ParseError("Invalid signature", "sfbk", signature);
+  }
+  const newBuffer = buffer.subarray(8);
+  const subChunks = getSubChunks(newBuffer.subarray(4));
+  return new RIFFChunk(id, newBuffer.length, newBuffer, subChunks);
+};
+const getChunk = (buffer, start) => {
+  const id = getChunkId(buffer, start);
+  const length = getChunkLength(buffer, start + 4);
+  let subChunks = [];
+  if (id === "RIFF" || id === "LIST") {
+    subChunks = getSubChunks(buffer.subarray(start + 12));
+  }
+  return new RIFFChunk(id, length, buffer.subarray(start + 8), subChunks);
+};
+const getChunkLength = (buffer, start) => {
+  buffer = buffer.subarray(start, start + 4);
+  return (buffer[0] | buffer[1] << 8 | buffer[2] << 16 | buffer[3] << 24) >>> 0;
+};
+const getSubChunks = (buffer) => {
+  const chunks = [];
+  let index = 0;
+  while (index <= buffer.length - 8) {
+    const subChunk = getChunk(buffer, index);
+    chunks.push(subChunk);
+    index += 8 + subChunk.length;
+    index = index % 2 ? index + 1 : index;
+  }
+  return chunks;
+};
+const getChunkId = (buffer, start = 0) => {
+  return getStringFromBuffer(buffer.subarray(start, start + 4));
+};
+
+export { getChunk, getChunkId, getChunkLength, getSubChunks, parseBuffer };

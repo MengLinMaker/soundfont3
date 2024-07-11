@@ -1,2 +1,22 @@
-import{dataViewWriteString as e,concatBuffer as r}from"../utils.js";const t=(t,n,f=0)=>{if(f%2!=0)throw Error("Max padding must be even number");if(f>0){const e=new ArrayBuffer(f-n.byteLength%2);n=r(n,e)}const u=new DataView(new ArrayBuffer(8));return e(u,0,t),u.setUint32(4,n.byteLength,!0),r(u.buffer,n)},n=(t,n,f)=>{const u=new DataView(new ArrayBuffer(12));return e(u,0,t),u.setUint32(4,4+f.byteLength,!0),e(u,8,n),r(u.buffer,f)};export{t as writeRiffSubChunk,n as writeRiffTopChunk};
-//# sourceMappingURL=writeRiffChunk.js.map
+import { dataViewWriteString, concatBuffer } from '../utils.js';
+
+const writeRiffSubChunk = (chunkId, contentBuffer, paddingMax = 0) => {
+  if (paddingMax % 2 !== 0) throw Error("Max padding must be even number");
+  if (paddingMax > 0) {
+    const padBuffer = new ArrayBuffer(paddingMax - contentBuffer.byteLength % 2);
+    contentBuffer = concatBuffer(contentBuffer, padBuffer);
+  }
+  const instView = new DataView(new ArrayBuffer(8));
+  dataViewWriteString(instView, 0, chunkId);
+  instView.setUint32(4, contentBuffer.byteLength, true);
+  return concatBuffer(instView.buffer, contentBuffer);
+};
+const writeRiffTopChunk = (chunkId, format, contentBuffer) => {
+  const instView = new DataView(new ArrayBuffer(12));
+  dataViewWriteString(instView, 0, chunkId);
+  instView.setUint32(4, 4 + contentBuffer.byteLength, true);
+  dataViewWriteString(instView, 8, format);
+  return concatBuffer(instView.buffer, contentBuffer);
+};
+
+export { writeRiffSubChunk, writeRiffTopChunk };

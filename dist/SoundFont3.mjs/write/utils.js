@@ -1,2 +1,13 @@
-const t=(t,e,n)=>{for(let r=0;r<n.length;r++)t.setUint8(e+r,n.charCodeAt(r))},e=(t,e)=>{const n=new Int8Array(t.byteLength+e.byteLength);return n.set(new Int8Array(t),0),n.set(new Int8Array(e),t.byteLength),new Int8Array(n.buffer)};export{e as concatBuffer,t as dataViewWriteString};
-//# sourceMappingURL=utils.js.map
+const dataViewWriteString = (view, offset, string) => {
+  for (let i = 0; i < string.length; i++) {
+    view.setUint8(offset + i, string.charCodeAt(i));
+  }
+};
+const concatBuffer = (buffer1, buffer2) => {
+  const tmp = new Int8Array(buffer1.byteLength + buffer2.byteLength);
+  tmp.set(new Int8Array(buffer1), 0);
+  tmp.set(new Int8Array(buffer2), buffer1.byteLength);
+  return new Int8Array(tmp.buffer);
+};
+
+export { concatBuffer, dataViewWriteString };

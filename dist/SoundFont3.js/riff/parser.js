@@ -1,2 +1,52 @@
-"use strict";var r=require("./parseError.js"),e=require("./utils.js"),t=require("./riffChunk.js");const s=(r,e)=>{const s=a(r,e),o=n(r,e+4);let h=[];return"RIFF"!==s&&"LIST"!==s||(h=u(r.subarray(e+12))),new t.RIFFChunk(s,o,r.subarray(e+8),h)},n=(r,e)=>((r=r.subarray(e,e+4))[0]|r[1]<<8|r[2]<<16|r[3]<<24)>>>0,u=r=>{const e=[];let t=0;for(;t<=r.length-8;){const n=s(r,t);e.push(n),t+=8+n.length,t=t%2?t+1:t}return e},a=(r,t=0)=>e.getStringFromBuffer(r.subarray(t,t+4));exports.getChunk=s,exports.getChunkId=a,exports.getChunkLength=n,exports.getSubChunks=u,exports.parseBuffer=e=>{const s=a(e);if("RIFF"!==s)throw new r.ParseError("Invalid file format","RIFF",s);const n=a(e,8);if("sfbk"!==n)throw new r.ParseError("Invalid signature","sfbk",n);const o=e.subarray(8),h=u(o.subarray(4));return new t.RIFFChunk(s,o.length,o,h)};
-//# sourceMappingURL=parser.js.map
+'use strict';
+
+var parseError = require('./parseError.js');
+var utils = require('./utils.js');
+var riffChunk = require('./riffChunk.js');
+
+const parseBuffer = (buffer) => {
+  const id = getChunkId(buffer);
+  if (id !== "RIFF") {
+    throw new parseError.ParseError("Invalid file format", "RIFF", id);
+  }
+  const signature = getChunkId(buffer, 8);
+  if (signature !== "sfbk") {
+    throw new parseError.ParseError("Invalid signature", "sfbk", signature);
+  }
+  const newBuffer = buffer.subarray(8);
+  const subChunks = getSubChunks(newBuffer.subarray(4));
+  return new riffChunk.RIFFChunk(id, newBuffer.length, newBuffer, subChunks);
+};
+const getChunk = (buffer, start) => {
+  const id = getChunkId(buffer, start);
+  const length = getChunkLength(buffer, start + 4);
+  let subChunks = [];
+  if (id === "RIFF" || id === "LIST") {
+    subChunks = getSubChunks(buffer.subarray(start + 12));
+  }
+  return new riffChunk.RIFFChunk(id, length, buffer.subarray(start + 8), subChunks);
+};
+const getChunkLength = (buffer, start) => {
+  buffer = buffer.subarray(start, start + 4);
+  return (buffer[0] | buffer[1] << 8 | buffer[2] << 16 | buffer[3] << 24) >>> 0;
+};
+const getSubChunks = (buffer) => {
+  const chunks = [];
+  let index = 0;
+  while (index <= buffer.length - 8) {
+    const subChunk = getChunk(buffer, index);
+    chunks.push(subChunk);
+    index += 8 + subChunk.length;
+    index = index % 2 ? index + 1 : index;
+  }
+  return chunks;
+};
+const getChunkId = (buffer, start = 0) => {
+  return utils.getStringFromBuffer(buffer.subarray(start, start + 4));
+};
+
+exports.getChunk = getChunk;
+exports.getChunkId = getChunkId;
+exports.getChunkLength = getChunkLength;
+exports.getSubChunks = getSubChunks;
+exports.parseBuffer = parseBuffer;

@@ -1,2 +1,103 @@
-"use strict";var e=require("./riff/parseError.js"),s=require("./riff/riffChunk.js"),r=require("./constants.js"),t=require("./chunks/instruments.js"),n=require("./chunks/presets.js"),i=require("./chunks/samples.js"),u=require("./chunks/parsers/generators.js"),a=require("./chunks/parsers/modulators.js"),h=require("./chunks/parsers/zones.js"),o=Object.defineProperty,d=(e,s,r)=>((e,s,r)=>s in e?o(e,s,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[s]=r)(e,s+"",r);class k extends s.RIFFChunk{constructor(e){super(e.id,e.length,e.buffer,e.subChunks),d(this,"subChunks"),this.subChunks=e.subChunks.map((e=>new k(e)))}validMetaDataChunkId(){return"LIST"===this.id}getMetaData(){if(!this.validMetaDataChunkId())throw new e.ParseError("Unexpected chunk ID","'LIST'",`'${this.id}'`);const s=this.subChunks.reduce(((s,t)=>{if("ifil"===t.id||"iver"===t.id){if(t.length!==r.SF_VERSION_LENGTH)throw new e.ParseError(`Invalid size for the '${t.id}' sub-chunk`);s[t.id]=`${t.getInt16()}.${t.getInt16(2)}`}else s[t.id]=t.getString();return s}),{});if(!s.ifil)throw new e.ParseError("Missing required 'ifil' sub-chunk");if(!s.INAM)throw new e.ParseError("Missing required 'INAM' sub-chunk");return{version:s.ifil,soundEngine:s.isng||"EMU8000",name:s.INAM,rom:s.irom,romVersion:s.iver,creationDate:s.ICRD,author:s.IENG,product:s.IPRD,copyright:s.ICOP,comments:s.ICMT,createdBy:s.ISFT}}getSampleData(){if(!this.validMetaDataChunkId())throw new e.ParseError("Unexpected chunk ID","'LIST'",`'${this.id}'`);const s=this.subChunks[0];if("smpl"!==s.id)throw new e.ParseError("Invalid chunk signature","'smpl'",`'${s.id}'`);return new Uint8Array(s.buffer)}getPresetData(){if(!this.validMetaDataChunkId())throw new e.ParseError("Unexpected chunk ID","'LIST'",`'${this.id}'`);return{presetHeaders:n.getPresetHeaders(this.subChunks[0]),presetZones:h.getZones(this.subChunks[1],"pbag"),presetModulators:a.getModulators(this.subChunks[2],"pmod"),presetGenerators:u.getGenerators(this.subChunks[3],"pgen"),instrumentHeaders:t.getInstrumentHeaders(this.subChunks[4]),instrumentZones:h.getZones(this.subChunks[5],"ibag"),instrumentModulators:a.getModulators(this.subChunks[6],"imod"),instrumentGenerators:u.getGenerators(this.subChunks[7],"igen"),sampleHeaders:i.getSampleHeaders(this.subChunks[8])}}}exports.SF2Chunk=k;
-//# sourceMappingURL=chunk.js.map
+'use strict';
+
+var parseError = require('./riff/parseError.js');
+var riffChunk = require('./riff/riffChunk.js');
+var constants = require('./constants.js');
+var instruments = require('./chunks/instruments.js');
+var presets = require('./chunks/presets.js');
+var samples = require('./chunks/samples.js');
+var generators = require('./chunks/parsers/generators.js');
+var modulators = require('./chunks/parsers/modulators.js');
+var zones = require('./chunks/parsers/zones.js');
+
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => __defNormalProp(obj, key + "" , value);
+class SF2Chunk extends riffChunk.RIFFChunk {
+  constructor(chunk) {
+    super(chunk.id, chunk.length, chunk.buffer, chunk.subChunks);
+    /**
+     * All sub-chunks of this `SF2Chunk` as `SF2Chunk`.
+     */
+    __publicField(this, "subChunks");
+    this.subChunks = chunk.subChunks.map((subChunk) => new SF2Chunk(subChunk));
+  }
+  /**
+   * Get meta data from the chunk. This assumes the chunk is a LIST chunk, containing INFO
+   * sub-chunks.
+   */
+  validMetaDataChunkId() {
+    return this.id === "LIST";
+  }
+  getMetaData() {
+    if (!this.validMetaDataChunkId()) {
+      throw new parseError.ParseError("Unexpected chunk ID", `'LIST'`, `'${this.id}'`);
+    }
+    const info = this.subChunks.reduce((target, chunk) => {
+      if (chunk.id === "ifil" || chunk.id === "iver") {
+        if (chunk.length !== constants.SF_VERSION_LENGTH) {
+          throw new parseError.ParseError(`Invalid size for the '${chunk.id}' sub-chunk`);
+        }
+        target[chunk.id] = `${chunk.getInt16()}.${chunk.getInt16(2)}`;
+      } else {
+        target[chunk.id] = chunk.getString();
+      }
+      return target;
+    }, {});
+    if (!info.ifil) {
+      throw new parseError.ParseError(`Missing required 'ifil' sub-chunk`);
+    }
+    if (!info.INAM) {
+      throw new parseError.ParseError(`Missing required 'INAM' sub-chunk`);
+    }
+    return {
+      version: info.ifil,
+      soundEngine: info.isng || "EMU8000",
+      name: info.INAM,
+      rom: info.irom,
+      romVersion: info.iver,
+      creationDate: info.ICRD,
+      author: info.IENG,
+      product: info.IPRD,
+      copyright: info.ICOP,
+      comments: info.ICMT,
+      createdBy: info.ISFT
+    };
+  }
+  /**
+   * Get the sample data as a unsigned 8-bit buffer from the chunk. This assumes the chunk is a
+   * LIST chunk containing a smpl sub-chunk.
+   */
+  getSampleData() {
+    if (!this.validMetaDataChunkId()) {
+      throw new parseError.ParseError("Unexpected chunk ID", `'LIST'`, `'${this.id}'`);
+    }
+    const sampleChunk = this.subChunks[0];
+    if (sampleChunk.id !== "smpl") {
+      throw new parseError.ParseError("Invalid chunk signature", `'smpl'`, `'${sampleChunk.id}'`);
+    }
+    return new Uint8Array(sampleChunk.buffer);
+  }
+  /**
+   * Get the preset data from the chunk. This assumes the chunk is a LIST chunk containing the
+   * preset data sub-chunks.
+   */
+  getPresetData() {
+    if (!this.validMetaDataChunkId()) {
+      throw new parseError.ParseError("Unexpected chunk ID", `'LIST'`, `'${this.id}'`);
+    }
+    return {
+      presetHeaders: presets.getPresetHeaders(this.subChunks[0]),
+      presetZones: zones.getZones(this.subChunks[1], "pbag"),
+      presetModulators: modulators.getModulators(this.subChunks[2], "pmod"),
+      presetGenerators: generators.getGenerators(this.subChunks[3], "pgen"),
+      instrumentHeaders: instruments.getInstrumentHeaders(this.subChunks[4]),
+      instrumentZones: zones.getZones(this.subChunks[5], "ibag"),
+      instrumentModulators: modulators.getModulators(this.subChunks[6], "imod"),
+      instrumentGenerators: generators.getGenerators(this.subChunks[7], "igen"),
+      sampleHeaders: samples.getSampleHeaders(this.subChunks[8])
+    };
+  }
+}
+
+exports.SF2Chunk = SF2Chunk;

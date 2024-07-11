@@ -1,2 +1,172 @@
-"use strict";var e=require("./writeRiffChunk.js"),t=require("../utils.js");const n=(e,n)=>{const r=(new TextEncoder).encode(e),a=n-r.byteLength;return a<0?r.slice(0,n):t.concatBuffer(r,new ArrayBuffer(a))};exports.writePresetDataChunk=r=>{let a=new Int8Array;{const f="phdr";let o=new Int8Array;r.presetHeaders.map((e=>{const r=n(e.name,20),a=new DataView(new ArrayBuffer(18));a.setUint16(0,e.preset,!0),a.setUint16(2,e.bank,!0),a.setUint16(4,e.bagIndex,!0),a.setUint32(6,e.library,!0),a.setUint32(10,e.genre,!0),a.setUint32(14,e.morphology,!0),o=t.concatBuffer(o,t.concatBuffer(r,a.buffer))}));const i=e.writeRiffSubChunk(f,o);a=t.concatBuffer(a,i)}{const n="pbag";let f=new Int8Array;r.presetZones.map((e=>{const n=new DataView(new ArrayBuffer(4));n.setInt16(0,e.generatorIndex,!0),n.setInt16(2,e.modulatorIndex,!0),f=t.concatBuffer(f,n.buffer)}));const o=e.writeRiffSubChunk(n,f);a=t.concatBuffer(a,o)}{const n="pmod";let f=new Int8Array;r.presetModulators.map((e=>{const n=new DataView(new ArrayBuffer(10));n.setUint16(0,e.source.index,!0),n.setUint16(0,e.id,!0),n.setInt16(0,e.value,!0),n.setUint16(0,e.valueSource.index,!0),n.setUint16(0,e.transform,!0),f=t.concatBuffer(f,n.buffer)}));const o=e.writeRiffSubChunk(n,f);a=t.concatBuffer(a,o)}{const n="pgen";let f=new Int8Array;r.presetGenerators.map((e=>{const n=new DataView(new ArrayBuffer(4));n.setUint16(0,e.id,!0);const r=void 0!==e.range,a=void 0!==e.value;if(r&&a)throw Error('Both "range" and "value" are defined in "pgen" when only one should be defined.');(r||a)&&(void 0!==e.range?(n.setUint8(2,e.range.lo),n.setUint8(3,e.range.hi)):void 0!==e.value&&n.setUint16(2,e.value,!0)),f=t.concatBuffer(f,n.buffer)})),f=t.concatBuffer(f,new ArrayBuffer(4));const o=e.writeRiffSubChunk(n,f);a=t.concatBuffer(a,o)}{const f="inst";let o=new Int8Array;r.instrumentHeaders.map((e=>{const r=n(e.name,20),a=new DataView(new ArrayBuffer(2));a.setUint16(0,e.bagIndex,!0),o=t.concatBuffer(o,t.concatBuffer(r,a.buffer))}));const i=e.writeRiffSubChunk(f,o);a=t.concatBuffer(a,i)}{const n="ibag";let f=new Int8Array;r.instrumentZones.map((e=>{const n=new DataView(new ArrayBuffer(4));n.setInt16(0,e.generatorIndex,!0),n.setInt16(2,e.modulatorIndex,!0),f=t.concatBuffer(f,n.buffer)}));const o=e.writeRiffSubChunk(n,f);a=t.concatBuffer(a,o)}{const n="imod";let f=new Int8Array;r.instrumentModulators.map((e=>{const n=new DataView(new ArrayBuffer(10));n.setUint16(0,e.source.index,!0),n.setUint16(0,e.id,!0),n.setInt16(0,e.value,!0),n.setUint16(0,e.valueSource.index,!0),n.setUint16(0,e.transform,!0),f=t.concatBuffer(f,n.buffer)}));const o=e.writeRiffSubChunk(n,f);a=t.concatBuffer(a,o)}{const n="igen";let f=new Int8Array;r.instrumentGenerators.map((e=>{const n=new DataView(new ArrayBuffer(4));n.setUint16(0,e.id,!0);const r=void 0!==e.range,a=void 0!==e.value;if(r&&a)throw Error('Both "range" and "value" are defined in "pgen" when only one should be defined.');(r||a)&&(void 0!==e.range?(n.setUint8(2,e.range.lo),n.setUint8(3,e.range.hi)):void 0!==e.value&&n.setUint16(2,e.value,!0)),f=t.concatBuffer(f,n.buffer)}));const o=e.writeRiffSubChunk(n,f);a=t.concatBuffer(a,o)}{const f="shdr";let o=new Int8Array;r.sampleHeaders.map((e=>{const r=n(e.name,20),a=new DataView(new ArrayBuffer(26));a.setUint32(0,e.start,!0),a.setUint32(4,e.end,!0),a.setUint32(8,e.start+e.startLoop,!0),a.setUint32(12,e.start+e.endLoop,!0),a.setUint32(16,e.sampleRate,!0),a.setUint8(20,e.originalPitch),a.setInt8(21,e.pitchCorrection),a.setUint16(22,e.link,!0),a.setUint16(24,e.type,!0),o=t.concatBuffer(o,t.concatBuffer(r,a.buffer))}));const i=e.writeRiffSubChunk(f,o);a=t.concatBuffer(a,i)}return e.writeRiffTopChunk("LIST","pdta",a)};
-//# sourceMappingURL=writePresetDataChunk.js.map
+'use strict';
+
+var writeRiffChunk = require('./writeRiffChunk.js');
+var utils = require('../utils.js');
+
+const extendStringBuffer = (string, desiredByte) => {
+  const textEncoder = new TextEncoder();
+  const stringBuffer = textEncoder.encode(string);
+  const padLength = desiredByte - stringBuffer.byteLength;
+  if (padLength < 0) return stringBuffer.slice(0, desiredByte);
+  return utils.concatBuffer(stringBuffer, new ArrayBuffer(padLength));
+};
+const writePresetDataChunk = (presetData) => {
+  let presetDataBuffer = new Int8Array();
+  {
+    const chunkId = "phdr";
+    let loopBuffer = new Int8Array();
+    presetData.presetHeaders.map((e) => {
+      const nameBuffer = extendStringBuffer(e.name, 20);
+      const view = new DataView(new ArrayBuffer(18));
+      view.setUint16(0, e.preset, true);
+      view.setUint16(2, e.bank, true);
+      view.setUint16(4, e.bagIndex, true);
+      view.setUint32(6, e.library, true);
+      view.setUint32(10, e.genre, true);
+      view.setUint32(14, e.morphology, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, utils.concatBuffer(nameBuffer, view.buffer));
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "pbag";
+    let loopBuffer = new Int8Array();
+    presetData.presetZones.map((e) => {
+      const view = new DataView(new ArrayBuffer(4));
+      view.setInt16(0, e.generatorIndex, true);
+      view.setInt16(2, e.modulatorIndex, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, view.buffer);
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "pmod";
+    let loopBuffer = new Int8Array();
+    presetData.presetModulators.map((e) => {
+      const view = new DataView(new ArrayBuffer(10));
+      view.setUint16(0, e.source.index, true);
+      view.setUint16(0, e.id, true);
+      view.setInt16(0, e.value, true);
+      view.setUint16(0, e.valueSource.index, true);
+      view.setUint16(0, e.transform, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, view.buffer);
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "pgen";
+    let loopBuffer = new Int8Array();
+    presetData.presetGenerators.map((e) => {
+      const view = new DataView(new ArrayBuffer(4));
+      view.setUint16(0, e.id, true);
+      const rangeDefined = typeof e.range !== "undefined";
+      const valueDefined = typeof e.value !== "undefined";
+      if (rangeDefined && valueDefined)
+        throw Error(
+          'Both "range" and "value" are defined in "pgen" when only one should be defined.'
+        );
+      else if (!rangeDefined && !valueDefined)
+        ;
+      else if (typeof e.range !== "undefined") {
+        view.setUint8(2, e.range.lo);
+        view.setUint8(3, e.range.hi);
+      } else if (typeof e.value !== "undefined") {
+        view.setUint16(2, e.value, true);
+      }
+      loopBuffer = utils.concatBuffer(loopBuffer, view.buffer);
+    });
+    loopBuffer = utils.concatBuffer(loopBuffer, new ArrayBuffer(4));
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "inst";
+    let loopBuffer = new Int8Array();
+    presetData.instrumentHeaders.map((e) => {
+      const nameBuffer = extendStringBuffer(e.name, 20);
+      const view = new DataView(new ArrayBuffer(2));
+      view.setUint16(0, e.bagIndex, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, utils.concatBuffer(nameBuffer, view.buffer));
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "ibag";
+    let loopBuffer = new Int8Array();
+    presetData.instrumentZones.map((e) => {
+      const view = new DataView(new ArrayBuffer(4));
+      view.setInt16(0, e.generatorIndex, true);
+      view.setInt16(2, e.modulatorIndex, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, view.buffer);
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "imod";
+    let loopBuffer = new Int8Array();
+    presetData.instrumentModulators.map((e) => {
+      const view = new DataView(new ArrayBuffer(10));
+      view.setUint16(0, e.source.index, true);
+      view.setUint16(0, e.id, true);
+      view.setInt16(0, e.value, true);
+      view.setUint16(0, e.valueSource.index, true);
+      view.setUint16(0, e.transform, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, view.buffer);
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "igen";
+    let loopBuffer = new Int8Array();
+    presetData.instrumentGenerators.map((e) => {
+      const view = new DataView(new ArrayBuffer(4));
+      view.setUint16(0, e.id, true);
+      const rangeDefined = typeof e.range !== "undefined";
+      const valueDefined = typeof e.value !== "undefined";
+      if (rangeDefined && valueDefined)
+        throw Error(
+          'Both "range" and "value" are defined in "pgen" when only one should be defined.'
+        );
+      else if (!rangeDefined && !valueDefined)
+        ;
+      else if (typeof e.range !== "undefined") {
+        view.setUint8(2, e.range.lo);
+        view.setUint8(3, e.range.hi);
+      } else if (typeof e.value !== "undefined") {
+        view.setUint16(2, e.value, true);
+      }
+      loopBuffer = utils.concatBuffer(loopBuffer, view.buffer);
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "shdr";
+    let loopBuffer = new Int8Array();
+    presetData.sampleHeaders.map((e) => {
+      const nameBuffer = extendStringBuffer(e.name, 20);
+      const view = new DataView(new ArrayBuffer(26));
+      view.setUint32(0, e.start, true);
+      view.setUint32(4, e.end, true);
+      view.setUint32(8, e.start + e.startLoop, true);
+      view.setUint32(12, e.start + e.endLoop, true);
+      view.setUint32(16, e.sampleRate, true);
+      view.setUint8(20, e.originalPitch);
+      view.setInt8(21, e.pitchCorrection);
+      view.setUint16(22, e.link, true);
+      view.setUint16(24, e.type, true);
+      loopBuffer = utils.concatBuffer(loopBuffer, utils.concatBuffer(nameBuffer, view.buffer));
+    });
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, loopBuffer);
+    presetDataBuffer = utils.concatBuffer(presetDataBuffer, chunkBuffer);
+  }
+  return writeRiffChunk.writeRiffTopChunk("LIST", "pdta", presetDataBuffer);
+};
+
+exports.writePresetDataChunk = writePresetDataChunk;

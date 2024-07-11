@@ -1,2 +1,86 @@
-import{ParseError as e}from"../../riff/parseError.js";import{SF_BAG_SIZE as t}from"../../constants.js";import{GeneratorType as n}from"../../types/generator.js";import"../../types/modulator.js";const r=(n,r)=>{if(n.id!==r)throw new e("Unexpected chunk ID",`'${r}'`,`'${n.id}'`);if(n.length%t)throw new e(`Invalid size for the '${r}' sub-chunk`);return n.iterate((e=>({generatorIndex:e.getInt16(),modulatorIndex:e.getInt16()})))},o=(e,t,r,o,g,d)=>{const l=[];for(let u=0;u<e.length;u++){const c=e[u],i=e[u+1],f=c.bagIndex,h=i?i.bagIndex:t.length,m=[];let I;for(let e=f;e<h;e++){const l=s(e,t,r),u=a(e,t,o),c=u[n.KeyRange]&&u[n.KeyRange].range,i=u[d];if(!i){e-f==0&&(I={keyRange:c,modulators:l,generators:u});continue}const h=g[i.value];h&&m.push({keyRange:c,modulators:l,generators:u,reference:h})}l.push({header:c,globalZone:I,zones:m})}return l},s=(e,t,n)=>{const r=t[e],o=t[e+1],s=r.modulatorIndex,a=o?o.modulatorIndex:t.length;return g(s,a,n)},a=(e,t,n)=>{const r=t[e],o=t[e+1],s=r.generatorIndex,a=o?o.generatorIndex:t.length;return g(s,a,n)},g=(e,t,n)=>{const r={};for(let o=e;o<t;o++){const e=n[o];e&&(r[e.id]=e)}return r};export{o as getItemsInZone,r as getZones};
-//# sourceMappingURL=zones.js.map
+import { ParseError } from '../../riff/parseError.js';
+import { SF_BAG_SIZE } from '../../constants.js';
+import { GeneratorType } from '../../types/generator.js';
+import '../../types/modulator.js';
+
+const getZones = (chunk, type) => {
+  if (chunk.id !== type) {
+    throw new ParseError("Unexpected chunk ID", `'${type}'`, `'${chunk.id}'`);
+  }
+  if (chunk.length % SF_BAG_SIZE) {
+    throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
+  }
+  return chunk.iterate((iterator) => ({
+    generatorIndex: iterator.getInt16(),
+    modulatorIndex: iterator.getInt16()
+  }));
+};
+const getItemsInZone = (headers, zones, itemModulators, itemGenerators, references, referenceType) => {
+  const items = [];
+  for (let i = 0; i < headers.length; i++) {
+    const header = headers[i];
+    const next = headers[i + 1];
+    const start = header.bagIndex;
+    const end = next ? next.bagIndex : zones.length;
+    const zoneItems = [];
+    let globalZone;
+    for (let j = start; j < end; j++) {
+      const modulators = getModulators(j, zones, itemModulators);
+      const generators = getGenerators(j, zones, itemGenerators);
+      const keyRange = generators[GeneratorType.KeyRange] && generators[GeneratorType.KeyRange].range;
+      const referenceId = generators[referenceType];
+      if (!referenceId) {
+        if (j - start === 0) {
+          globalZone = {
+            keyRange,
+            modulators,
+            generators
+          };
+        }
+        continue;
+      }
+      const reference = references[referenceId.value];
+      if (!reference) {
+        continue;
+      }
+      zoneItems.push({
+        keyRange,
+        modulators,
+        generators,
+        reference
+      });
+    }
+    items.push({
+      header,
+      globalZone,
+      zones: zoneItems
+    });
+  }
+  return items;
+};
+const getModulators = (index, zones, modulators) => {
+  const zone = zones[index];
+  const next = zones[index + 1];
+  const start = zone.modulatorIndex;
+  const end = next ? next.modulatorIndex : zones.length;
+  return getZone(start, end, modulators);
+};
+const getGenerators = (index, zones, generators) => {
+  const zone = zones[index];
+  const next = zones[index + 1];
+  const start = zone.generatorIndex;
+  const end = next ? next.generatorIndex : zones.length;
+  return getZone(start, end, generators);
+};
+const getZone = (start, end, items) => {
+  const itemsObject = {};
+  for (let i = start; i < end; i++) {
+    const item = items[i];
+    if (item) {
+      itemsObject[item.id] = item;
+    }
+  }
+  return itemsObject;
+};
+
+export { getItemsInZone, getZones };

@@ -1,2 +1,21 @@
-import{writeRiffTopChunk as t}from"./soundFont/writeRiffChunk.js";import{writeMetaDataChunk as o}from"./soundFont/writeMetaDataChunk.js";import{writeSampleDataChunk as r}from"./soundFont/writeSampleDataChunk.js";import{writePresetDataChunk as a}from"./soundFont/writePresetDataChunk.js";import{concatBuffer as s}from"./utils.js";const e=e=>t("RIFF","sfbk",s(o(e.metaData),s(r(e.sampleData),a(e.presetData))));export{e as writeSoundFont};
-//# sourceMappingURL=writeSoundFont.js.map
+import { writeRiffTopChunk } from './soundFont/writeRiffChunk.js';
+import { writeMetaDataChunk } from './soundFont/writeMetaDataChunk.js';
+import { writeSampleDataChunk } from './soundFont/writeSampleDataChunk.js';
+import { writePresetDataChunk } from './soundFont/writePresetDataChunk.js';
+import { concatBuffer } from './utils.js';
+
+const writeSoundFont = (soundFont) => {
+  return writeRiffTopChunk(
+    "RIFF",
+    "sfbk",
+    concatBuffer(
+      writeMetaDataChunk(soundFont.metaData),
+      concatBuffer(
+        writeSampleDataChunk(soundFont.sampleData),
+        writePresetDataChunk(soundFont.presetData)
+      )
+    )
+  );
+};
+
+export { writeSoundFont };

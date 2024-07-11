@@ -1,2 +1,6 @@
-const e=e=>new TextDecoder("utf8").decode(e).split(/\0/)[0].trim();export{e as getStringFromBuffer};
-//# sourceMappingURL=utils.js.map
+const getStringFromBuffer = (buffer) => {
+  const decoded = new TextDecoder("utf8").decode(buffer);
+  return decoded.split(/\0/)[0].trim();
+};
+
+export { getStringFromBuffer };

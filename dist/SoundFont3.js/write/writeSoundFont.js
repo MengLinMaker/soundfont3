@@ -1,2 +1,23 @@
-"use strict";var e=require("./soundFont/writeRiffChunk.js"),t=require("./soundFont/writeMetaDataChunk.js"),a=require("./soundFont/writeSampleDataChunk.js"),r=require("./soundFont/writePresetDataChunk.js"),u=require("./utils.js");exports.writeSoundFont=n=>e.writeRiffTopChunk("RIFF","sfbk",u.concatBuffer(t.writeMetaDataChunk(n.metaData),u.concatBuffer(a.writeSampleDataChunk(n.sampleData),r.writePresetDataChunk(n.presetData))));
-//# sourceMappingURL=writeSoundFont.js.map
+'use strict';
+
+var writeRiffChunk = require('./soundFont/writeRiffChunk.js');
+var writeMetaDataChunk = require('./soundFont/writeMetaDataChunk.js');
+var writeSampleDataChunk = require('./soundFont/writeSampleDataChunk.js');
+var writePresetDataChunk = require('./soundFont/writePresetDataChunk.js');
+var utils = require('./utils.js');
+
+const writeSoundFont = (soundFont) => {
+  return writeRiffChunk.writeRiffTopChunk(
+    "RIFF",
+    "sfbk",
+    utils.concatBuffer(
+      writeMetaDataChunk.writeMetaDataChunk(soundFont.metaData),
+      utils.concatBuffer(
+        writeSampleDataChunk.writeSampleDataChunk(soundFont.sampleData),
+        writePresetDataChunk.writePresetDataChunk(soundFont.presetData)
+      )
+    )
+  );
+};
+
+exports.writeSoundFont = writeSoundFont;

@@ -1,2 +1,75 @@
-"use strict";var e=require("./writeRiffChunk.js"),t=require("../utils.js");exports.writeMetaDataChunk=n=>{let r=new Int8Array;const f=new TextEncoder;{const f="ifil",i=n.version.split("."),c=new DataView(new ArrayBuffer(4));c.setUint16(0,Number(i[0]),!0),c.setUint16(2,Number(i[1]),!0);const o=e.writeRiffSubChunk(f,c.buffer);r=t.concatBuffer(r,o)}{const i="isng",c=e.writeRiffSubChunk(i,f.encode(n.soundEngine),6);r=t.concatBuffer(r,c)}{const i="INAM",c=e.writeRiffSubChunk(i,f.encode(n.name),2);r=t.concatBuffer(r,c)}if(n.rom){const i="irom",c=e.writeRiffSubChunk(i,f.encode(n.rom),2);r=t.concatBuffer(r,c)}if(n.romVersion){const f="iver",i=n.romVersion.split("."),c=new DataView(new ArrayBuffer(4));c.setUint16(0,Number(i[0])),c.setUint16(2,Number(i[1]));const o=e.writeRiffSubChunk(f,c.buffer);r=t.concatBuffer(r,o)}if(n.creationDate){const i="ICRD",c=e.writeRiffSubChunk(i,f.encode(n.creationDate),2);r=t.concatBuffer(r,c)}if(n.author){const i="IENG",c=e.writeRiffSubChunk(i,f.encode(n.author),2);r=t.concatBuffer(r,c)}if(n.product){const i="IPRD",c=e.writeRiffSubChunk(i,f.encode(n.product),2);r=t.concatBuffer(r,c)}if(n.copyright){const i="ICOP",c=e.writeRiffSubChunk(i,f.encode(n.copyright),6);r=t.concatBuffer(r,c)}if(n.comments){const i="ICMT",c=e.writeRiffSubChunk(i,f.encode(n.comments),2);r=t.concatBuffer(r,c)}if(n.createdBy){const i="ISFT",c=e.writeRiffSubChunk(i,f.encode(n.createdBy),2);r=t.concatBuffer(r,c)}return e.writeRiffTopChunk("LIST","INFO",r)};
-//# sourceMappingURL=writeMetaDataChunk.js.map
+'use strict';
+
+var writeRiffChunk = require('./writeRiffChunk.js');
+var utils = require('../utils.js');
+
+const writeMetaDataChunk = (metaData) => {
+  let metaDataBuffer = new Int8Array();
+  const textEncoder = new TextEncoder();
+  {
+    const chunkId = "ifil";
+    const soundFontVersion = metaData.version.split(".");
+    const view = new DataView(new ArrayBuffer(4));
+    view.setUint16(0, Number(soundFontVersion[0]), true);
+    view.setUint16(2, Number(soundFontVersion[1]), true);
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, view.buffer);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "isng";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.soundEngine), 6);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  {
+    const chunkId = "INAM";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.name), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.rom) {
+    const chunkId = "irom";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.rom), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.romVersion) {
+    const chunkId = "iver";
+    const romVersion = metaData.romVersion.split(".");
+    const iverView = new DataView(new ArrayBuffer(4));
+    iverView.setUint16(0, Number(romVersion[0]));
+    iverView.setUint16(2, Number(romVersion[1]));
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, iverView.buffer);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.creationDate) {
+    const chunkId = "ICRD";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.creationDate), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.author) {
+    const chunkId = "IENG";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.author), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.product) {
+    const chunkId = "IPRD";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.product), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.copyright) {
+    const chunkId = "ICOP";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.copyright), 6);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.comments) {
+    const chunkId = "ICMT";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.comments), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  if (metaData.createdBy) {
+    const chunkId = "ISFT";
+    const chunkBuffer = writeRiffChunk.writeRiffSubChunk(chunkId, textEncoder.encode(metaData.createdBy), 2);
+    metaDataBuffer = utils.concatBuffer(metaDataBuffer, chunkBuffer);
+  }
+  return writeRiffChunk.writeRiffTopChunk("LIST", "INFO", metaDataBuffer);
+};
+
+exports.writeMetaDataChunk = writeMetaDataChunk;

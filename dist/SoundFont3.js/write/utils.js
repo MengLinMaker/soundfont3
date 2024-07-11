@@ -1,2 +1,16 @@
-"use strict";exports.concatBuffer=(t,e)=>{const r=new Int8Array(t.byteLength+e.byteLength);return r.set(new Int8Array(t),0),r.set(new Int8Array(e),t.byteLength),new Int8Array(r.buffer)},exports.dataViewWriteString=(t,e,r)=>{for(let n=0;n<r.length;n++)t.setUint8(e+n,r.charCodeAt(n))};
-//# sourceMappingURL=utils.js.map
+'use strict';
+
+const dataViewWriteString = (view, offset, string) => {
+  for (let i = 0; i < string.length; i++) {
+    view.setUint8(offset + i, string.charCodeAt(i));
+  }
+};
+const concatBuffer = (buffer1, buffer2) => {
+  const tmp = new Int8Array(buffer1.byteLength + buffer2.byteLength);
+  tmp.set(new Int8Array(buffer1), 0);
+  tmp.set(new Int8Array(buffer2), buffer1.byteLength);
+  return new Int8Array(tmp.buffer);
+};
+
+exports.concatBuffer = concatBuffer;
+exports.dataViewWriteString = dataViewWriteString;

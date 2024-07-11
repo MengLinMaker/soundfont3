@@ -19,7 +19,7 @@
     "lint": "eslint '**/*.ts'",
     "test": "jest --coverage",
     "prettier": "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
-    "build": "rollup -c",
+    "build": "rimraf dist && rollup -c",
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist",
     "docs:start": "vitepress build docs && vitepress preview docs",
     "docs:dev": "vitepress dev docs"
@@ -43,6 +43,7 @@
     "postcss": "^8.4.39",
     "prettier": "^3.3.2",
     "riff-file": "^1.0.3",
+    "rimraf": "^6.0.1",
     "rollup": "^4.18.1",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^6.1.1",

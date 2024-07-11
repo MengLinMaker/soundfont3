@@ -1,2 +1,67 @@
-"use strict";var e=require("../../riff/parseError.js"),r=require("../../types/generator.js");require("../../types/modulator.js");var t=require("../../constants.js");const n=[r.GeneratorType.StartAddrsOffset,r.GeneratorType.EndAddrsOffset,r.GeneratorType.StartLoopAddrsOffset,r.GeneratorType.EndLoopAddrsOffset,r.GeneratorType.StartAddrsCoarseOffset,r.GeneratorType.EndAddrsCoarseOffset,r.GeneratorType.StartLoopAddrsCoarseOffset,r.GeneratorType.KeyNum,r.GeneratorType.Velocity,r.GeneratorType.EndLoopAddrsCoarseOffset,r.GeneratorType.SampleModes,r.GeneratorType.ExclusiveClass,r.GeneratorType.OverridingRootKey],o=[r.GeneratorType.Unused1,r.GeneratorType.Unused2,r.GeneratorType.Unused3,r.GeneratorType.Unused4,r.GeneratorType.Reserved1,r.GeneratorType.Reserved2,r.GeneratorType.Reserved3],s=[r.GeneratorType.KeyRange,r.GeneratorType.VelRange];exports.getGenerators=(a,d)=>{if(a.id!==d)throw new e.ParseError("Unexpected chunk ID",`'${d}'`,`'${a.id}'`);if(a.length%t.SF_GENERATOR_SIZE)throw new e.ParseError(`Invalid size for the '${d}' sub-chunk`);return a.iterate((e=>{const t=e.getInt16();return r.GeneratorType[t]?"pgen"===d&&n.includes(t)||"igen"===d&&o.includes(t)?null:s.includes(t)?{id:t,range:{lo:e.getByte(),hi:e.getByte()}}:{id:t,value:e.getInt16BE()}:null}))};
-//# sourceMappingURL=generators.js.map
+'use strict';
+
+var parseError = require('../../riff/parseError.js');
+var generator = require('../../types/generator.js');
+require('../../types/modulator.js');
+var constants = require('../../constants.js');
+
+const PRESET_TYPES_BLACKLIST = [
+  generator.GeneratorType.StartAddrsOffset,
+  generator.GeneratorType.EndAddrsOffset,
+  generator.GeneratorType.StartLoopAddrsOffset,
+  generator.GeneratorType.EndLoopAddrsOffset,
+  generator.GeneratorType.StartAddrsCoarseOffset,
+  generator.GeneratorType.EndAddrsCoarseOffset,
+  generator.GeneratorType.StartLoopAddrsCoarseOffset,
+  generator.GeneratorType.KeyNum,
+  generator.GeneratorType.Velocity,
+  generator.GeneratorType.EndLoopAddrsCoarseOffset,
+  generator.GeneratorType.SampleModes,
+  generator.GeneratorType.ExclusiveClass,
+  generator.GeneratorType.OverridingRootKey
+];
+const INSTRUMENT_TYPES_BLACKLIST = [
+  generator.GeneratorType.Unused1,
+  generator.GeneratorType.Unused2,
+  generator.GeneratorType.Unused3,
+  generator.GeneratorType.Unused4,
+  generator.GeneratorType.Reserved1,
+  generator.GeneratorType.Reserved2,
+  generator.GeneratorType.Reserved3
+];
+const RANGE_TYPES = [generator.GeneratorType.KeyRange, generator.GeneratorType.VelRange];
+const getGenerators = (chunk, type) => {
+  if (chunk.id !== type) {
+    throw new parseError.ParseError("Unexpected chunk ID", `'${type}'`, `'${chunk.id}'`);
+  }
+  if (chunk.length % constants.SF_GENERATOR_SIZE) {
+    throw new parseError.ParseError(`Invalid size for the '${type}' sub-chunk`);
+  }
+  return chunk.iterate((iterator) => {
+    const id = iterator.getInt16();
+    if (!generator.GeneratorType[id]) {
+      return null;
+    }
+    if (type === "pgen" && PRESET_TYPES_BLACKLIST.includes(id)) {
+      return null;
+    }
+    if (type === "igen" && INSTRUMENT_TYPES_BLACKLIST.includes(id)) {
+      return null;
+    }
+    if (RANGE_TYPES.includes(id)) {
+      return {
+        id,
+        range: {
+          lo: iterator.getByte(),
+          hi: iterator.getByte()
+        }
+      };
+    }
+    return {
+      id,
+      value: iterator.getInt16BE()
+    };
+  });
+};
+
+exports.getGenerators = getGenerators;

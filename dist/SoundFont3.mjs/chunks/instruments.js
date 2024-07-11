@@ -1,2 +1,19 @@
-import{ParseError as t}from"../riff/parseError.js";import{SF_INSTRUMENT_HEADER_SIZE as n}from"../constants.js";const e=e=>{if("inst"!==e.id)throw new t("Unexpected chunk ID","'inst'",`'${e.id}'`);if(e.length%n)throw new t("Invalid size for the 'inst' sub-chunk");return e.iterate((t=>({name:t.getString(),bagIndex:t.getInt16()})))};export{e as getInstrumentHeaders};
-//# sourceMappingURL=instruments.js.map
+import { ParseError } from '../riff/parseError.js';
+import { SF_INSTRUMENT_HEADER_SIZE } from '../constants.js';
+
+const getInstrumentHeaders = (chunk) => {
+  if (chunk.id !== "inst") {
+    throw new ParseError("Unexpected chunk ID", `'inst'`, `'${chunk.id}'`);
+  }
+  if (chunk.length % SF_INSTRUMENT_HEADER_SIZE) {
+    throw new ParseError(`Invalid size for the 'inst' sub-chunk`);
+  }
+  return chunk.iterate((iterator) => {
+    return {
+      name: iterator.getString(),
+      bagIndex: iterator.getInt16()
+    };
+  });
+};
+
+export { getInstrumentHeaders };

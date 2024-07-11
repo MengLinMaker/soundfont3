@@ -1,2 +1,65 @@
-import{ParseError as e}from"../../riff/parseError.js";import{GeneratorType as t}from"../../types/generator.js";import"../../types/modulator.js";import{SF_GENERATOR_SIZE as s}from"../../constants.js";const r=[t.StartAddrsOffset,t.EndAddrsOffset,t.StartLoopAddrsOffset,t.EndLoopAddrsOffset,t.StartAddrsCoarseOffset,t.EndAddrsCoarseOffset,t.StartLoopAddrsCoarseOffset,t.KeyNum,t.Velocity,t.EndLoopAddrsCoarseOffset,t.SampleModes,t.ExclusiveClass,t.OverridingRootKey],d=[t.Unused1,t.Unused2,t.Unused3,t.Unused4,t.Reserved1,t.Reserved2,t.Reserved3],n=[t.KeyRange,t.VelRange],o=(o,f)=>{if(o.id!==f)throw new e("Unexpected chunk ID",`'${f}'`,`'${o.id}'`);if(o.length%s)throw new e(`Invalid size for the '${f}' sub-chunk`);return o.iterate((e=>{const s=e.getInt16();return t[s]?"pgen"===f&&r.includes(s)||"igen"===f&&d.includes(s)?null:n.includes(s)?{id:s,range:{lo:e.getByte(),hi:e.getByte()}}:{id:s,value:e.getInt16BE()}:null}))};export{o as getGenerators};
-//# sourceMappingURL=generators.js.map
+import { ParseError } from '../../riff/parseError.js';
+import { GeneratorType } from '../../types/generator.js';
+import '../../types/modulator.js';
+import { SF_GENERATOR_SIZE } from '../../constants.js';
+
+const PRESET_TYPES_BLACKLIST = [
+  GeneratorType.StartAddrsOffset,
+  GeneratorType.EndAddrsOffset,
+  GeneratorType.StartLoopAddrsOffset,
+  GeneratorType.EndLoopAddrsOffset,
+  GeneratorType.StartAddrsCoarseOffset,
+  GeneratorType.EndAddrsCoarseOffset,
+  GeneratorType.StartLoopAddrsCoarseOffset,
+  GeneratorType.KeyNum,
+  GeneratorType.Velocity,
+  GeneratorType.EndLoopAddrsCoarseOffset,
+  GeneratorType.SampleModes,
+  GeneratorType.ExclusiveClass,
+  GeneratorType.OverridingRootKey
+];
+const INSTRUMENT_TYPES_BLACKLIST = [
+  GeneratorType.Unused1,
+  GeneratorType.Unused2,
+  GeneratorType.Unused3,
+  GeneratorType.Unused4,
+  GeneratorType.Reserved1,
+  GeneratorType.Reserved2,
+  GeneratorType.Reserved3
+];
+const RANGE_TYPES = [GeneratorType.KeyRange, GeneratorType.VelRange];
+const getGenerators = (chunk, type) => {
+  if (chunk.id !== type) {
+    throw new ParseError("Unexpected chunk ID", `'${type}'`, `'${chunk.id}'`);
+  }
+  if (chunk.length % SF_GENERATOR_SIZE) {
+    throw new ParseError(`Invalid size for the '${type}' sub-chunk`);
+  }
+  return chunk.iterate((iterator) => {
+    const id = iterator.getInt16();
+    if (!GeneratorType[id]) {
+      return null;
+    }
+    if (type === "pgen" && PRESET_TYPES_BLACKLIST.includes(id)) {
+      return null;
+    }
+    if (type === "igen" && INSTRUMENT_TYPES_BLACKLIST.includes(id)) {
+      return null;
+    }
+    if (RANGE_TYPES.includes(id)) {
+      return {
+        id,
+        range: {
+          lo: iterator.getByte(),
+          hi: iterator.getByte()
+        }
+      };
+    }
+    return {
+      id,
+      value: iterator.getInt16BE()
+    };
+  });
+};
+
+export { getGenerators };

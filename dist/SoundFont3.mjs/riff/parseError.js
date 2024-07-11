@@ -1,2 +1,7 @@
-class e extends Error{constructor(e,r,c){super(`${e}${r&&c?`, expected ${r}, received ${c}`:""}`)}}export{e as ParseError};
-//# sourceMappingURL=parseError.js.map
+class ParseError extends Error {
+  constructor(message, expected, received) {
+    super(`${message}${expected && received ? `, expected ${expected}, received ${received}` : ``}`);
+  }
+}
+
+export { ParseError };
