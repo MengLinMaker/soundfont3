@@ -1,0 +1,2 @@
+"use strict";var e=require("../../riff/parseError.js"),r=require("../../constants.js");const t=e=>({type:e>>10&63,polarity:e>>9&1,direction:e>>8&1,palette:e>>7&1,index:127&e});exports.getModulators=(n,i)=>{if(n.id!==i)throw new e.ParseError("Unexpected chunk ID",`'${i}'`,`'${n.id}'`);if(n.length%r.SF_MODULATOR_SIZE)throw new e.ParseError(`Invalid size for the '${i}' sub-chunk`);return n.iterate((e=>({source:t(e.getInt16BE()),id:e.getInt16BE(),value:e.getInt16BE(),valueSource:t(e.getInt16BE()),transform:e.getInt16BE()})))};
+//# sourceMappingURL=modulators.js.map

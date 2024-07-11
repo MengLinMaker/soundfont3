@@ -1,0 +1,2 @@
+import{ParseError as t}from"../riff/parseError.js";import{SF_SAMPLE_HEADER_SIZE as e}from"../constants.js";const r=r=>{if("shdr"!==r.id)throw new t("Unexpected chunk ID","'shdr'",`'${r.id}'`);if(r.length%e)throw new t("Invalid size for the 'shdr' sub-chunk");return r.iterate((t=>({name:t.getString(),start:t.getUInt32(),end:t.getUInt32(),startLoop:t.getUInt32(),endLoop:t.getUInt32(),sampleRate:t.getUInt32(),originalPitch:t.getByte(),pitchCorrection:t.getChar(),link:t.getInt16(),type:t.getInt16()})))};export{r as getSampleHeaders};
+//# sourceMappingURL=samples.js.map

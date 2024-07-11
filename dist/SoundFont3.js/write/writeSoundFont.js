@@ -1,0 +1,2 @@
+"use strict";var e=require("./soundFont/writeRiffChunk.js"),t=require("./soundFont/writeMetaDataChunk.js"),a=require("./soundFont/writeSampleDataChunk.js"),r=require("./soundFont/writePresetDataChunk.js"),u=require("./utils.js");exports.writeSoundFont=n=>e.writeRiffTopChunk("RIFF","sfbk",u.concatBuffer(t.writeMetaDataChunk(n.metaData),u.concatBuffer(a.writeSampleDataChunk(n.sampleData),r.writePresetDataChunk(n.presetData))));
+//# sourceMappingURL=writeSoundFont.js.map

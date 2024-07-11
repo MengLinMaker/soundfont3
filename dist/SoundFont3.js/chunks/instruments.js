@@ -1,0 +1,2 @@
+"use strict";var r=require("../riff/parseError.js"),e=require("../constants.js");exports.getInstrumentHeaders=t=>{if("inst"!==t.id)throw new r.ParseError("Unexpected chunk ID","'inst'",`'${t.id}'`);if(t.length%e.SF_INSTRUMENT_HEADER_SIZE)throw new r.ParseError("Invalid size for the 'inst' sub-chunk");return t.iterate((r=>({name:r.getString(),bagIndex:r.getInt16()})))};
+//# sourceMappingURL=instruments.js.map

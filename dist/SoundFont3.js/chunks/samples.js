@@ -1,0 +1,2 @@
+"use strict";var e=require("../riff/parseError.js"),t=require("../constants.js");exports.getSampleHeaders=r=>{if("shdr"!==r.id)throw new e.ParseError("Unexpected chunk ID","'shdr'",`'${r.id}'`);if(r.length%t.SF_SAMPLE_HEADER_SIZE)throw new e.ParseError("Invalid size for the 'shdr' sub-chunk");return r.iterate((e=>({name:e.getString(),start:e.getUInt32(),end:e.getUInt32(),startLoop:e.getUInt32(),endLoop:e.getUInt32(),sampleRate:e.getUInt32(),originalPitch:e.getByte(),pitchCorrection:e.getChar(),link:e.getInt16(),type:e.getInt16()})))};
+//# sourceMappingURL=samples.js.map

@@ -1,0 +1,2 @@
+"use strict";var e=require("./convert/writeWav.js");exports.extractAudioFiles=async(a,r)=>{const{existsSync:s,mkdirSync:t,writeFileSync:i}=await import("fs"),o=Number(a.metaData.version);if(s(r)||t(r),o>=2&&o<3)for(const s of a.presetData.sampleHeaders){if("EOS"===s.name)break;const t=a.sampleData.slice(2*s.start,2*s.end),o=e.pcm16BufferToWav(s.sampleRate,t);i(`${r}/${s.name}.wav`,o)}else o>=3&&o<4&&a.samples.forEach((e=>{i(`${r}/${e.header.name}.ogg`,Buffer.from(e.data))}))};
+//# sourceMappingURL=extractAudioFiles.js.map

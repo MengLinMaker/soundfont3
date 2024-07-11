@@ -1,0 +1,2 @@
+"use strict";var t=require("../utils.js");exports.pcm16BufferToWav=function(e,i){const r=new ArrayBuffer(44),n=new DataView(r);return t.dataViewWriteString(n,0,"RIFF"),n.setUint32(4,44+i.byteLength,!0),t.dataViewWriteString(n,8,"WAVE"),t.dataViewWriteString(n,12,"fmt "),n.setUint32(16,16,!0),n.setUint16(20,1,!0),n.setUint16(22,1,!0),n.setUint32(24,e,!0),n.setUint32(28,1*e*2,!0),n.setUint16(32,2,!0),n.setUint16(34,16,!0),t.dataViewWriteString(n,36,"data"),n.setUint32(40,8+i.byteLength,!0),Buffer.concat([Buffer.from(r),Buffer.from(i)])};
+//# sourceMappingURL=writeWav.js.map

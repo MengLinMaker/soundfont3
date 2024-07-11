@@ -1,0 +1,2 @@
+"use strict";var e=require("./generator.js");e.GeneratorType.InitialAttenuation,e.GeneratorType.InitialFilterFc,e.GeneratorType.VibLFOToPitch,e.GeneratorType.VibLFOToPitch,e.GeneratorType.InitialAttenuation,e.GeneratorType.InitialAttenuation,e.GeneratorType.InitialAttenuation,e.GeneratorType.ReverbEffectsSend,e.GeneratorType.ChorusEffectsSend,e.GeneratorType.CoarseTune;
+//# sourceMappingURL=modulator.js.map

@@ -1,0 +1,2 @@
+import{pcm16BufferToWav as e}from"./convert/writeWav.js";const a=async(a,t)=>{const{existsSync:s,mkdirSync:r,writeFileSync:o}=await import("fs"),m=Number(a.metaData.version);if(s(t)||r(t),m>=2&&m<3)for(const s of a.presetData.sampleHeaders){if("EOS"===s.name)break;const r=a.sampleData.slice(2*s.start,2*s.end),m=e(s.sampleRate,r);o(`${t}/${s.name}.wav`,m)}else m>=3&&m<4&&a.samples.forEach((e=>{o(`${t}/${e.header.name}.ogg`,Buffer.from(e.data))}))};export{a as extractAudioFiles};
+//# sourceMappingURL=extractAudioFiles.js.map

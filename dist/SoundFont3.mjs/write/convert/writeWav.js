@@ -1,0 +1,2 @@
+import{dataViewWriteString as t}from"../utils.js";function e(e,n){const f=new ArrayBuffer(44),i=new DataView(f);t(i,0,"RIFF"),i.setUint32(4,44+n.byteLength,!0),t(i,8,"WAVE"),t(i,12,"fmt "),i.setUint32(16,16,!0),i.setUint16(20,1,!0),i.setUint16(22,1,!0),i.setUint32(24,e,!0),i.setUint32(28,1*e*2,!0),i.setUint16(32,2,!0),i.setUint16(34,16,!0),t(i,36,"data"),i.setUint32(40,8+n.byteLength,!0);return Buffer.concat([Buffer.from(f),Buffer.from(n)])}export{e as pcm16BufferToWav};
+//# sourceMappingURL=writeWav.js.map
