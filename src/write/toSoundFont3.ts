@@ -1,8 +1,11 @@
 import { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } from 'fs'
 import { execSync } from 'child_process'
-import { SampleHeader, SoundFont3, writeSoundFont } from '..'
+import { SoundFont3 } from '../soundFont3'
+import { writeSoundFont } from './writeSoundFont'
+import { SampleHeader } from '../types/sample'
 import { pcm16BufferToWav } from './convert'
 import { SoundFont2Raw } from './utils'
+import { Sample } from '../types/sample'
 
 type ToSoundFont3Config =
   | {
@@ -43,9 +46,12 @@ export const toSoundFont3 = (
 
   const sampleHeaders: SampleHeader[] = []
   let sampleBuffer = Buffer.from('')
-  soundFont.samples.map((sample) => {
+  soundFont.samples.map((sample: Sample) => {
     const fileName = `${folderPath}/${sample.header.name}`
-    const originalAudioBuffer = sampleToBuffer(sample.header.sampleRate, sample.data)
+    const originalAudioBuffer = sampleToBuffer(
+      sample.header.sampleRate,
+      new Int16Array(sample.data)
+    )
     writeFileSync(`${fileName}.${audioType}`, originalAudioBuffer)
     execSync(
       `ffmpeg -y -i "${fileName}.${audioType}" -ar ${config.sampleRate} -ab ${config.bitrate}k -acodec lib${config.oggCompressionAlgorithm} "${fileName}.ogg"`,

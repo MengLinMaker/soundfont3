@@ -1,6 +1,6 @@
 import { SampleData } from '../../types'
 import { SF_SDTA_CHUNKS_ID } from '../../constants'
-import { writeRiffSubChunk, writeRiffTopChunk } from '.'
+import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
 
 /**
  * Writes a sample data chunk buffer.

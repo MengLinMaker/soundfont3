@@ -1,6 +1,6 @@
 import { SF_PDTA_CHUNKS_ID } from '../../constants'
 import { PresetData } from '../../types'
-import { writeRiffSubChunk, writeRiffTopChunk } from '.'
+import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
 import { concatBuffer } from '../utils'
 
 /**

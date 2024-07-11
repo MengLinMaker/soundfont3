@@ -26,7 +26,8 @@
     "baseUrl": "/",
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
-    "module": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Node10",
     "noEmit": true,
     "noEmitOnError": true,
     /* Browser Types */

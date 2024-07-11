@@ -1,6 +1,6 @@
 import { MetaData } from '../../types'
 import { SF_INFO_CHUNKS_ID } from '../../constants'
-import { writeRiffSubChunk, writeRiffTopChunk } from '.'
+import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
 import { concatBuffer } from '../utils'
 
 /**

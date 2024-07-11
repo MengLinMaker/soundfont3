@@ -1,6 +1,8 @@
 import { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } from 'fs'
 import { execSync } from 'child_process'
-import { SampleHeader, SoundFont3, writeSoundFont } from '..'
+import { SoundFont3 } from '../soundFont3'
+import { writeSoundFont } from './writeSoundFont'
+import { SampleHeader } from '../types/sample'
 import { concatBuffer, SoundFont2Raw } from './utils'
 
 export const toSoundFont2 = (
