@@ -2,9 +2,9 @@
   "name": "soundfont3",
   "version": "0.0.1",
   "description": "A SoundFont3 parser for Node.js and web browsers",
-  "main": "lib/SoundFont3.node.js",
-  "module": "lib/SoundFont3.js",
-  "typings": "typings/index.d.ts",
+  "main": "dist/SoundFont3.js",
+  "module": "dist/SoundFont3.mjs",
+  "typings": "dist/SoundFont3.d.ts",
   "keywords": [
     "soundfont3",
     "soundfont",
@@ -25,9 +25,7 @@
     "docs:dev": "vitepress dev docs"
   },
   "files": [
-    "lib",
-    "src",
-    "typings"
+    "dist"
   ],
   "devDependencies": {
     "@eslint/js": "^9.5.0",
