@@ -1,7 +1,8 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { RIFFFile } from 'riff-file'
-import { SoundFont3, extractAudioFiles, writeSoundFont, toSoundFont3 } from '../src'
+import { SoundFont3 } from '../src'
+import { extractAudioFiles, toSoundFont3, writeSoundFont } from '../src/write'
 import { ParseError } from '../src/riff'
 
 const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
