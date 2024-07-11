@@ -55,7 +55,8 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.1",
     "vitepress": "^1.2.3",
-    "vue": "^3.4.31"
+    "vue": "^3.4.31",
+    "soundfont3": "file:."
   },
   "lint-staged": {
     "*.ts": [
@@ -76,8 +77,7 @@
     }
   },
   "dependencies": {
-    "audio-decode": "^2.2.0",
-    "soundfont3": "file:."
+    "audio-decode": "^2.2.0"
   },
   "type": "module"
 }
