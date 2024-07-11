@@ -16,7 +16,7 @@
   "repository": "https://github.com/musidi-org/soundfont3.git",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint '**/*.ts'",
+    "lint": "eslint '**/*.ts' && tsc",
     "test": "jest --coverage",
     "prettier": "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
     "build": "rimraf dist &&rollup -c",
