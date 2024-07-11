@@ -19,7 +19,7 @@
     "lint": "eslint '**/*.ts' && tsc",
     "test": "jest --coverage",
     "prettier": "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
-    "build": "rimraf dist &&rollup -c",
+    "build": "rimraf dist && rollup -c && pnpm run prettier",
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist",
     "docs:start": "vitepress build docs && vitepress preview docs",
     "docs:dev": "vitepress dev docs"
