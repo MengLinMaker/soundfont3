@@ -2,7 +2,7 @@
   "name": "@menglinmaker/soundfont3",
   "version": "0.0.2",
   "description": "A SoundFont3 parser for Node.js and web browsers",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
   "keywords": [
