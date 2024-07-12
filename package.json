@@ -50,14 +50,14 @@
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^6.1.1",
     "smplr": "^0.15.1",
+    "soundfont3": "file:.",
     "tailwindcss": "^3.4.4",
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.1",
     "vitepress": "^1.2.3",
-    "vue": "^3.4.31",
-    "soundfont3": "file:."
+    "vue": "^3.4.31"
   },
   "lint-staged": {
     "*.ts": [
