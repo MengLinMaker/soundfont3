@@ -2,9 +2,9 @@
   "name": "@menglinmaker/soundfont3",
   "version": "0.0.2",
   "description": "A SoundFont3 parser for Node.js and web browsers",
-  "main": "dist/src.js",
-  "module": "dist/src.mjs",
-  "typings": "dist/src.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
   "keywords": [
     "soundfont3",
     "soundfont",
@@ -19,7 +19,7 @@
     "lint": "eslint '**/*.ts' && tsc",
     "test": "jest --coverage",
     "prettier": "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
-    "build": "rimraf dist && rollup -c && pnpm run prettier",
+    "build": "rimraf dist && rollup -c && pnpm run prettier && pnpm link .",
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist",
     "docs:start": "vitepress build docs && vitepress preview docs",
     "docs:dev": "vitepress dev docs",
@@ -79,6 +79,5 @@
   },
   "dependencies": {
     "audio-decode": "^2.2.0"
-  },
-  "type": "module"
+  }
 }

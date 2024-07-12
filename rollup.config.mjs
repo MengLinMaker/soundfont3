@@ -15,16 +15,14 @@ export default [
     plugins: [esbuild()],
     output: [
       {
-        dir: `${outDir}/index.js`,
+        dir: `${outDir}/index.cjs`,
         format: 'cjs',
         preserveModules: true,
-        preserveModulesRoot: 'src',
       },
       {
         dir: `${outDir}/index.mjs`,
         format: 'esm',
         preserveModules: true,
-        preserveModulesRoot: 'src',
       },
     ],
   }),
@@ -34,7 +32,6 @@ export default [
       dir: `${outDir}/index.d.ts`,
       format: 'es',
       preserveModules: true,
-      preserveModulesRoot: 'src'
     },
   }),
 ]
