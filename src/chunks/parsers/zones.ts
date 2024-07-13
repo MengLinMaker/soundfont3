@@ -8,7 +8,7 @@ import {
   Zone,
   ZoneItems,
   ZoneItemsWithReference,
-  ZoneMap
+  ZoneMap,
 } from '../../types'
 
 /**
@@ -28,7 +28,7 @@ export const getZones = (chunk: SF2Chunk, type: 'pbag' | 'ibag'): Zone[] => {
 
   return chunk.iterate<Zone>((iterator) => ({
     generatorIndex: iterator.getInt16(),
-    modulatorIndex: iterator.getInt16()
+    modulatorIndex: iterator.getInt16(),
   }))
 }
 
@@ -51,9 +51,17 @@ export const getItemsInZone = <T extends { bagIndex: number }, R>(
   itemModulators: Modulator[],
   itemGenerators: Generator[],
   references: R[],
-  referenceType: GeneratorType
-): { header: T; zones: ZoneItemsWithReference<R>[]; globalZone?: ZoneItems }[] => {
-  const items: { header: T; zones: ZoneItemsWithReference<R>[]; globalZone?: ZoneItems }[] = []
+  referenceType: GeneratorType,
+): {
+  header: T
+  zones: ZoneItemsWithReference<R>[]
+  globalZone?: ZoneItems
+}[] => {
+  const items: {
+    header: T
+    zones: ZoneItemsWithReference<R>[]
+    globalZone?: ZoneItems
+  }[] = []
 
   for (let i = 0; i < headers.length; i++) {
     const header = headers[i]
@@ -69,7 +77,8 @@ export const getItemsInZone = <T extends { bagIndex: number }, R>(
       const generators = getGenerators(j, zones, itemGenerators)
 
       const keyRange =
-        generators[GeneratorType.KeyRange] && generators[GeneratorType.KeyRange]!.range
+        generators[GeneratorType.KeyRange] &&
+        generators[GeneratorType.KeyRange].range
       const referenceId = generators[referenceType]
       if (!referenceId) {
         if (j - start === 0) {
@@ -80,7 +89,7 @@ export const getItemsInZone = <T extends { bagIndex: number }, R>(
           globalZone = {
             keyRange,
             modulators,
-            generators
+            generators,
           }
         }
         continue
@@ -95,14 +104,14 @@ export const getItemsInZone = <T extends { bagIndex: number }, R>(
         keyRange,
         modulators,
         generators,
-        reference
+        reference,
       })
     }
 
     items.push({
       header,
       globalZone,
-      zones: zoneItems
+      zones: zoneItems,
     })
   }
 
@@ -120,7 +129,7 @@ export const getItemsInZone = <T extends { bagIndex: number }, R>(
 const getModulators = (
   index: number,
   zones: Zone[],
-  modulators: Modulator[]
+  modulators: Modulator[],
 ): ZoneMap<Modulator> => {
   const zone = zones[index]
   const next = zones[index + 1]
@@ -142,7 +151,7 @@ const getModulators = (
 const getGenerators = (
   index: number,
   zones: Zone[],
-  generators: Generator[]
+  generators: Generator[],
 ): ZoneMap<Generator> => {
   const zone = zones[index]
   const next = zones[index + 1]
@@ -165,7 +174,7 @@ const getGenerators = (
 const getZone = <T extends { id: GeneratorType }>(
   start: number,
   end: number,
-  items: T[]
+  items: T[],
 ): { [key in GeneratorType]?: T } => {
   const itemsObject: ZoneMap<T> = {}
 

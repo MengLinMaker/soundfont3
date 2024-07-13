@@ -1,48 +1,28 @@
 {
   "compilerOptions": {
-    /* Base Options */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "ESNext",
-    "allowJs": false,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    /* Max Strictness */
+    /* Strictest Check */
     "strict": true,
-    "allowUnreachableCode": false,
     "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
     // "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "noPropertyAccessFromIndexSignature": true,
     // "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    /* Bundle Config */
+    /* Check Config */
+    "checkJs": true,
+    "skipLibCheck": true,
+    "pretty": true,
+    /* Module Config */
     "baseUrl": "/",
-    "outDir": "dist",
-    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "module": "ESNext",
-    "moduleResolution": "Node10",
-    "noEmit": true,
-    "noEmitOnError": true,
-    /* Browser Types */
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    /* Build Library */
-    "declaration": true
+    "moduleResolution": "Node10"
   },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
 }
