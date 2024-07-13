@@ -25,7 +25,7 @@ export const getPresetHeaders = (chunk: SF2Chunk): PresetHeader[] => {
       bagIndex: iterator.getInt16(),
       library: iterator.getUInt32(),
       genre: iterator.getUInt32(),
-      morphology: iterator.getUInt32()
+      morphology: iterator.getUInt32(),
     }
   })
 }

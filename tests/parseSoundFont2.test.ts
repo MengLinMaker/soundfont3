@@ -9,8 +9,13 @@ const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
 const buffer = readFileSync(soundFontUrl)
 const soundFont = new SoundFont3(buffer)
 
-const expectedPresetDataPath = join(__dirname, 'fonts/sf2/piano.sf2.presetData.json')
-const expectedPresetData = JSON.parse(readFileSync(expectedPresetDataPath).toString())
+const expectedPresetDataPath = join(
+  __dirname,
+  'fonts/sf2/piano.sf2.presetData.json',
+)
+const expectedPresetData = JSON.parse(
+  readFileSync(expectedPresetDataPath).toString(),
+)
 
 describe('Parse SoundFont2', () => {
   it('should not parse invalid SoundFonts', async () => {
@@ -21,8 +26,13 @@ describe('Parse SoundFont2', () => {
   it('should parse as a RIFF file', () => {
     const riff = new RIFFFile()
     riff.setSignature(buffer)
-    const expectedRiffSignaturePath = join(__dirname, 'fonts/sf2/piano.sf2.riff.signature.json')
-    const expectedRiffSignature = JSON.parse(readFileSync(expectedRiffSignaturePath).toString())
+    const expectedRiffSignaturePath = join(
+      __dirname,
+      'fonts/sf2/piano.sf2.riff.signature.json',
+    )
+    const expectedRiffSignature = JSON.parse(
+      readFileSync(expectedRiffSignaturePath).toString(),
+    )
     expect(riff.signature).toStrictEqual(expectedRiffSignature)
   })
 
@@ -39,7 +49,7 @@ describe('Parse SoundFont2', () => {
       product: undefined,
       copyright: 'Creative Commons',
       comments: undefined,
-      createdBy: 'Polyphone'
+      createdBy: 'Polyphone',
     })
   })
 
@@ -65,7 +75,9 @@ describe('Parse SoundFont2', () => {
 
   it('should parse instrumentHeaders', () => {
     const instrumentHeaders = soundFont.presetData.instrumentHeaders
-    expect(instrumentHeaders).toStrictEqual(expectedPresetData.instrumentHeaders)
+    expect(instrumentHeaders).toStrictEqual(
+      expectedPresetData.instrumentHeaders,
+    )
   })
 
   it('should parse instrumentZones', () => {
@@ -75,12 +87,16 @@ describe('Parse SoundFont2', () => {
 
   it('should parse instrumentModulators', () => {
     const instrumentModulators = soundFont.presetData.instrumentModulators
-    expect(instrumentModulators).toStrictEqual(expectedPresetData.instrumentModulators)
+    expect(instrumentModulators).toStrictEqual(
+      expectedPresetData.instrumentModulators,
+    )
   })
 
   it('should parse instrumentGenerators', () => {
     const instrumentGenerators = soundFont.presetData.instrumentGenerators
-    expect(instrumentGenerators).toStrictEqual(expectedPresetData.instrumentGenerators)
+    expect(instrumentGenerators).toStrictEqual(
+      expectedPresetData.instrumentGenerators,
+    )
   })
 
   it('should parse sampleHeaders', () => {

@@ -25,14 +25,21 @@ export const toSoundFont3 = async (
   config: ToSoundFont3Config = {
     bitrate: 32,
     sampleRate: 44100,
-    oggCompressionAlgorithm: 'vorbis'
+    oggCompressionAlgorithm: 'vorbis',
   },
-  folderPath = `soundfont-${crypto.randomUUID()}`
+  folderPath = `soundfont-${crypto.randomUUID()}`,
 ) => {
-  if (typeof document !== 'undefined') throw Error('WebCodecs not supported yet.')
+  if (typeof document !== 'undefined')
+    throw Error('WebCodecs not supported yet.')
 
-  const { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } =
-    await import('fs')
+  const {
+    existsSync,
+    mkdirSync,
+    readFileSync,
+    rmdirSync,
+    unlinkSync,
+    writeFileSync,
+  } = await import('fs')
   const { execSync } = await import('child_process')
   if (!existsSync(folderPath)) mkdirSync(folderPath)
 
@@ -40,7 +47,8 @@ export const toSoundFont3 = async (
   const soundFontVersion = Number(soundFont.metaData.version)
 
   let audioType = 'wav'
-  let sampleToBuffer = (sampleRate: number, data: Int16Array) => pcm16BufferToWav(sampleRate, data)
+  let sampleToBuffer = (sampleRate: number, data: Int16Array) =>
+    pcm16BufferToWav(sampleRate, data)
   if (soundFontVersion >= 3 && soundFontVersion < 4) {
     audioType = 'ogg'
     sampleToBuffer = (_: number, data: Int16Array) => Buffer.from(data)
@@ -52,20 +60,22 @@ export const toSoundFont3 = async (
     const fileName = `${folderPath}/${sample.header.name}`
     const originalAudioBuffer = sampleToBuffer(
       sample.header.sampleRate,
-      new Int16Array(sample.data)
+      new Int16Array(sample.data),
     )
     writeFileSync(`${fileName}.${audioType}`, originalAudioBuffer)
     execSync(
       `ffmpeg -y -i "${fileName}.${audioType}" -ar ${config.sampleRate} -ab ${config.bitrate}k -acodec lib${config.oggCompressionAlgorithm} "${fileName}.ogg"`,
       {
-        stdio: 'ignore'
-      }
+        stdio: 'ignore',
+      },
     )
     const oggBuffer = readFileSync(`${fileName}.ogg`)
     unlinkSync(`${fileName}.wav`)
     unlinkSync(`${fileName}.ogg`)
 
-    const padBuffer = Buffer.from(new ArrayBuffer(2 - (oggBuffer.byteLength % 2)))
+    const padBuffer = Buffer.from(
+      new ArrayBuffer(2 - (oggBuffer.byteLength % 2)),
+    )
     sample.header.start = sampleBuffer.byteLength
     sample.header.end = sample.header.start + oggBuffer.byteLength
     sample.header.startLoop -= sample.header.start

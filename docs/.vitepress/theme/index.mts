@@ -11,5 +11,5 @@ export default {
     ComponentNames.map((name) => {
       app.component(name, Components[name])
     })
-  }
+  },
 }

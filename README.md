@@ -1,6 +1,6 @@
 # Soundfont3
 
-SoundFont3 is a parser written in TypeScript for Node.js and (modern) web browsers. 
+SoundFont3 is a parser written in TypeScript for Node.js and (modern) web browsers.
 
 The original parser complies with [SoundFont 2.01 specification](http://www.synthfont.com/SFSPEC21.PDF), with the goal of achieving compliance with [SoundFont 2.04 specification](http://www.synthfont.com/sfspec24.pdf).
 

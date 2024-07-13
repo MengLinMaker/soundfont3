@@ -3,7 +3,7 @@ import {
   writeMetaDataChunk,
   writePresetDataChunk,
   writeRiffTopChunk,
-  writeSampleDataChunk
+  writeSampleDataChunk,
 } from './soundFont'
 import { SoundFont2Raw, concatBuffer } from './utils'
 
@@ -20,8 +20,8 @@ export const writeSoundFont = (soundFont: SoundFont3 | SoundFont2Raw) => {
       writeMetaDataChunk(soundFont.metaData),
       concatBuffer(
         writeSampleDataChunk(soundFont.sampleData),
-        writePresetDataChunk(soundFont.presetData)
-      )
-    )
+        writePresetDataChunk(soundFont.presetData),
+      ),
+    ),
   )
 }

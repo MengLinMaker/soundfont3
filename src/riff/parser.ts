@@ -51,7 +51,9 @@ export const getChunk = (buffer: Uint8Array, start: number): RIFFChunk => {
 export const getChunkLength = (buffer: Uint8Array, start: number) => {
   buffer = buffer.subarray(start, start + 4)
 
-  return (buffer[0] | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24)) >>> 0
+  return (
+    (buffer[0] | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24)) >>> 0
+  )
 }
 
 /**

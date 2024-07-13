@@ -51,7 +51,10 @@ export class ChunkIterator<T> {
    * Get a signed 16-bit integer from the chunk.
    */
   public getInt16(): number {
-    return this.chunk.buffer[this.position++] | (this.chunk.buffer[this.position++] << 8)
+    return (
+      this.chunk.buffer[this.position++] |
+      (this.chunk.buffer[this.position++] << 8)
+    )
   }
 
   /**

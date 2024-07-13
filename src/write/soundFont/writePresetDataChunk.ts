@@ -38,7 +38,10 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       view.setUint32(6, e.library, true)
       view.setUint32(10, e.genre, true)
       view.setUint32(14, e.morphology, true)
-      loopBuffer = concatBuffer(loopBuffer, concatBuffer(nameBuffer, view.buffer))
+      loopBuffer = concatBuffer(
+        loopBuffer,
+        concatBuffer(nameBuffer, view.buffer),
+      )
     })
     const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
     presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
@@ -80,10 +83,12 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       const valueDefined = typeof e.value !== 'undefined'
       if (rangeDefined && valueDefined)
         throw Error(
-          'Both "range" and "value" are defined in "pgen" when only one should be defined.'
+          'Both "range" and "value" are defined in "pgen" when only one should be defined.',
         )
       else if (!rangeDefined && !valueDefined)
-        Error('Neither "range" nor "value" are defined in "pgen" when only one should be defined.')
+        Error(
+          'Neither "range" nor "value" are defined in "pgen" when only one should be defined.',
+        )
       else if (typeof e.range !== 'undefined') {
         view.setUint8(2, e.range.lo)
         view.setUint8(3, e.range.hi)
@@ -105,7 +110,10 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       const nameBuffer = extendStringBuffer(e.name, 20)
       const view = new DataView(new ArrayBuffer(2))
       view.setUint16(0, e.bagIndex, true)
-      loopBuffer = concatBuffer(loopBuffer, concatBuffer(nameBuffer, view.buffer))
+      loopBuffer = concatBuffer(
+        loopBuffer,
+        concatBuffer(nameBuffer, view.buffer),
+      )
     })
     const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
     presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
@@ -147,10 +155,12 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       const valueDefined = typeof e.value !== 'undefined'
       if (rangeDefined && valueDefined)
         throw Error(
-          'Both "range" and "value" are defined in "pgen" when only one should be defined.'
+          'Both "range" and "value" are defined in "pgen" when only one should be defined.',
         )
       else if (!rangeDefined && !valueDefined)
-        Error('Neither "range" nor "value" are defined in "pgen" when only one should be defined.')
+        Error(
+          'Neither "range" nor "value" are defined in "pgen" when only one should be defined.',
+        )
       else if (typeof e.range !== 'undefined') {
         view.setUint8(2, e.range.lo)
         view.setUint8(3, e.range.hi)
@@ -179,7 +189,10 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       view.setInt8(21, e.pitchCorrection)
       view.setUint16(22, e.link, true)
       view.setUint16(24, e.type, true)
-      loopBuffer = concatBuffer(loopBuffer, concatBuffer(nameBuffer, view.buffer))
+      loopBuffer = concatBuffer(
+        loopBuffer,
+        concatBuffer(nameBuffer, view.buffer),
+      )
     })
     const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
     presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)

@@ -7,7 +7,7 @@ import {
   getModulators,
   getPresetHeaders,
   getSampleHeaders,
-  getZones
+  getZones,
 } from './chunks'
 
 export class SF2Chunk extends RIFFChunk {
@@ -35,19 +35,23 @@ export class SF2Chunk extends RIFFChunk {
       throw new ParseError('Unexpected chunk ID', `'LIST'`, `'${this.id}'`)
     }
 
-    const info = this.subChunks.reduce<{ [key in SF_INFO_CHUNKS_ID]?: string }>((target, chunk) => {
-      if (chunk.id === 'ifil' || chunk.id === 'iver') {
-        // ifil and iver length must be 4 bytes
-        if (chunk.length !== SF_VERSION_LENGTH) {
-          throw new ParseError(`Invalid size for the '${chunk.id}' sub-chunk`)
+    const info = this.subChunks.reduce<{ [key in SF_INFO_CHUNKS_ID]?: string }>(
+      (target, chunk) => {
+        if (chunk.id === 'ifil' || chunk.id === 'iver') {
+          // ifil and iver length must be 4 bytes
+          if (chunk.length !== SF_VERSION_LENGTH) {
+            throw new ParseError(`Invalid size for the '${chunk.id}' sub-chunk`)
+          }
+          target[chunk.id as SF_INFO_CHUNKS_ID] =
+            `${chunk.getInt16()}.${chunk.getInt16(2)}`
+        } else {
+          target[chunk.id as SF_INFO_CHUNKS_ID] = chunk.getString()
         }
-        target[chunk.id as SF_INFO_CHUNKS_ID] = `${chunk.getInt16()}.${chunk.getInt16(2)}`
-      } else {
-        target[chunk.id as SF_INFO_CHUNKS_ID] = chunk.getString()
-      }
 
-      return target
-    }, {})
+        return target
+      },
+      {},
+    )
 
     if (!info.ifil) {
       throw new ParseError(`Missing required 'ifil' sub-chunk`)
@@ -68,7 +72,7 @@ export class SF2Chunk extends RIFFChunk {
       product: info.IPRD,
       copyright: info.ICOP,
       comments: info.ICMT,
-      createdBy: info.ISFT
+      createdBy: info.ISFT,
     }
   }
 
@@ -83,7 +87,11 @@ export class SF2Chunk extends RIFFChunk {
 
     const sampleChunk = this.subChunks[0]
     if (sampleChunk.id !== 'smpl') {
-      throw new ParseError('Invalid chunk signature', `'smpl'`, `'${sampleChunk.id}'`)
+      throw new ParseError(
+        'Invalid chunk signature',
+        `'smpl'`,
+        `'${sampleChunk.id}'`,
+      )
     }
 
     return new Uint8Array(sampleChunk.buffer)
@@ -107,7 +115,7 @@ export class SF2Chunk extends RIFFChunk {
       instrumentZones: getZones(this.subChunks[5], 'ibag'),
       instrumentModulators: getModulators(this.subChunks[6], 'imod'),
       instrumentGenerators: getGenerators(this.subChunks[7], 'igen'),
-      sampleHeaders: getSampleHeaders(this.subChunks[8])
+      sampleHeaders: getSampleHeaders(this.subChunks[8]),
     }
   }
 }

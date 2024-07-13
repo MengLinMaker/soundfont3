@@ -5,7 +5,7 @@ import {
   writeRiffSubChunk,
   writeMetaDataChunk,
   writeSampleDataChunk,
-  writePresetDataChunk
+  writePresetDataChunk,
 } from '../src/write/soundFont'
 import { writeSoundFont } from '../src/write'
 import { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
@@ -33,7 +33,7 @@ describe('Write SoundFont2', () => {
       product: 'f',
       copyright: 'g',
       comments: 'h',
-      createdBy: 'i'
+      createdBy: 'i',
     }
     const expectedBuffer = Buffer.from(
       new Int8Array([
@@ -181,8 +181,8 @@ describe('Write SoundFont2', () => {
         0,
         0, // 2 byte
         105,
-        0 // "i" with 1 byte pad
-      ])
+        0, // "i" with 1 byte pad
+      ]),
     )
     const metaDataBuffer = writeMetaDataChunk(metaData)
     expect(Buffer.from(metaDataBuffer)).toStrictEqual(expectedBuffer)
@@ -192,7 +192,9 @@ describe('Write SoundFont2', () => {
     const metaDataBuffer = Buffer.from(writeMetaDataChunk(soundFont.metaData))
     const metaDataChunk = soundFont.chunk.subChunks[0]
     const subBuffer = metaDataBuffer.slice(8, metaDataBuffer.length)
-    const expectedBuffer = Buffer.from(metaDataChunk.buffer.slice(0, metaDataChunk.length))
+    const expectedBuffer = Buffer.from(
+      metaDataChunk.buffer.slice(0, metaDataChunk.length),
+    )
 
     const expectedChunkId: SF_TOP_CHUNKS_ID = 'LIST'
     const chunkId = metaDataBuffer.slice(0, 4).toString()
@@ -209,8 +211,12 @@ describe('Write SoundFont2', () => {
   })
 
   it('should write sampleData', async () => {
-    const sampleDataBuffer = Buffer.from(writeSampleDataChunk(soundFont.sampleData))
-    const expectedBuffer = Buffer.from(soundFont.chunk.subChunks[1].subChunks[0].buffer)
+    const sampleDataBuffer = Buffer.from(
+      writeSampleDataChunk(soundFont.sampleData),
+    )
+    const expectedBuffer = Buffer.from(
+      soundFont.chunk.subChunks[1].subChunks[0].buffer,
+    )
     // Slice 12 bytes from 'sdta', then slice 8 bytes from 'smpl'
     const subBuffer = sampleDataBuffer.slice(20, sampleDataBuffer.length)
 
@@ -230,7 +236,9 @@ describe('Write SoundFont2', () => {
   })
 
   it('should write presetData', async () => {
-    const presetDataBuffer = Buffer.from(writePresetDataChunk(soundFont.presetData))
+    const presetDataBuffer = Buffer.from(
+      writePresetDataChunk(soundFont.presetData),
+    )
     const expectedBuffer = soundFont.chunk.subChunks[2].buffer
     const subBuffer = presetDataBuffer.slice(8, presetDataBuffer.length)
 

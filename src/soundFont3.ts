@@ -7,7 +7,7 @@ import {
   Preset,
   PresetData,
   Sample,
-  ZoneItems
+  ZoneItems,
 } from './types'
 import { SF2Chunk } from './chunk'
 import { parseBuffer, ParseError } from './riff'
@@ -22,7 +22,7 @@ import { getItemsInZone } from './chunks'
  * @param {(...originalArgs: T[]) => U} originalFunction
  */
 export const memoize = <T, U>(
-  originalFunction: (...originalArgs: T[]) => U
+  originalFunction: (...originalArgs: T[]) => U,
 ): ((...args: T[]) => U) => {
   const memo: { [key: string]: U } = {}
 
@@ -103,7 +103,11 @@ export class SoundFont3 {
     }
 
     if (chunk.subChunks.length !== 3) {
-      throw new ParseError('Invalid sfbk structure', '3 chunks', `${chunk.subChunks.length} chunks`)
+      throw new ParseError(
+        'Invalid sfbk structure',
+        '3 chunks',
+        `${chunk.subChunks.length} chunks`,
+      )
     }
 
     this.chunk = chunk
@@ -132,40 +136,54 @@ export class SoundFont3 {
   public getKeyData(
     memoizedKeyNumber: number,
     memoizedBankNumber: number = 0,
-    memoizedPresetNumber: number = 0
+    memoizedPresetNumber: number = 0,
   ): Key | null {
     // Get a memoized version of the function
-    return memoize((keyNumber: number, bankNumber: number, presetNumber: number): Key | null => {
-      const bank = this.banks[bankNumber]
-      if (bank) {
-        const preset = bank.presets[presetNumber]
-        if (preset) {
-          const presetZone = preset.zones.find((zone) => this.isKeyInRange(zone, keyNumber))
-          if (presetZone) {
-            const instrument = presetZone.instrument
-            const instrumentZone = instrument.zones.find((zone) =>
-              this.isKeyInRange(zone, keyNumber)
+    return memoize(
+      (
+        keyNumber: number,
+        bankNumber: number,
+        presetNumber: number,
+      ): Key | null => {
+        const bank = this.banks[bankNumber]
+        if (bank) {
+          const preset = bank.presets[presetNumber]
+          if (preset) {
+            const presetZone = preset.zones.find((zone) =>
+              this.isKeyInRange(zone, keyNumber),
             )
-            if (instrumentZone) {
-              const sample = instrumentZone.sample
-              const generators = { ...presetZone.generators, ...instrumentZone.generators }
-              const modulators = { ...presetZone.modulators, ...instrumentZone.modulators }
+            if (presetZone) {
+              const instrument = presetZone.instrument
+              const instrumentZone = instrument.zones.find((zone) =>
+                this.isKeyInRange(zone, keyNumber),
+              )
+              if (instrumentZone) {
+                const sample = instrumentZone.sample
+                const generators = {
+                  ...presetZone.generators,
+                  ...instrumentZone.generators,
+                }
+                const modulators = {
+                  ...presetZone.modulators,
+                  ...instrumentZone.modulators,
+                }
 
-              return {
-                keyNumber,
-                preset,
-                instrument,
-                sample,
-                generators,
-                modulators
+                return {
+                  keyNumber,
+                  preset,
+                  instrument,
+                  sample,
+                  generators,
+                  modulators,
+                }
               }
             }
           }
         }
-      }
 
-      return null
-    })(memoizedKeyNumber, memoizedBankNumber, memoizedPresetNumber)
+        return null
+      },
+    )(memoizedKeyNumber, memoizedBankNumber, memoizedPresetNumber)
   }
 
   /**
@@ -190,7 +208,7 @@ export class SoundFont3 {
 
       if (!target[bankNumber]) {
         target[bankNumber] = {
-          presets: []
+          presets: [],
         }
       }
 
@@ -203,7 +221,8 @@ export class SoundFont3 {
    * Parse the raw preset data to presets.
    */
   private getPresets(): Preset[] {
-    const { presetHeaders, presetZones, presetGenerators, presetModulators } = this.presetData
+    const { presetHeaders, presetZones, presetGenerators, presetModulators } =
+      this.presetData
 
     const presets = getItemsInZone(
       presetHeaders,
@@ -211,7 +230,7 @@ export class SoundFont3 {
       presetModulators,
       presetGenerators,
       this.instruments,
-      GeneratorType.Instrument
+      GeneratorType.Instrument,
     )
 
     return presets
@@ -225,9 +244,9 @@ export class SoundFont3 {
               keyRange: zone.keyRange,
               generators: zone.generators,
               modulators: zone.modulators,
-              instrument: zone.reference
+              instrument: zone.reference,
             }
-          })
+          }),
         }
       })
   }
@@ -236,8 +255,12 @@ export class SoundFont3 {
    * Parse the raw instrument data (found in the preset data) to instruments.
    */
   private getInstruments(): Instrument[] {
-    const { instrumentHeaders, instrumentZones, instrumentModulators, instrumentGenerators } =
-      this.presetData
+    const {
+      instrumentHeaders,
+      instrumentZones,
+      instrumentModulators,
+      instrumentGenerators,
+    } = this.presetData
 
     const instruments = getItemsInZone(
       instrumentHeaders,
@@ -245,7 +268,7 @@ export class SoundFont3 {
       instrumentModulators,
       instrumentGenerators,
       this.samples,
-      GeneratorType.SampleId
+      GeneratorType.SampleId,
     )
 
     return instruments
@@ -259,9 +282,9 @@ export class SoundFont3 {
               keyRange: zone.keyRange,
               generators: zone.generators,
               modulators: zone.modulators,
-              sample: zone.reference
+              sample: zone.reference,
             }
-          })
+          }),
         }
       })
   }
@@ -276,7 +299,7 @@ export class SoundFont3 {
         // Sample rate must be above 0
         if (header.name !== 'EOS' && header.sampleRate <= 0) {
           throw new Error(
-            `Illegal sample rate of ${header.sampleRate} hz in sample '${header.name}'`
+            `Illegal sample rate of ${header.sampleRate} hz in sample '${header.name}'`,
           )
         }
 
@@ -293,15 +316,17 @@ export class SoundFont3 {
           const data = this.sampleData.subarray(header.start, header.end)
           return {
             header,
-            data
+            data,
           }
         }
 
         return {
           header,
           data: new Int16Array(
-            new Uint8Array(this.sampleData.subarray(header.start * 2, header.end * 2)).buffer
-          )
+            new Uint8Array(
+              this.sampleData.subarray(header.start * 2, header.end * 2),
+            ).buffer,
+          ),
         }
       })
   }

@@ -23,7 +23,12 @@ export class RIFFChunk {
    */
   public readonly subChunks: RIFFChunk[]
 
-  public constructor(id: string, length: number, buffer: Uint8Array, subChunks: RIFFChunk[]) {
+  public constructor(
+    id: string,
+    length: number,
+    buffer: Uint8Array,
+    subChunks: RIFFChunk[],
+  ) {
     this.id = id
     this.length = length
     this.buffer = buffer
@@ -38,7 +43,9 @@ export class RIFFChunk {
    * @param {number} [length]
    */
   public getString(position: number = 0, length?: number): string {
-    return getStringFromBuffer(this.getBuffer(position, length || this.length - position))
+    return getStringFromBuffer(
+      this.getBuffer(position, length || this.length - position),
+    )
   }
 
   /**
@@ -100,7 +107,10 @@ export class RIFFChunk {
    *   specified return type
    * @param {number} [start] - The optional index where to start iterating over the chunk
    */
-  public iterate<T>(callback: (iterator: ChunkIterator<T>) => T | null, start: number = 0): T[] {
+  public iterate<T>(
+    callback: (iterator: ChunkIterator<T>) => T | null,
+    start: number = 0,
+  ): T[] {
     const iterator = new ChunkIterator<T>(this, start)
     iterator.iterate(callback)
     return iterator.target

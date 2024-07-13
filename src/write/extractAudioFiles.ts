@@ -6,7 +6,10 @@ import { pcm16BufferToWav } from './convert'
  * @param {SoundFont3} soundFont - folder to dump samples.
  * @param {string} folderPath - folder to dump samples.
  */
-export const extractAudioFiles = async (soundFont: SoundFont3, folderPath: string) => {
+export const extractAudioFiles = async (
+  soundFont: SoundFont3,
+  folderPath: string,
+) => {
   const { existsSync, mkdirSync, writeFileSync } = await import('fs')
 
   const soundFontVersion = Number(soundFont.metaData.version)
@@ -20,7 +23,10 @@ export const extractAudioFiles = async (soundFont: SoundFont3, folderPath: strin
     }
   } else if (soundFontVersion >= 3 && soundFontVersion < 4) {
     soundFont.samples.forEach((sample) => {
-      writeFileSync(`${folderPath}/${sample.header.name}.ogg`, Buffer.from(sample.data))
+      writeFileSync(
+        `${folderPath}/${sample.header.name}.ogg`,
+        Buffer.from(sample.data),
+      )
     })
   }
   return

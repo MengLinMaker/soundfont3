@@ -38,4 +38,7 @@ export type SF_PDTA_CHUNKS_ID =
   | 'igen'
   | 'shdr'
 
-export type SF_SUB_CHUNKS_ID = SF_INFO_CHUNKS_ID | SF_SDTA_CHUNKS_ID | SF_PDTA_CHUNKS_ID
+export type SF_SUB_CHUNKS_ID =
+  | SF_INFO_CHUNKS_ID
+  | SF_SDTA_CHUNKS_ID
+  | SF_PDTA_CHUNKS_ID

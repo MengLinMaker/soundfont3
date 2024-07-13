@@ -27,7 +27,7 @@ export enum ControllerType {
    * to half of the maximum, after which the controller output is at a maximum. The direction and
    * polarity are specified by the modulator.
    */
-  Switch = 3
+  Switch = 3,
 }
 
 export enum ControllerPolarity {
@@ -41,7 +41,7 @@ export enum ControllerPolarity {
    * The controller should be mapped with a minimum value of -1 and a maximum value of 1. It
    * behaves similar to the pitch wheel controller of the MIDI specification.
    */
-  Bipolar = 1
+  Bipolar = 1,
 }
 
 export enum ControllerDirection {
@@ -53,7 +53,7 @@ export enum ControllerDirection {
   /**
    * The direction of the controller should be from the maximum to the minimum value.
    */
-  Decreasing = 1
+  Decreasing = 1,
 }
 
 export enum ControllerPalette {
@@ -65,7 +65,7 @@ export enum ControllerPalette {
   /**
    * Use the MIDI controller palette.
    */
-  MidiController = 1
+  MidiController = 1,
 }
 
 export enum Controller {
@@ -114,7 +114,7 @@ export enum Controller {
    * The controller source is the output of another modulator. This is only supported as `value`,
    * not as `valueSource`.
    */
-  Link = 127
+  Link = 127,
 }
 
 export interface ControllerValue {
@@ -158,7 +158,7 @@ export enum TransformType {
    *
    * `output = Math.sqrt(input ** 2)` or simply `output = Math.abs(input)`
    */
-  Absolute = 2
+  Absolute = 2,
 }
 
 export interface Modulator {
@@ -203,7 +203,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Decreasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoteOnVelocity
+      index: Controller.NoteOnVelocity,
     },
     value: 960,
     valueSource: {
@@ -211,9 +211,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI note-on velocity to filter cutoff
@@ -224,7 +224,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Decreasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoteOnVelocity
+      index: Controller.NoteOnVelocity,
     },
     value: -2400, // cents
     valueSource: {
@@ -232,9 +232,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI channel pressure to vibrato LFO pitch depth
@@ -245,7 +245,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.ChannelPressure
+      index: Controller.ChannelPressure,
     },
     value: 50, // cents / max excursion
     valueSource: {
@@ -253,9 +253,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI continuous controller 1 to vibrato LFO pitch depth
@@ -266,7 +266,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.MidiController,
-      index: 1
+      index: 1,
     },
     value: 50,
     valueSource: {
@@ -274,9 +274,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI continuous controller 7 to initial attenuation
@@ -287,7 +287,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Decreasing,
       palette: ControllerPalette.MidiController,
-      index: 7
+      index: 7,
     },
     value: 960,
     valueSource: {
@@ -295,9 +295,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI continuous controller 10 to pan position
@@ -308,7 +308,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Bipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.MidiController,
-      index: 10
+      index: 10,
     },
     value: 1000, // tenths of a percent
     valueSource: {
@@ -316,9 +316,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI continuous controller 11 to initial attenuation
@@ -329,7 +329,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Decreasing,
       palette: ControllerPalette.MidiController,
-      index: 11
+      index: 11,
     },
     value: 960,
     valueSource: {
@@ -337,9 +337,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI continuous controller 91 to reverb effects send
@@ -350,7 +350,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.MidiController,
-      index: 91
+      index: 91,
     },
     value: 200, // tenths of a percent
     valueSource: {
@@ -358,9 +358,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI continuous controller 93 to chorus effects send
@@ -371,7 +371,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.MidiController,
-      index: 93
+      index: 93,
     },
     value: 200, // tenths of a percent
     valueSource: {
@@ -379,9 +379,9 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.NoController
+      index: Controller.NoController,
     },
-    transform: TransformType.Linear
+    transform: TransformType.Linear,
   },
 
   // MIDI pitch wheel to initial pitch controlled by MIDI pitch wheel sensitivity
@@ -392,7 +392,7 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Bipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.PitchWheel
+      index: Controller.PitchWheel,
     },
     value: 12700, // cents
     valueSource: {
@@ -400,8 +400,8 @@ export const DEFAULT_INSTRUMENT_MODULATORS: Modulator[] = [
       polarity: ControllerPolarity.Unipolar,
       direction: ControllerDirection.Increasing,
       palette: ControllerPalette.GeneralController,
-      index: Controller.PitchWheelSensitivity
+      index: Controller.PitchWheelSensitivity,
     },
-    transform: TransformType.Linear
-  }
+    transform: TransformType.Linear,
+  },
 ]

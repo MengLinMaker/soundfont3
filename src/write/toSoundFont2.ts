@@ -5,15 +5,22 @@ import { concatBuffer, SoundFont2Raw } from './utils'
 
 export const toSoundFont2 = async (
   _soundFont: SoundFont3,
-  folderPath = `soundfont-${crypto.randomUUID()}`
+  folderPath = `soundfont-${crypto.randomUUID()}`,
 ) => {
   const soundFont = structuredClone(_soundFont) as never as SoundFont2Raw
-  if (typeof document !== 'undefined') throw Error('WebCodecs not supported yet.')
+  if (typeof document !== 'undefined')
+    throw Error('WebCodecs not supported yet.')
   const soundFontVersion = Number(soundFont.metaData.version)
   if (soundFontVersion < 3) return _soundFont
 
-  const { existsSync, mkdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } =
-    await import('fs')
+  const {
+    existsSync,
+    mkdirSync,
+    readFileSync,
+    rmdirSync,
+    unlinkSync,
+    writeFileSync,
+  } = await import('fs')
   const { execSync } = await import('child_process')
   if (!existsSync(folderPath)) mkdirSync(folderPath)
 
@@ -28,12 +35,14 @@ export const toSoundFont2 = async (
     execSync(
       `ffmpeg -y -i "${fileName}.ogg" -ar ${sample.header.sampleRate} -ac 1 "${fileName}.wav"`,
       {
-        stdio: 'ignore'
-      }
+        stdio: 'ignore',
+      },
     )
     const wavFileBuffer = readFileSync(`${fileName}.wav`)
     // Remove 44 byte header plus 34 byte extra
-    const wavBuffer = new Int8Array(wavFileBuffer.slice(44 + 34, wavFileBuffer.byteLength))
+    const wavBuffer = new Int8Array(
+      wavFileBuffer.slice(44 + 34, wavFileBuffer.byteLength),
+    )
 
     unlinkSync(`${fileName}.wav`)
     unlinkSync(`${fileName}.ogg`)
@@ -43,12 +52,17 @@ export const toSoundFont2 = async (
     sample.header.end = sampleOffset + wavBuffer.byteLength / 2
     sample.header.startLoop += oggOffset
     sample.header.endLoop += oggOffset
-    sampleBuffer = concatBuffer(concatBuffer(sampleBuffer, wavBuffer), padBuffer)
+    sampleBuffer = concatBuffer(
+      concatBuffer(sampleBuffer, wavBuffer),
+      padBuffer,
+    )
     sampleOffset += wavBuffer.byteLength / 2 + padBuffer.byteLength
     oggOffset += oggBuffer.byteLength
     sampleHeaders.push(sample.header)
   })
-  console.info(`Sample size: ${(sampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`)
+  console.info(
+    `Sample size: ${(sampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`,
+  )
   rmdirSync(folderPath)
 
   soundFont.metaData.version = '2.04'

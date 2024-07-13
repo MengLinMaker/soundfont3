@@ -3,7 +3,7 @@ import {
   getChunkId,
   getChunkLength,
   getSubChunks,
-  parseBuffer
+  parseBuffer,
 } from '../../src/riff/parser'
 import buffer from './buffer.mock'
 

@@ -362,7 +362,7 @@ export enum GeneratorType {
   /**
    * Unused generator. If this generator is encountered, it should be ignored.
    */
-  EndOper
+  EndOper,
 }
 
 /**
@@ -448,7 +448,7 @@ export const DEFAULT_GENERATOR_VALUES: { [key in ValueGenerator]: number } = {
   [GeneratorType.SampleModes]: 0,
   [GeneratorType.ScaleTuning]: 100,
   [GeneratorType.ExclusiveClass]: 0,
-  [GeneratorType.OverridingRootKey]: -1
+  [GeneratorType.OverridingRootKey]: -1,
 }
 
 /**

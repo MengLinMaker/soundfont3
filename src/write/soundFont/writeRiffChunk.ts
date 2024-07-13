@@ -1,4 +1,8 @@
-import { SF_SUB_CHUNKS_ID, SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../../constants'
+import {
+  SF_SUB_CHUNKS_ID,
+  SF_TOP_CHUNKS_FORMAT,
+  SF_TOP_CHUNKS_ID,
+} from '../../constants'
 import { concatBuffer, dataViewWriteString } from '../utils'
 
 /**
@@ -11,12 +15,14 @@ import { concatBuffer, dataViewWriteString } from '../utils'
 export const writeRiffSubChunk = (
   chunkId: SF_SUB_CHUNKS_ID,
   contentBuffer: ArrayBuffer,
-  paddingMax: number = 0
+  paddingMax: number = 0,
 ) => {
   if (paddingMax % 2 !== 0) throw Error('Max padding must be even number')
 
   if (paddingMax > 0) {
-    const padBuffer = new ArrayBuffer(paddingMax - (contentBuffer.byteLength % 2))
+    const padBuffer = new ArrayBuffer(
+      paddingMax - (contentBuffer.byteLength % 2),
+    )
     contentBuffer = concatBuffer(contentBuffer, padBuffer)
   }
 
@@ -36,7 +42,7 @@ export const writeRiffSubChunk = (
 export const writeRiffTopChunk = (
   chunkId: SF_TOP_CHUNKS_ID,
   format: SF_TOP_CHUNKS_FORMAT,
-  contentBuffer: ArrayBuffer
+  contentBuffer: ArrayBuffer,
 ) => {
   const instView = new DataView(new ArrayBuffer(12))
   dataViewWriteString(instView, 0, chunkId)

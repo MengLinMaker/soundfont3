@@ -28,7 +28,7 @@ export const getSampleHeaders = (chunk: SF2Chunk): SampleHeader[] => {
       originalPitch: iterator.getByte(),
       pitchCorrection: iterator.getChar(),
       link: iterator.getInt16(),
-      type: iterator.getInt16()
+      type: iterator.getInt16(),
     }
   })
 }

@@ -14,7 +14,7 @@ const getModulatorValue = (value: number): ControllerValue => {
     polarity: (value >> 9) & 1,
     direction: (value >> 8) & 1,
     palette: (value >> 7) & 1,
-    index: value & 0x7f
+    index: value & 0x7f,
   }
 }
 
@@ -24,7 +24,10 @@ const getModulatorValue = (value: number): ControllerValue => {
  * @param {SF2Chunk} chunk - The input chunk
  * @param {string} type - The type of chunk, either 'pmod' or 'imod'
  */
-export const getModulators = (chunk: SF2Chunk, type: 'pmod' | 'imod'): Modulator[] => {
+export const getModulators = (
+  chunk: SF2Chunk,
+  type: 'pmod' | 'imod',
+): Modulator[] => {
   if (chunk.id !== type) {
     throw new ParseError('Unexpected chunk ID', `'${type}'`, `'${chunk.id}'`)
   }
@@ -39,7 +42,7 @@ export const getModulators = (chunk: SF2Chunk, type: 'pmod' | 'imod'): Modulator
       id: iterator.getInt16BE(),
       value: iterator.getInt16BE(),
       valueSource: getModulatorValue(iterator.getInt16BE()),
-      transform: iterator.getInt16BE()
+      transform: iterator.getInt16BE(),
     }
   })
 }

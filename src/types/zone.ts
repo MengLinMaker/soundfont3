@@ -21,7 +21,9 @@ export interface Zone {
   modulatorIndex: number
 }
 
-export type ZoneMap<T extends Modulator | Generator> = { [key in GeneratorType]?: T }
+export type ZoneMap<T extends Modulator | Generator> = {
+  [key in GeneratorType]?: T
+}
 
 export interface ZoneItems {
   /**

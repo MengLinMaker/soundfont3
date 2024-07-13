@@ -20,7 +20,7 @@ export const getInstrumentHeaders = (chunk: SF2Chunk): InstrumentHeader[] => {
   return chunk.iterate<InstrumentHeader>((iterator) => {
     return {
       name: iterator.getString(),
-      bagIndex: iterator.getInt16()
+      bagIndex: iterator.getInt16(),
     }
   })
 }

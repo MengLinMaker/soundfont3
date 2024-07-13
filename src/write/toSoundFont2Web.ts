@@ -34,11 +34,16 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
     sample.header.endLoop = sampleLen - 128
     sample.header.startLoop = sampleLen - loopLen - 128
 
-    sampleBuffer = concatBuffer(concatBuffer(sampleBuffer, wavBuffer), padBuffer)
+    sampleBuffer = concatBuffer(
+      concatBuffer(sampleBuffer, wavBuffer),
+      padBuffer,
+    )
     sampleOffset += wavBuffer.byteLength / 2 + padBuffer.byteLength
     sampleHeaders.push(sample.header)
   }
-  console.info(`Sample size: ${(sampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`)
+  console.info(
+    `Sample size: ${(sampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`,
+  )
 
   soundFont.metaData.version = '2.04'
   soundFont.sampleData = new Int16Array(sampleBuffer)

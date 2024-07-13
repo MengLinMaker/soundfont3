@@ -41,6 +41,9 @@ export function pcm16BufferToWav(sampleRate: number, pcm16Buffer: SampleData) {
   headerView.setUint32(40, 8 + pcm16Buffer.byteLength, true)
 
   // Append pcm16 data
-  const wavFileBuffer = Buffer.concat([Buffer.from(headerBuffer), Buffer.from(pcm16Buffer)])
+  const wavFileBuffer = Buffer.concat([
+    Buffer.from(headerBuffer),
+    Buffer.from(pcm16Buffer),
+  ])
   return wavFileBuffer
 }

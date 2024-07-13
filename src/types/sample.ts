@@ -17,7 +17,7 @@ export enum SampleType {
   RomMono = 32769,
   RomRight = 32770,
   RomLeft = 32772,
-  RomLinked = 32776
+  RomLinked = 32776,
 }
 
 export interface SampleHeader {

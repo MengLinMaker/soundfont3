@@ -20,7 +20,7 @@ const PRESET_TYPES_BLACKLIST: number[] = [
   GeneratorType.EndLoopAddrsCoarseOffset,
   GeneratorType.SampleModes,
   GeneratorType.ExclusiveClass,
-  GeneratorType.OverridingRootKey
+  GeneratorType.OverridingRootKey,
 ]
 
 /**
@@ -34,7 +34,7 @@ const INSTRUMENT_TYPES_BLACKLIST: number[] = [
   GeneratorType.Unused4,
   GeneratorType.Reserved1,
   GeneratorType.Reserved2,
-  GeneratorType.Reserved3
+  GeneratorType.Reserved3,
 ]
 
 /**
@@ -51,7 +51,10 @@ const RANGE_TYPES: number[] = [GeneratorType.KeyRange, GeneratorType.VelRange]
  * @param {SF2Chunk} chunk - The input chunk
  * @param {string} type - The type, can be 'pgen' or 'igen'
  */
-export const getGenerators = (chunk: SF2Chunk, type: 'pgen' | 'igen'): Generator[] => {
+export const getGenerators = (
+  chunk: SF2Chunk,
+  type: 'pgen' | 'igen',
+): Generator[] => {
   if (chunk.id !== type) {
     throw new ParseError('Unexpected chunk ID', `'${type}'`, `'${chunk.id}'`)
   }
@@ -81,14 +84,14 @@ export const getGenerators = (chunk: SF2Chunk, type: 'pgen' | 'igen'): Generator
         id,
         range: {
           lo: iterator.getByte(),
-          hi: iterator.getByte()
-        }
+          hi: iterator.getByte(),
+        },
       }
     }
 
     return {
       id,
-      value: iterator.getInt16BE()
+      value: iterator.getInt16BE(),
     }
   })
 }
