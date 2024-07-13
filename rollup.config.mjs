@@ -3,11 +3,10 @@ import esbuild from 'rollup-plugin-esbuild'
 
 const outDir = 'dist'
 
-const bundle = config => ({
+const bundle = (config) => ({
   ...config,
   input: 'src/index.ts',
   treeshake: true,
-  external: id => !/^[./]/.test(id),
 })
 
 export default [
@@ -30,7 +29,7 @@ export default [
     plugins: [dts()],
     output: {
       dir: `${outDir}/index.d.ts`,
-      format: 'es',
+      format: 'esm',
       preserveModules: true,
     },
   }),
