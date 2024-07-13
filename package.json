@@ -5,6 +5,9 @@
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "soundfont3",
     "soundfont",
@@ -13,9 +16,11 @@
     "synthesizer"
   ],
   "author": "Meng Lin <menglinmaker@gmail.com>",
-  "repository": "https://github.com/musidi-org/soundfont3.git",
+  "repository": "https://github.com/menglinmaker/soundfont3.git",
   "license": "MIT",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks",
     "format": "prettier --write --list-different .",
     "lint": "eslint --fix && tsc --noEmit",
     "test": "jest --coverage",
@@ -25,9 +30,6 @@
     "docs:start": "vitepress build docs && vitepress preview docs",
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist"
   },
-  "files": [
-    "dist"
-  ],
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
     "@eslint/js": "^9.5.0",
@@ -50,6 +52,7 @@
     "rollup": "^4.18.1",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^6.1.1",
+    "simple-git-hooks": "^2.11.1",
     "smplr": "^0.15.1",
     "soundfont3": "file:.",
     "tailwindcss": "^3.4.4",
@@ -60,25 +63,17 @@
     "vitepress": "^1.2.3",
     "vue": "^3.4.31"
   },
-  "lint-staged": {
-    "*.ts": [
-      "prettier --write --config ./.prettierrc --list-different '**/*.ts'",
-      "git add"
-    ]
+  "dependencies": {
+    "audio-decode": "^2.2.0"
   },
-  "husky": {
-    "hooks": {
-      "post-commit": "git update-index --again",
-      "pre-commit": "pnpm run lint && pnpm run test && lint-staged"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "pnpm run format",
+    "pre-push": "pnpm run format && pnpm run lint"
   },
   "postcss": {
     "plugins": {
       "tailwindcss": {},
       "autoprefixer": {}
     }
-  },
-  "dependencies": {
-    "audio-decode": "^2.2.0"
   }
 }
