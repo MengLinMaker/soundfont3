@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - "**"
+      - '**'
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: latest
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - run: pnpm install
       - run: pnpm run lint && pnpm run test && pnpm run build

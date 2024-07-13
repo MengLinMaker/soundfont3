@@ -20,7 +20,7 @@
     "lint": "eslint --fix && tsc --noEmit",
     "test": "jest --coverage",
     "build": "rimraf dist && rollup -c && pnpm link .",
-    "release": "pnpm run build && changeset publish",
+    "release": "changeset publish",
     "docs:dev": "vitepress dev docs",
     "docs:start": "vitepress build docs && vitepress preview docs",
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist"
