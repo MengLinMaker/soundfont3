@@ -1,13 +1,19 @@
-# Dependency
-node_modules/
-
 # Test
 coverage
+
+# Build
+dist
 
 # Docs
 docs/.vitepress/dist
 docs/.vitepress/cache
 
-# System
+# Dependency
+node_modules
+
+# Environment
 .env
+
+# System
 .DS_Store
+.vscode
