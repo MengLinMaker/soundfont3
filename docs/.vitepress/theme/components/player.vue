@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue'
 import soundFontUrl3 from './piano.sf3?url'
 
 // Library is linked
-import { SoundFont3, toSoundFont2Web } from 'soundfont3'
+import { SoundFont3, toSoundFont2Web } from '.'
 
 const contextStarted = ref(0)
 let sampler: Soundfont2Sampler
@@ -23,6 +23,7 @@ const startPlayer = async () => {
   console.log('AudioContext started')
   sampler = new Soundfont2Sampler(new AudioContext(), {
     url: '',
+    // @ts-ignore SoundFont3 is different type
     createSoundfont: () => soundFont,
   })
   sampler.load.then(() => {
