@@ -23,7 +23,7 @@
     "postinstall": "simple-git-hooks",
     "format": "prettier --write --list-different .",
     "lint": "eslint --fix & tsc --noEmit --incremental",
-    "test": "jest --coverage",
+    "test": "vitest",
     "build": "rimraf dist && rollup -c && pnpm link .",
     "release": "changeset publish",
     "docs:dev": "vitepress dev docs",
