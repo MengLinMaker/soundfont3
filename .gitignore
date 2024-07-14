@@ -3,6 +3,7 @@ coverage
 
 # Build
 dist
+tsconfig.tsbuildinfo
 
 # Docs
 docs/.vitepress/dist

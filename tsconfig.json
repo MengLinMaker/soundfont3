@@ -17,11 +17,12 @@
     "skipLibCheck": true,
     "pretty": true,
     /* Module Config */
-    "baseUrl": "/",
     "isolatedModules": true,
     "esModuleInterop": true,
     "module": "ESNext",
-    "moduleResolution": "Node10"
+    "moduleResolution": "Node10",
+    /* Build Config */
+    "incremental": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules"]
