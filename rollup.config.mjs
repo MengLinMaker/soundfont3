@@ -20,7 +20,7 @@ export default [
       },
       {
         dir: `${outDir}/index.mjs`,
-        format: 'esm',
+        format: 'es',
         preserveModules: true,
       },
     ],
@@ -29,7 +29,7 @@ export default [
     plugins: [dts()],
     output: {
       dir: `${outDir}/index.d.ts`,
-      format: 'esm',
+      format: 'es',
       preserveModules: true,
     },
   }),
