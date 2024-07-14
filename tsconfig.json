@@ -19,8 +19,8 @@
     /* Module Config */
     "isolatedModules": true,
     "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "Node10"
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   },
   "include": ["docs", "src"]
 }

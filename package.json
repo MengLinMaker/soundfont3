@@ -2,9 +2,19 @@
   "name": "@menglinmaker/soundfont3",
   "version": "0.0.3",
   "description": "A SoundFont3 parser for Node.js and web browsers",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "typings": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "files": ["dist"],
   "keywords": ["soundfont3", "soundfont", "sf3", "midi", "synthesizer"],
   "author": "Meng Lin <menglinmaker@gmail.com>",
@@ -16,7 +26,7 @@
     "format": "biome check --write --verbose",
     "lint": "eslint --fix & tsc --noEmit --incremental",
     "test": "vitest",
-    "build": "rimraf dist && rollup -c && pnpm link .",
+    "build": "unbuild && pnpm link .",
     "release": "changeset publish",
     "docs:dev": "vitepress dev docs",
     "docs:start": "vitepress build docs && vitepress preview docs",
@@ -33,15 +43,12 @@
     "gh-pages": "^2.2.0",
     "postcss": "^8.4.39",
     "riff-file": "^1.0.3",
-    "rimraf": "^6.0.1",
-    "rollup": "^4.18.1",
-    "rollup-plugin-dts": "^6.1.1",
-    "rollup-plugin-esbuild": "^6.1.1",
     "simple-git-hooks": "^2.11.1",
     "smplr": "^0.15.1",
     "soundfont3": "file:.",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
     "vitepress": "^1.2.3",
     "vitest": "^2.0.2",
     "vue": "^3.4.31"
