@@ -48,9 +48,6 @@ importers:
       smplr:
         specifier: ^0.15.1
         version: 0.15.1
-      soundfont3:
-        specifier: file:.
-        version: '@menglinmaker/soundfont3@file:'
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4(ts-node@10.9.2(@types/node@10.17.60)(typescript@5.5.3))
@@ -744,9 +741,6 @@ packages:
 
   '@mdn/browser-compat-data@5.5.39':
     resolution: {integrity: sha512-22awGsC5t7sGOT2u5EU1RA64L+F87GWYXHZkh0ofjJsLGObqNDDVSTlumd/+6YK3QwlOIEVWAsqmJymrrSqBlA==}
-
-  '@menglinmaker/soundfont3@file:':
-    resolution: {directory: '', type: directory}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3704,10 +3698,6 @@ snapshots:
       read-yaml-file: 1.1.0
 
   '@mdn/browser-compat-data@5.5.39': {}
-
-  '@menglinmaker/soundfont3@file:':
-    dependencies:
-      audio-decode: 2.2.0
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
