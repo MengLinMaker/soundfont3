@@ -13,6 +13,11 @@ function floatTo16BitPcm(input: Float32Array) {
   return view.buffer
 }
 
+/**
+ * Convert parsed '.sf3' file to '.sf2'.
+ * @param {SoundFont3} _soundFont - SoundFont3 instance '.sf3'.
+ * @returns {SoundFont3} SoundFont3 instance '.sf2'.
+ */
 export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   const soundFont = structuredClone(_soundFont) as never as SoundFont2Raw
   const soundFontVersion = Number(soundFont.metaData.version)

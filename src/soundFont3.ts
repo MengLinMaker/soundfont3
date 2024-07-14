@@ -38,6 +38,12 @@ export const memoize = <T, U>(
   }
 }
 
+/**
+ * @alias constructor
+ * Parses SoundFont file.
+ * @param {Uint8Array | SF2Chunk} chunk - SoundFont binary file.
+ * @returns {SoundFont3} Parsed SoundFont file.
+ */
 export class SoundFont3 {
   /**
    * Create a new `SoundFont3` instance from a raw input buffer.

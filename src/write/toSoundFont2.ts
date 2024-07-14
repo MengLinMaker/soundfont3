@@ -3,6 +3,11 @@ import type { SampleHeader } from '../types/sample'
 import { type SoundFont2Raw, concatBuffer } from './utils'
 import { writeSoundFont } from './writeSoundFont'
 
+/**
+ * Convert parsed '.sf3' file to '.sf2'. Only works on Node.js.
+ * @param {SoundFont3} _soundFont - SoundFont3 instance '.sf3'.
+ * @returns {SoundFont3} SoundFont3 instance '.sf2'.
+ */
 export const toSoundFont2 = async (
   _soundFont: SoundFont3,
   folderPath = `soundfont-${crypto.randomUUID()}`,

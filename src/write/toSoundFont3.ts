@@ -18,7 +18,9 @@ type ToSoundFont3Config =
     }
 
 /**
- * Convert samples to SF3
+ * Convert parsed '.sf2' file to '.sf3'. Only works on Node.js.
+ * @param {SoundFont3} _soundFont - SoundFont3 instance '.sf2'.
+ * @returns {SoundFont3} SoundFont3 instance '.sf3'.
  */
 export const toSoundFont3 = async (
   _soundFont: SoundFont3,
