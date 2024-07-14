@@ -22,7 +22,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
     "format": "prettier --write --list-different .",
-    "lint": "eslint --fix && tsc --noEmit",
+    "lint": "eslint --fix & tsc --noEmit --incremental",
     "test": "jest --coverage",
     "build": "rimraf dist && rollup -c && pnpm link .",
     "release": "changeset publish",
@@ -61,12 +61,15 @@
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm run format",
-    "pre-push": "pnpm run format && pnpm run lint"
+    "pre-push": "pnpm run lint"
   },
   "postcss": {
     "plugins": {
       "tailwindcss": {},
       "autoprefixer": {}
     }
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

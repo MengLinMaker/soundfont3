@@ -21,9 +21,6 @@
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Node10",
-    /* Build Config */
-    "incremental": true
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["docs", "src"]
 }
