@@ -30,8 +30,7 @@
         "useNodejsImportProtocol": "off",
         "noNonNullAssertion": "off"
       }
-    },
-    "ignore": ["docs", "tests"]
+    }
   },
   "javascript": {
     "formatter": {
@@ -40,7 +39,7 @@
     }
   },
   "files": {
-    "ignore": ["coverage", "dist", "node_modules"],
+    "ignore": ["coverage", "dist", "docs/.vitepress", "node_modules"],
     "ignoreUnknown": true
   }
 }

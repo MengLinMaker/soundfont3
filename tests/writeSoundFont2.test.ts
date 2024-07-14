@@ -17,12 +17,12 @@ const buffer = readFileSync(soundFontUrl)
 const soundFont = new SoundFont3(buffer)
 
 describe('Write SoundFont2', () => {
-  it('Only accept even padding', async () => {
+  it('Only accept even padding', () => {
     const someBuffer = Buffer.from('')
     expect(() => writeRiffSubChunk('ICMT', someBuffer, 1)).toThrow(Error)
   })
 
-  it('should write all metaData info', async () => {
+  it('should write all metaData info', () => {
     const metaData: MetaData = {
       version: '2.10',
       soundEngine: 'a',
@@ -189,7 +189,7 @@ describe('Write SoundFont2', () => {
     expect(Buffer.from(metaDataBuffer)).toStrictEqual(expectedBuffer)
   })
 
-  it('should write metaData', async () => {
+  it('should write metaData', () => {
     const metaDataBuffer = Buffer.from(writeMetaDataChunk(soundFont.metaData))
     const metaDataChunk = soundFont.chunk.subChunks[0]
     const subBuffer = metaDataBuffer.slice(8, metaDataBuffer.length)
@@ -211,7 +211,7 @@ describe('Write SoundFont2', () => {
     expect(subBuffer).toStrictEqual(expectedBuffer)
   })
 
-  it('should write sampleData', async () => {
+  it('should write sampleData', () => {
     const sampleDataBuffer = Buffer.from(
       writeSampleDataChunk(soundFont.sampleData),
     )
@@ -236,7 +236,7 @@ describe('Write SoundFont2', () => {
     expect(subBuffer.equals(expectedBuffer)).toBe(true)
   })
 
-  it('should write presetData', async () => {
+  it('should write presetData', () => {
     const presetDataBuffer = Buffer.from(
       writePresetDataChunk(soundFont.presetData),
     )
@@ -258,7 +258,7 @@ describe('Write SoundFont2', () => {
     expect(subBuffer).toStrictEqual(expectedBuffer)
   })
 
-  it('should write same parsable SoundFont', async () => {
+  it('should write same parsable SoundFont', () => {
     const newSoundFontBuffer = Buffer.from(writeSoundFont(soundFont))
     const newSoundFont = new SoundFont3(newSoundFontBuffer)
 
