@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { SoundFont3 } from '../src'

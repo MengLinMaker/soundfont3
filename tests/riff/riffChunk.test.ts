@@ -1,3 +1,4 @@
+import { describe, it, expect, vitest } from 'vitest'
 import buffer from './buffer.mock'
 import { ChunkIterator } from '../../src/riff/chunkIterator'
 import { parseBuffer } from '../../src/riff/parser'
@@ -24,7 +25,7 @@ describe('RIFFChunk', () => {
   })
 
   it('should iterate over the chunk', () => {
-    const callback = jest.fn((iterator: ChunkIterator<void>) => {
+    const callback = vitest.fn((iterator: ChunkIterator<void>) => {
       iterator.skip(1)
     })
 
