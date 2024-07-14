@@ -5,23 +5,15 @@
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "soundfont3",
-    "soundfont",
-    "sf3",
-    "midi",
-    "synthesizer"
-  ],
+  "files": ["dist"],
+  "keywords": ["soundfont3", "soundfont", "sf3", "midi", "synthesizer"],
   "author": "Meng Lin <menglinmaker@gmail.com>",
   "repository": "https://github.com/menglinmaker/soundfont3.git",
   "license": "MIT",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
-    "format": "pretty-quick --write --list-different .",
+    "format": "biome format --write --log-level=warn --verbose --files-ignore-unknown=true",
     "lint": "eslint --fix & tsc --noEmit --incremental",
     "test": "vitest",
     "build": "rimraf dist && rollup -c && pnpm link .",
@@ -31,6 +23,7 @@
     "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.8.3",
     "@changesets/cli": "^2.27.7",
     "@eslint/js": "^9.5.0",
     "@types/node": "^10.17.60",
@@ -40,7 +33,6 @@
     "eslint-plugin-compat": "^5.0.0",
     "gh-pages": "^2.2.0",
     "postcss": "^8.4.39",
-    "pretty-quick": "^4.0.0",
     "riff-file": "^1.0.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.18.1",
@@ -69,7 +61,5 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "defaults"
-  ]
+  "browserslist": ["defaults"]
 }
