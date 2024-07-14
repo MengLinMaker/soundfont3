@@ -1,6 +1,6 @@
-import { existsSync, readdirSync, statSync } from 'fs'
-import { join, parse } from 'path'
-import { DefaultTheme, defineConfig } from 'vitepress'
+import { existsSync, readdirSync, statSync } from 'node:fs'
+import { join, parse } from 'node:path'
+import { type DefaultTheme, defineConfig } from 'vitepress'
 
 const docDir = __dirname.replace('.vitepress', '')
 const routesFolder = 'routes'
@@ -9,7 +9,7 @@ const routes = join(docDir, routesFolder)
 // Auto create document routes
 const sidebarWalkDir = (dir) => {
   const paths: DefaultTheme.Sidebar = []
-  readdirSync(dir).forEach((fileName) => {
+  readdirSync(dir).map((fileName) => {
     const dirPath = join(dir, fileName)
     const isDirectory = statSync(dirPath).isDirectory()
     if (isDirectory) {

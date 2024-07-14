@@ -1,5 +1,5 @@
-import { SampleData } from '../../types'
-import { dataViewWriteString } from '../utils'
+import type { SampleData } from '../types'
+import { dataViewWriteString } from './utils'
 
 /**
  * Converts a pcm int16 audio data to WAV file as a buffer.

@@ -1,5 +1,5 @@
-import { SampleData } from '../../types'
-import { SF_SDTA_CHUNKS_ID } from '../../constants'
+import type { SF_SDTA_CHUNKS_ID } from '../../constants'
+import type { SampleData } from '../../types'
 import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
 
 /**

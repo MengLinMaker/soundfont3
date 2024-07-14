@@ -1,6 +1,6 @@
 import { ParseError } from './parseError'
-import { getStringFromBuffer } from './utils'
 import { RIFFChunk } from './riffChunk'
+import { getStringFromBuffer } from './utils'
 
 /**
  * Attempts to parse a RIFF file from a raw buffer.
@@ -84,6 +84,6 @@ export const getSubChunks = (buffer: Uint8Array): RIFFChunk[] => {
  * @param {Buffer} buffer - The input buffer
  * @param {number} start - Where to start reading the chunk ID from the buffer
  */
-export const getChunkId = (buffer: Uint8Array, start: number = 0) => {
+export const getChunkId = (buffer: Uint8Array, start = 0) => {
   return getStringFromBuffer(buffer.subarray(start, start + 4))
 }

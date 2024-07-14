@@ -1,6 +1,3 @@
-import { ParseError, RIFFChunk } from './riff'
-import { MetaData, PresetData } from './types'
-import { SF_INFO_CHUNKS_ID, SF_VERSION_LENGTH } from './constants'
 import {
   getGenerators,
   getInstrumentHeaders,
@@ -9,6 +6,9 @@ import {
   getSampleHeaders,
   getZones,
 } from './chunks'
+import { type SF_INFO_CHUNKS_ID, SF_VERSION_LENGTH } from './constants'
+import { ParseError, RIFFChunk } from './riff'
+import type { MetaData, PresetData } from './types'
 
 export class SF2Chunk extends RIFFChunk {
   /**

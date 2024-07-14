@@ -1,7 +1,7 @@
 import { SoundFont3 } from '../soundFont3'
+import type { SampleHeader } from '../types/sample'
+import { type SoundFont2Raw, concatBuffer } from './utils'
 import { writeSoundFont } from './writeSoundFont'
-import { SampleHeader } from '../types/sample'
-import { concatBuffer, SoundFont2Raw } from './utils'
 
 export const toSoundFont2 = async (
   _soundFont: SoundFont3,

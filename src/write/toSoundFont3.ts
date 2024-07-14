@@ -1,9 +1,9 @@
 import { SoundFont3 } from '../soundFont3'
+import type { SampleHeader } from '../types/sample'
+import type { Sample } from '../types/sample'
+import type { SoundFont2Raw } from './utils'
 import { writeSoundFont } from './writeSoundFont'
-import { SampleHeader } from '../types/sample'
-import { pcm16BufferToWav } from './convert'
-import { SoundFont2Raw } from './utils'
-import { Sample } from '../types/sample'
+import { pcm16BufferToWav } from './writeWav'
 
 type ToSoundFont3Config =
   | {

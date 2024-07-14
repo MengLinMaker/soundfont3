@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest'
-import { join } from 'path'
 import { readFileSync } from 'fs'
+import { join } from 'path'
 import { RIFFFile } from 'riff-file'
+import { describe, expect, it } from 'vitest'
 import { SoundFont3 } from '../src'
 import { extractAudioFiles, toSoundFont2, writeSoundFont } from '../src/write'
 

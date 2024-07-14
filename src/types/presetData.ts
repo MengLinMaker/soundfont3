@@ -1,9 +1,9 @@
-import { PresetHeader } from './preset'
-import { Zone } from './zone'
-import { Modulator } from './modulator'
-import { Generator } from './generator'
-import { InstrumentHeader } from './instrument'
-import { SampleHeader } from './sample'
+import type { Generator } from './generator'
+import type { InstrumentHeader } from './instrument'
+import type { Modulator } from './modulator'
+import type { PresetHeader } from './preset'
+import type { SampleHeader } from './sample'
+import type { Zone } from './zone'
 
 /**
  * All the data found in the `pdta` sub-chunk.

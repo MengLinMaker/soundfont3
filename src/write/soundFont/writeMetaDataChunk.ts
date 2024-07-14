@@ -1,7 +1,7 @@
-import { MetaData } from '../../types'
-import { SF_INFO_CHUNKS_ID } from '../../constants'
-import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
+import type { SF_INFO_CHUNKS_ID } from '../../constants'
+import type { MetaData } from '../../types'
 import { concatBuffer } from '../utils'
+import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
 
 /**
  * Writes a metadata chunk buffer.

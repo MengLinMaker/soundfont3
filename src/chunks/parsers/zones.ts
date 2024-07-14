@@ -1,14 +1,14 @@
-import { SF2Chunk } from '../../chunk'
-import { ParseError } from '../../riff'
+import type { SF2Chunk } from '../../chunk'
 import { SF_BAG_SIZE } from '../../constants'
+import { ParseError } from '../../riff'
 import {
-  Generator,
+  type Generator,
   GeneratorType,
-  Modulator,
-  Zone,
-  ZoneItems,
-  ZoneItemsWithReference,
-  ZoneMap,
+  type Modulator,
+  type Zone,
+  type ZoneItems,
+  type ZoneItemsWithReference,
+  type ZoneMap,
 } from '../../types'
 
 /**

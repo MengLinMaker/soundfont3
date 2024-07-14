@@ -42,7 +42,7 @@ export class RIFFChunk {
    * @param {number} [position]
    * @param {number} [length]
    */
-  public getString(position: number = 0, length?: number): string {
+  public getString(position = 0, length?: number): string {
     return getStringFromBuffer(
       this.getBuffer(position, length || this.length - position),
     )
@@ -53,7 +53,7 @@ export class RIFFChunk {
    *
    * @param {number} [position]
    */
-  public getInt16(position: number = 0): number {
+  public getInt16(position = 0): number {
     return this.buffer[position++] | (this.buffer[position] << 8)
   }
 
@@ -62,7 +62,7 @@ export class RIFFChunk {
    *
    * @param {number} [position]
    */
-  public getUInt32(position: number = 0): number {
+  public getUInt32(position = 0): number {
     return (
       (this.buffer[position++] |
         (this.buffer[position++] << 8) |
@@ -77,7 +77,7 @@ export class RIFFChunk {
    *
    * @param {number} [position]
    */
-  public getByte(position: number = 0): number {
+  public getByte(position = 0): number {
     return this.buffer[position]
   }
 
@@ -86,7 +86,7 @@ export class RIFFChunk {
    *
    * @param {number} [position]
    */
-  public getChar(position: number = 0): number {
+  public getChar(position = 0): number {
     return (this.buffer[position] << 24) >> 24
   }
 
@@ -95,7 +95,7 @@ export class RIFFChunk {
    *
    * @param {number} [start] - The position where to start iterating. Defaults to 0.
    */
-  public iterator<T>(start: number = 0): ChunkIterator<T> {
+  public iterator<T>(start = 0): ChunkIterator<T> {
     return new ChunkIterator<T>(this, start)
   }
 
@@ -109,7 +109,7 @@ export class RIFFChunk {
    */
   public iterate<T>(
     callback: (iterator: ChunkIterator<T>) => T | null,
-    start: number = 0,
+    start = 0,
   ): T[] {
     const iterator = new ChunkIterator<T>(this, start)
     iterator.iterate(callback)

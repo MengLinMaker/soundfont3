@@ -1,6 +1,6 @@
-import { MetaData } from '../types/metaData'
-import { PresetData } from '../types/presetData'
-import { Sample, SampleData } from '../types/sample'
+import type { MetaData } from '../types/metaData'
+import type { PresetData } from '../types/presetData'
+import type { Sample, SampleData } from '../types/sample'
 
 export type SoundFont2Raw = {
   metaData: MetaData

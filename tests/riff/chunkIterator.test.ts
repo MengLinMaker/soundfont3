@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { ParseError } from '../../src/riff'
 import { parseBuffer } from '../../src/riff'
 import buffer from './buffer.mock'

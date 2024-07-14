@@ -1,7 +1,7 @@
-import { SF2Chunk } from '../chunk'
-import { ParseError } from '../riff'
+import type { SF2Chunk } from '../chunk'
 import { SF_INSTRUMENT_HEADER_SIZE } from '../constants'
-import { InstrumentHeader } from '../types'
+import { ParseError } from '../riff'
+import type { InstrumentHeader } from '../types'
 
 /**
  * Get all instrument headers from a `inst` sub-chunk.

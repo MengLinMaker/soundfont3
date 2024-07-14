@@ -1,5 +1,5 @@
-import { ZoneItems } from './zone'
-import { Instrument } from './instrument'
+import type { Instrument } from './instrument'
+import type { ZoneItems } from './zone'
 
 export interface PresetHeader {
   /**

@@ -1,7 +1,7 @@
-import { SF2Chunk } from '../chunk'
-import { ParseError } from '../riff'
+import type { SF2Chunk } from '../chunk'
 import { SF_SAMPLE_HEADER_SIZE } from '../constants'
-import { SampleHeader } from '../types'
+import { ParseError } from '../riff'
+import type { SampleHeader } from '../types'
 
 /**
  * Get all sample headers from a `shdr` sub-chunk.

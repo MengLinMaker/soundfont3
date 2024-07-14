@@ -1,17 +1,17 @@
-import {
-  Bank,
-  GeneratorType,
-  Instrument,
-  Key,
-  MetaData,
-  Preset,
-  PresetData,
-  Sample,
-  ZoneItems,
-} from './types'
 import { SF2Chunk } from './chunk'
-import { parseBuffer, ParseError } from './riff'
 import { getItemsInZone } from './chunks'
+import { ParseError, parseBuffer } from './riff'
+import {
+  type Bank,
+  GeneratorType,
+  type Instrument,
+  type Key,
+  type MetaData,
+  type Preset,
+  type PresetData,
+  type Sample,
+  type ZoneItems,
+} from './types'
 
 /**
  * Returns a memoized function for the original function. Function arguments are serialized as a
@@ -135,8 +135,8 @@ export class SoundFont3 {
    */
   public getKeyData(
     memoizedKeyNumber: number,
-    memoizedBankNumber: number = 0,
-    memoizedPresetNumber: number = 0,
+    memoizedBankNumber = 0,
+    memoizedPresetNumber = 0,
   ): Key | null {
     // Get a memoized version of the function
     return memoize(

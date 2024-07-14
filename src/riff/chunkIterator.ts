@@ -1,4 +1,4 @@
-import { RIFFChunk } from './riffChunk'
+import type { RIFFChunk } from './riffChunk'
 import { getStringFromBuffer } from './utils'
 
 /**
@@ -7,9 +7,9 @@ import { getStringFromBuffer } from './utils'
 export class ChunkIterator<T> {
   public readonly target: T[] = []
   private readonly chunk: RIFFChunk
-  private position: number = 0
+  private position = 0
 
-  public constructor(chunk: RIFFChunk, start: number = 0) {
+  public constructor(chunk: RIFFChunk, start = 0) {
     this.chunk = chunk
     this.position = start
   }
@@ -41,7 +41,7 @@ export class ChunkIterator<T> {
    * @param {number} length - The length of the string. If no length is specified, a default of 20
    *   is assumed
    */
-  public getString(length: number = 20): string {
+  public getString(length = 20): string {
     const text = getStringFromBuffer(this.getBuffer(this.position, length))
     this.position += length
     return text

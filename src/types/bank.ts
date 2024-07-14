@@ -1,4 +1,4 @@
-import { Preset } from './preset'
+import type { Preset } from './preset'
 
 /**
  * Describes a MIDI bank.

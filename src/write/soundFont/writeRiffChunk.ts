@@ -1,4 +1,4 @@
-import {
+import type {
   SF_SUB_CHUNKS_ID,
   SF_TOP_CHUNKS_FORMAT,
   SF_TOP_CHUNKS_ID,
@@ -15,7 +15,7 @@ import { concatBuffer, dataViewWriteString } from '../utils'
 export const writeRiffSubChunk = (
   chunkId: SF_SUB_CHUNKS_ID,
   contentBuffer: ArrayBuffer,
-  paddingMax: number = 0,
+  paddingMax = 0,
 ) => {
   if (paddingMax % 2 !== 0) throw Error('Max padding must be even number')
 

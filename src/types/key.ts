@@ -1,9 +1,9 @@
-import { Preset } from './preset'
-import { Instrument } from './instrument'
-import { Sample } from './sample'
-import { ZoneMap } from './zone'
-import { Generator } from './generator'
-import { Modulator } from './modulator'
+import type { Generator } from './generator'
+import type { Instrument } from './instrument'
+import type { Modulator } from './modulator'
+import type { Preset } from './preset'
+import type { Sample } from './sample'
+import type { ZoneMap } from './zone'
 
 /**
  * Key data specific to a MIDI key.

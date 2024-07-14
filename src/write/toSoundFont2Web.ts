@@ -1,9 +1,9 @@
 import { SoundFont3 } from '../soundFont3'
-import { SampleHeader } from '../types'
+import type { SampleHeader } from '../types'
+import { type SoundFont2Raw, concatBuffer } from './utils'
 import { writeSoundFont } from './writeSoundFont'
-import { SoundFont2Raw, concatBuffer } from './utils'
 
-function floatTo16BitPCM(input: Float32Array) {
+function floatTo16BitPcm(input: Float32Array) {
   const view = new DataView(new ArrayBuffer(input.length * 2))
   let offset = 0
   for (let i = 0; i < input.length; i++, offset += 2) {
@@ -24,7 +24,7 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   const decode = await import('audio-decode')
   for (const sample of soundFont.samples) {
     const audioBuffer = await decode.default(new Int8Array(sample.data).buffer)
-    const wavBuffer = floatTo16BitPCM(audioBuffer.getChannelData(0))
+    const wavBuffer = floatTo16BitPcm(audioBuffer.getChannelData(0))
     const padBuffer = new ArrayBuffer(2 - (wavBuffer.byteLength % 2))
 
     sample.header.start = sampleOffset

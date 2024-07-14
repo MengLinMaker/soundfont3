@@ -1,5 +1,5 @@
-import { Modulator } from './modulator'
-import { Generator, GeneratorType, Range } from './generator'
+import type { Generator, GeneratorType, Range } from './generator'
+import type { Modulator } from './modulator'
 
 /**
  * Describes the generator and modulator index for a preset or instrument zone, defined to play

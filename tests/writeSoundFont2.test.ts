@@ -1,16 +1,16 @@
-import { describe, it, expect } from 'vitest'
-import { join } from 'path'
 import { readFileSync } from 'fs'
+import { join } from 'path'
+import { describe, expect, it } from 'vitest'
 import { SoundFont3 } from '../src'
-import {
-  writeRiffSubChunk,
-  writeMetaDataChunk,
-  writeSampleDataChunk,
-  writePresetDataChunk,
-} from '../src/write/soundFont'
+import type { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
+import type { MetaData } from '../src/types'
 import { writeSoundFont } from '../src/write'
-import { SF_TOP_CHUNKS_FORMAT, SF_TOP_CHUNKS_ID } from '../src/constants'
-import { MetaData } from '../src/types'
+import {
+  writeMetaDataChunk,
+  writePresetDataChunk,
+  writeRiffSubChunk,
+  writeSampleDataChunk,
+} from '../src/write/soundFont'
 
 const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
 const buffer = readFileSync(soundFontUrl)

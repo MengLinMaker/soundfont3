@@ -1,5 +1,5 @@
-import { SoundFont3 } from '../soundFont3'
-import { pcm16BufferToWav } from './convert'
+import type { SoundFont3 } from '../soundFont3'
+import { pcm16BufferToWav } from './writeWav'
 
 /**
  * Extract samples from SoundFont to folder
@@ -22,7 +22,7 @@ export const extractAudioFiles = async (
       writeFileSync(`${folderPath}/${header.name}.wav`, wavFile)
     }
   } else if (soundFontVersion >= 3 && soundFontVersion < 4) {
-    soundFont.samples.forEach((sample) => {
+    soundFont.samples.map((sample) => {
       writeFileSync(
         `${folderPath}/${sample.header.name}.ogg`,
         Buffer.from(sample.data),

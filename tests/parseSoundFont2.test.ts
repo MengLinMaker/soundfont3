@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'fs'
-import { join } from 'path'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { RIFFFile } from 'riff-file'
+import { describe, expect, it } from 'vitest'
 import { SoundFont3 } from '../src'
-import { extractAudioFiles, toSoundFont3, writeSoundFont } from '../src/write'
 import { ParseError } from '../src/riff'
+import { extractAudioFiles, toSoundFont3, writeSoundFont } from '../src/write'
 
 const soundFontUrl = join(__dirname, 'fonts/sf2/piano.sf2')
 const buffer = readFileSync(soundFontUrl)

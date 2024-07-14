@@ -1,11 +1,11 @@
-import { SoundFont3 } from '../soundFont3'
+import type { SoundFont3 } from '../soundFont3'
 import {
   writeMetaDataChunk,
   writePresetDataChunk,
   writeRiffTopChunk,
   writeSampleDataChunk,
 } from './soundFont'
-import { SoundFont2Raw, concatBuffer } from './utils'
+import { type SoundFont2Raw, concatBuffer } from './utils'
 
 /**
  * Writes a sample data chunk buffer.

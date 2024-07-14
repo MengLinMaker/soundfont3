@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-// @ts-expect-error File import will not have TypeScript definition.
-import soundFontUrl3 from './piano.sf3?url'
 import { Soundfont2Sampler } from 'smplr'
 import { onMounted, ref } from 'vue'
+// @ts-expect-error File import will not have TypeScript definition.
+import soundFontUrl3 from './piano.sf3?url'
 
 // Library is linked
 import { SoundFont3, toSoundFont2Web } from 'soundfont3'
 
-let contextStarted = ref(0)
+const contextStarted = ref(0)
 let sampler: Soundfont2Sampler
 let soundFont: SoundFont3
 
@@ -23,7 +23,7 @@ const startPlayer = async () => {
   console.log('AudioContext started')
   sampler = new Soundfont2Sampler(new AudioContext(), {
     url: '',
-    createSoundfont: () => soundFont as any,
+    createSoundfont: () => soundFont,
   })
   sampler.load.then(() => {
     sampler.loadInstrument(sampler.instrumentNames[0])

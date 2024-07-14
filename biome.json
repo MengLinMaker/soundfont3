@@ -4,10 +4,43 @@
     "enabled": true,
     "indentStyle": "space"
   },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "performance": {
+        "noBarrelFile": "off",
+        "noReExportAll": "off"
+      },
+      "correctness": {
+        "noNodejsModules": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off"
+      },
+      "suspicious": {
+        "noImplicitAnyLet": "off"
+      },
+      "style": {
+        "noUselessElse": "off",
+        "useBlockStatements": "off",
+        "noParameterAssign": "off",
+        "noDefaultExport": "off",
+        "useNamingConvention": "off",
+        "useNodejsImportProtocol": "off",
+        "noNonNullAssertion": "off"
+      }
+    },
+    "ignore": ["docs", "tests"]
+  },
   "javascript": {
     "formatter": {
       "semicolons": "asNeeded",
       "quoteStyle": "single"
     }
+  },
+  "files": {
+    "ignore": ["coverage", "dist", "node_modules"],
+    "ignoreUnknown": true
   }
 }

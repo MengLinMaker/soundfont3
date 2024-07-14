@@ -1,7 +1,7 @@
-import { SF_PDTA_CHUNKS_ID } from '../../constants'
-import { PresetData } from '../../types'
-import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
+import type { SF_PDTA_CHUNKS_ID } from '../../constants'
+import type { PresetData } from '../../types'
 import { concatBuffer } from '../utils'
+import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
 
 /**
  * Writes a preset data chunk buffer.
@@ -85,7 +85,7 @@ export const writePresetDataChunk = (presetData: PresetData) => {
         throw Error(
           'Both "range" and "value" are defined in "pgen" when only one should be defined.',
         )
-      else if (!rangeDefined && !valueDefined)
+      else if (!(rangeDefined || valueDefined))
         Error(
           'Neither "range" nor "value" are defined in "pgen" when only one should be defined.',
         )
@@ -157,7 +157,7 @@ export const writePresetDataChunk = (presetData: PresetData) => {
         throw Error(
           'Both "range" and "value" are defined in "pgen" when only one should be defined.',
         )
-      else if (!rangeDefined && !valueDefined)
+      else if (!(rangeDefined || valueDefined))
         Error(
           'Neither "range" nor "value" are defined in "pgen" when only one should be defined.',
         )

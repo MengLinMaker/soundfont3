@@ -1,7 +1,7 @@
-import { describe, it, expect, vitest } from 'vitest'
-import buffer from './buffer.mock'
-import { ChunkIterator } from '../../src/riff/chunkIterator'
+import { describe, expect, it, vitest } from 'vitest'
+import type { ChunkIterator } from '../../src/riff/chunkIterator'
 import { parseBuffer } from '../../src/riff/parser'
+import buffer from './buffer.mock'
 
 const chunk = parseBuffer(buffer)
 
