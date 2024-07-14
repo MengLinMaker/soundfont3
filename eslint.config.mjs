@@ -2,7 +2,7 @@ import compat from 'eslint-plugin-compat'
 
 export default [
   {
-    ignores: ['coverage', 'dist', 'node_modules'],
+    ignores: ['coverage', 'dist', 'docs/.vitepress/cache', 'node_modules'],
   },
   compat.configs['flat/recommended'],
 ]

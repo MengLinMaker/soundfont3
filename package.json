@@ -2,7 +2,6 @@
   "name": "@menglinmaker/soundfont3",
   "version": "0.0.3",
   "description": "A SoundFont3 parser for Node.js and web browsers",
-  "type": "module",
   "exports": {
     ".": {
       "import": {
