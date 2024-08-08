@@ -26,9 +26,11 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   const sampleHeaders: SampleHeader[] = []
   let sampleBuffer = new Int8Array()
   let sampleOffset = 0
-  const decode = await import('audio-decode')
+  const audioContext = new AudioContext()
   for (const sample of soundFont.samples) {
-    const audioBuffer = await decode.default(new Int8Array(sample.data).buffer)
+    const audioBuffer = await audioContext.decodeAudioData(
+      new Int8Array(sample.data).buffer,
+    )
     const wavBuffer = floatTo16BitPcm(audioBuffer.getChannelData(0))
     const padBuffer = new ArrayBuffer(2 - (wavBuffer.byteLength % 2))
 
