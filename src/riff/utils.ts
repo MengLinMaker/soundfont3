@@ -6,6 +6,11 @@
  * @param {Buffer} buffer - The input buffer
  */
 export const getStringFromBuffer = (buffer: Uint8Array): string => {
-  const decoded = new TextDecoder('utf8').decode(buffer)
-  return decoded.split(/\0/)[0].trim()
+  let decoded = ''
+  for (let i = 0; i < buffer.byteLength; i++) {
+    const decodedSub = new TextDecoder('utf8').decode(buffer.slice(i, i + 1))
+    if (decodedSub.match(/\0/)) break
+    decoded += decodedSub
+  }
+  return decoded
 }
