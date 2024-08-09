@@ -19,7 +19,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
     view.setUint16(0, Number(soundFontVersion[0]), true)
     view.setUint16(2, Number(soundFontVersion[1]), true)
     const chunkBuffer = writeRiffSubChunk(chunkId, view.buffer)
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_INFO_CHUNKS_ID = 'isng'
@@ -28,7 +28,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.soundEngine),
       6,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_INFO_CHUNKS_ID = 'INAM'
@@ -37,7 +37,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.name),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
 
   // 8 non-essential metadata
@@ -48,7 +48,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.rom),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.romVersion) {
     const chunkId: SF_INFO_CHUNKS_ID = 'iver'
@@ -57,7 +57,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
     iverView.setUint16(0, Number(romVersion[0]))
     iverView.setUint16(2, Number(romVersion[1]))
     const chunkBuffer = writeRiffSubChunk(chunkId, iverView.buffer)
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.creationDate) {
     const chunkId: SF_INFO_CHUNKS_ID = 'ICRD'
@@ -66,7 +66,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.creationDate),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.author) {
     const chunkId: SF_INFO_CHUNKS_ID = 'IENG'
@@ -75,7 +75,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.author),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.product) {
     const chunkId: SF_INFO_CHUNKS_ID = 'IPRD'
@@ -84,7 +84,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.product),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.copyright) {
     const chunkId: SF_INFO_CHUNKS_ID = 'ICOP'
@@ -93,7 +93,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.copyright),
       6,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.comments) {
     const chunkId: SF_INFO_CHUNKS_ID = 'ICMT'
@@ -102,7 +102,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.comments),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   if (metaData.createdBy) {
     const chunkId: SF_INFO_CHUNKS_ID = 'ISFT'
@@ -111,7 +111,7 @@ export const writeMetaDataChunk = (metaData: MetaData) => {
       textEncoder.encode(metaData.createdBy),
       2,
     )
-    metaDataBuffer = concatBuffer(metaDataBuffer, chunkBuffer)
+    metaDataBuffer = concatBuffer([metaDataBuffer, chunkBuffer])
   }
   return writeRiffTopChunk('LIST', 'INFO', metaDataBuffer)
 }

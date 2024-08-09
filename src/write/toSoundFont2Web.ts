@@ -26,7 +26,7 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   const audioContext = new AudioContext()
 
   const sampleHeaders: SampleHeader[] = []
-  let sampleBuffer = new Int8Array()
+  const sampleBuffer: ArrayBuffer[] = []
   let sampleOffset = 0
   for (const sample of soundFont.samples) {
     // Decoding audio on main thread may block UI.
@@ -44,22 +44,21 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
     sample.header.endLoop = sampleLen - 128
     sample.header.startLoop = sampleLen - loopLen - 128
 
-    sampleBuffer = concatBuffer(
-      concatBuffer(sampleBuffer, wavBuffer),
-      padBuffer,
-    )
+    sampleBuffer.push(wavBuffer)
+    sampleBuffer.push(padBuffer)
     sampleOffset += wavBuffer.byteLength / 2 + padBuffer.byteLength
     sampleHeaders.push(sample.header)
   }
 
   await audioContext.close()
 
+  const totalSampleBuffer = concatBuffer(sampleBuffer)
   console.info(
-    `Sample size: ${(sampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`,
+    `Sample size: ${(totalSampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`,
   )
 
   soundFont.metaData.version = '2.04'
-  soundFont.sampleData = new Int16Array(sampleBuffer)
+  soundFont.sampleData = new Int16Array(totalSampleBuffer)
   soundFont.presetData.sampleHeaders = sampleHeaders
   return new SoundFont3(new Uint8Array(writeSoundFont(soundFont)))
 }

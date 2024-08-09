@@ -23,13 +23,13 @@ export const writeRiffSubChunk = (
     const padBuffer = new ArrayBuffer(
       paddingMax - (contentBuffer.byteLength % 2),
     )
-    contentBuffer = concatBuffer(contentBuffer, padBuffer)
+    contentBuffer = concatBuffer([contentBuffer, padBuffer])
   }
 
   const instView = new DataView(new ArrayBuffer(8))
   dataViewWriteString(instView, 0, chunkId)
   instView.setUint32(4, contentBuffer.byteLength, true)
-  return concatBuffer(instView.buffer, contentBuffer)
+  return concatBuffer([instView.buffer, contentBuffer])
 }
 
 /**
@@ -48,5 +48,5 @@ export const writeRiffTopChunk = (
   dataViewWriteString(instView, 0, chunkId)
   instView.setUint32(4, 4 + contentBuffer.byteLength, true)
   dataViewWriteString(instView, 8, format)
-  return concatBuffer(instView.buffer, contentBuffer)
+  return concatBuffer([instView.buffer, contentBuffer])
 }

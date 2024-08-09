@@ -14,7 +14,7 @@ const extendStringBuffer = (string: string, desiredByte: number) => {
   const stringBuffer = textEncoder.encode(string)
   const padLength = desiredByte - stringBuffer.byteLength
   if (padLength < 0) return stringBuffer.slice(0, desiredByte)
-  return concatBuffer(stringBuffer, new ArrayBuffer(padLength))
+  return concatBuffer([stringBuffer, new ArrayBuffer(padLength)])
 }
 
 /**
@@ -28,7 +28,7 @@ export const writePresetDataChunk = (presetData: PresetData) => {
   // Presets
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'phdr'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.presetHeaders.map((e) => {
       const nameBuffer = extendStringBuffer(e.name, 20)
       const view = new DataView(new ArrayBuffer(18))
@@ -38,29 +38,27 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       view.setUint32(6, e.library, true)
       view.setUint32(10, e.genre, true)
       view.setUint32(14, e.morphology, true)
-      loopBuffer = concatBuffer(
-        loopBuffer,
-        concatBuffer(nameBuffer, view.buffer),
-      )
+      loopBuffer.push(nameBuffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'pbag'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.presetZones.map((e) => {
       const view = new DataView(new ArrayBuffer(4))
       view.setInt16(0, e.generatorIndex, true)
       view.setInt16(2, e.modulatorIndex, true)
-      loopBuffer = concatBuffer(loopBuffer, view.buffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'pmod'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.presetModulators.map((e) => {
       const view = new DataView(new ArrayBuffer(10))
       view.setUint16(0, e.source.index, true)
@@ -68,14 +66,14 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       view.setInt16(0, e.value, true)
       view.setUint16(0, e.valueSource.index, true)
       view.setUint16(0, e.transform, true)
-      loopBuffer = concatBuffer(loopBuffer, view.buffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'pgen'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.presetGenerators.map((e) => {
       const view = new DataView(new ArrayBuffer(4))
       view.setUint16(0, e.id, true)
@@ -95,44 +93,42 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       } else if (typeof e.value !== 'undefined') {
         view.setUint16(2, e.value, true)
       }
-      loopBuffer = concatBuffer(loopBuffer, view.buffer)
+      loopBuffer.push(view.buffer)
     })
-    loopBuffer = concatBuffer(loopBuffer, new ArrayBuffer(4))
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    loopBuffer.push(new ArrayBuffer(4))
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
 
   // Instruments
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'inst'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.instrumentHeaders.map((e) => {
       const nameBuffer = extendStringBuffer(e.name, 20)
       const view = new DataView(new ArrayBuffer(2))
       view.setUint16(0, e.bagIndex, true)
-      loopBuffer = concatBuffer(
-        loopBuffer,
-        concatBuffer(nameBuffer, view.buffer),
-      )
+      loopBuffer.push(nameBuffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'ibag'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.instrumentZones.map((e) => {
       const view = new DataView(new ArrayBuffer(4))
       view.setInt16(0, e.generatorIndex, true)
       view.setInt16(2, e.modulatorIndex, true)
-      loopBuffer = concatBuffer(loopBuffer, view.buffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'imod'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.instrumentModulators.map((e) => {
       const view = new DataView(new ArrayBuffer(10))
       view.setUint16(0, e.source.index, true)
@@ -140,14 +136,14 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       view.setInt16(0, e.value, true)
       view.setUint16(0, e.valueSource.index, true)
       view.setUint16(0, e.transform, true)
-      loopBuffer = concatBuffer(loopBuffer, view.buffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'igen'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.instrumentGenerators.map((e) => {
       const view = new DataView(new ArrayBuffer(4))
       view.setUint16(0, e.id, true)
@@ -167,16 +163,16 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       } else if (typeof e.value !== 'undefined') {
         view.setUint16(2, e.value, true)
       }
-      loopBuffer = concatBuffer(loopBuffer, view.buffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
 
   // Samples
   {
     const chunkId: SF_PDTA_CHUNKS_ID = 'shdr'
-    let loopBuffer = new Int8Array()
+    const loopBuffer: ArrayBuffer[] = []
     presetData.sampleHeaders.map((e) => {
       const nameBuffer = extendStringBuffer(e.name, 20)
       const view = new DataView(new ArrayBuffer(26))
@@ -189,13 +185,11 @@ export const writePresetDataChunk = (presetData: PresetData) => {
       view.setInt8(21, e.pitchCorrection)
       view.setUint16(22, e.link, true)
       view.setUint16(24, e.type, true)
-      loopBuffer = concatBuffer(
-        loopBuffer,
-        concatBuffer(nameBuffer, view.buffer),
-      )
+      loopBuffer.push(nameBuffer)
+      loopBuffer.push(view.buffer)
     })
-    const chunkBuffer = writeRiffSubChunk(chunkId, loopBuffer)
-    presetDataBuffer = concatBuffer(presetDataBuffer, chunkBuffer)
+    const chunkBuffer = writeRiffSubChunk(chunkId, concatBuffer(loopBuffer))
+    presetDataBuffer = concatBuffer([presetDataBuffer, chunkBuffer])
   }
   return writeRiffTopChunk('LIST', 'pdta', presetDataBuffer)
 }

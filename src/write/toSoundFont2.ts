@@ -57,10 +57,7 @@ export const toSoundFont2 = async (
     sample.header.end = sampleOffset + wavBuffer.byteLength / 2
     sample.header.startLoop += oggOffset
     sample.header.endLoop += oggOffset
-    sampleBuffer = concatBuffer(
-      concatBuffer(sampleBuffer, wavBuffer),
-      padBuffer,
-    )
+    sampleBuffer = concatBuffer([sampleBuffer, wavBuffer, padBuffer])
     sampleOffset += wavBuffer.byteLength / 2 + padBuffer.byteLength
     oggOffset += oggBuffer.byteLength
     sampleHeaders.push(sample.header)

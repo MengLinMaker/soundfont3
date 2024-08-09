@@ -16,12 +16,10 @@ export const writeSoundFont = (soundFont: SoundFont3 | SoundFont2Raw) => {
   return writeRiffTopChunk(
     'RIFF',
     'sfbk',
-    concatBuffer(
+    concatBuffer([
       writeMetaDataChunk(soundFont.metaData),
-      concatBuffer(
-        writeSampleDataChunk(soundFont.sampleData),
-        writePresetDataChunk(soundFont.presetData),
-      ),
-    ),
+      writeSampleDataChunk(soundFont.sampleData),
+      writePresetDataChunk(soundFont.presetData),
+    ]),
   )
 }
