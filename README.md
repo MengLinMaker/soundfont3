@@ -12,7 +12,7 @@
 ```bash
 pnpm i @menglinmaker/soundfont3
 ```
-For examples and API details, visit the [documentation website](https://soundfont3.pages.dev/).
+For examples and API details, visit the [documentation website](http://localhost:5173/routes/1.%20Guide/README.html).
 
 &nbsp;
 
