@@ -1,6 +1,6 @@
 {
   "name": "@menglinmaker/soundfont3",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A SoundFont3 parser for Node.js and web browsers",
   "exports": {
     ".": {
@@ -14,8 +14,16 @@
       }
     }
   },
-  "files": ["dist"],
-  "keywords": ["soundfont3", "soundfont", "sf3", "midi", "synthesizer"],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "soundfont3",
+    "soundfont",
+    "sf3",
+    "midi",
+    "synthesizer"
+  ],
   "author": "Meng Lin <menglinmaker@gmail.com>",
   "repository": "https://github.com/menglinmaker/soundfont3.git",
   "license": "MIT",
@@ -61,5 +69,7 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": ["defaults"]
+  "browserslist": [
+    "defaults"
+  ]
 }
