@@ -33,7 +33,7 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
     // Decoding audio on main thread may block UI.
     // Unfortunately, AudioContext is undefined in Web Workers.
     const audioBuffer = await audioContext.decodeAudioData(
-      new Int8Array(sample.data).buffer,
+      new Uint8Array(sample.data).buffer,
     )
     const wavBuffer = floatTo16BitPcm(audioBuffer.getChannelData(0))
     const padBuffer = new ArrayBuffer(2 - (wavBuffer.byteLength % 2))

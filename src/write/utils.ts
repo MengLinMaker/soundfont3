@@ -28,7 +28,7 @@ export const dataViewWriteString = (
 /**
  * Concats ArrayBuffers
  * @param {ArrayBuffer[]} buffers
- * @return {Int8Array}
+ * @return {Uint8Array}
  */
 export const concatBuffer = (buffers: ArrayBuffer[]) => {
   const lengths = buffers.map((buffer) => buffer.byteLength)
@@ -36,12 +36,12 @@ export const concatBuffer = (buffers: ArrayBuffer[]) => {
     (partialLength, length) => partialLength + length,
     0,
   )
-  const tmp = new Int8Array(totalLength)
+  const tmp = new Uint8Array(totalLength)
 
   let offset = 0
   buffers.map((buffer, i) => {
-    tmp.set(new Int8Array(buffer), offset)
+    tmp.set(new Uint8Array(buffer), offset)
     offset += lengths[i]
   })
-  return new Int8Array(tmp.buffer)
+  return new Uint8Array(tmp.buffer)
 }

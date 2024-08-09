@@ -37,7 +37,7 @@ describe('Write SoundFont2', () => {
       createdBy: 'i',
     }
     const expectedBuffer = Buffer.from(
-      new Int8Array([
+      new Uint8Array([
         76,
         73,
         83,

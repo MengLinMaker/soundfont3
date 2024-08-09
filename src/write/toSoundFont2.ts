@@ -30,13 +30,13 @@ export const toSoundFont2 = async (
   if (!existsSync(folderPath)) mkdirSync(folderPath)
 
   const sampleHeaders: SampleHeader[] = []
-  let sampleBuffer = new Int8Array()
+  let sampleBuffer = new Uint8Array()
   let sampleOffset = 0
   let oggOffset = 0 // Undo OGG offset
   soundFont.samples.map((sample) => {
     const fileName = `${folderPath}/${sample.header.name}`
     const oggBuffer = sample.data.buffer
-    writeFileSync(`${fileName}.ogg`, new Int8Array(sample.data))
+    writeFileSync(`${fileName}.ogg`, new Uint8Array(sample.data))
     execSync(
       `ffmpeg -y -i "${fileName}.ogg" -ar ${sample.header.sampleRate} -ac 1 "${fileName}.wav"`,
       {
@@ -45,7 +45,7 @@ export const toSoundFont2 = async (
     )
     const wavFileBuffer = readFileSync(`${fileName}.wav`)
     // Remove 44 byte header plus 34 byte extra
-    const wavBuffer = new Int8Array(
+    const wavBuffer = new Uint8Array(
       wavFileBuffer.slice(44 + 34, wavFileBuffer.byteLength),
     )
 

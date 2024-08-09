@@ -7,7 +7,7 @@ import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
  * Writes a preset data chunk buffer.
  * @param {string} string - raw string.
  * @param {number} desiredByte - parsed presetData info.
- * @return {Int8Array} Elongated string buffer.
+ * @return {Uint8Array} Elongated string buffer.
  */
 const extendStringBuffer = (string: string, desiredByte: number) => {
   const textEncoder = new TextEncoder()
@@ -23,7 +23,7 @@ const extendStringBuffer = (string: string, desiredByte: number) => {
  * @return {Buffer} Chunk buffer.
  */
 export const writePresetDataChunk = (presetData: PresetData) => {
-  let presetDataBuffer = new Int8Array()
+  let presetDataBuffer = new Uint8Array()
 
   // Presets
   {

@@ -9,7 +9,7 @@ import { writeRiffSubChunk, writeRiffTopChunk } from './writeRiffChunk'
  * @return {Buffer} Chunk buffer.
  */
 export const writeMetaDataChunk = (metaData: MetaData) => {
-  let metaDataBuffer = new Int8Array()
+  let metaDataBuffer = new Uint8Array()
   const textEncoder = new TextEncoder()
   {
     // Scope variables to prevent leakage

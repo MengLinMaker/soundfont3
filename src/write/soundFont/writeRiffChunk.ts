@@ -10,7 +10,7 @@ import { concatBuffer, dataViewWriteString } from '../utils'
  * @param {SF_SUB_CHUNKS_ID} chunkId - 4 character code chunk id.
  * @param {ArrayBuffer} contentBuffer - Subchunk buffer.
  * @param {number} paddingMax - Maximum pad for even RIFF byte.
- * @return {Int8Array} Chunk buffer
+ * @return {Uint8Array} Chunk buffer
  */
 export const writeRiffSubChunk = (
   chunkId: SF_SUB_CHUNKS_ID,
@@ -37,7 +37,7 @@ export const writeRiffSubChunk = (
  * @param {SF_TOP_CHUNKS_ID} chunkId - 4 character code chunk id.
  * @param {SF_TOP_CHUNKS_FORMAT} format - 4 character code format.
  * @param {ArrayBuffer} Chunk - Content buffer.
- * @return {Int8Array}
+ * @return {Uint8Array}
  */
 export const writeRiffTopChunk = (
   chunkId: SF_TOP_CHUNKS_ID,
