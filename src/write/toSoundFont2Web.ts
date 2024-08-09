@@ -5,10 +5,11 @@ import { writeSoundFont } from './writeSoundFont'
 
 function floatTo16BitPcm(input: Float32Array) {
   const view = new DataView(new ArrayBuffer(input.length * 2))
-  let offset = 0
-  for (let i = 0; i < input.length; i++, offset += 2) {
-    const s = Math.max(-1, Math.min(1, input[i]))
-    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true)
+  for (let i = 0; i < input.length; i++) {
+    const s = input[i]
+    const val = s < 0 ? s * 0x8000 : s * 0x7fff
+    const offset = i * 2
+    view.setInt16(offset, val, true)
   }
   return view.buffer
 }
