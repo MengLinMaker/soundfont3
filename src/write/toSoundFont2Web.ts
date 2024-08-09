@@ -59,7 +59,7 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   )
 
   soundFont.metaData.version = '2.04'
-  soundFont.sampleData = new Int16Array(totalSampleBuffer)
+  soundFont.sampleData = totalSampleBuffer
   soundFont.presetData.sampleHeaders = sampleHeaders
-  return new SoundFont3(new Uint8Array(writeSoundFont(soundFont)))
+  return new SoundFont3(writeSoundFont(soundFont))
 }

@@ -49,11 +49,11 @@ export const toSoundFont3 = async (
   const soundFontVersion = Number(soundFont.metaData.version)
 
   let audioType = 'wav'
-  let sampleToBuffer = (sampleRate: number, data: Int16Array) =>
+  let sampleToBuffer = (sampleRate: number, data: Uint8Array) =>
     pcm16BufferToWav(sampleRate, data)
   if (soundFontVersion >= 3 && soundFontVersion < 4) {
     audioType = 'ogg'
-    sampleToBuffer = (_: number, data: Int16Array) => Buffer.from(data)
+    sampleToBuffer = (_: number, data: Uint8Array) => Buffer.from(data)
   }
 
   const sampleHeaders: SampleHeader[] = []
@@ -62,7 +62,7 @@ export const toSoundFont3 = async (
     const fileName = `${folderPath}/${sample.header.name}`
     const originalAudioBuffer = sampleToBuffer(
       sample.header.sampleRate,
-      new Int16Array(sample.data),
+      new Uint8Array(sample.data),
     )
     writeFileSync(`${fileName}.${audioType}`, originalAudioBuffer)
     execSync(
@@ -88,7 +88,7 @@ export const toSoundFont3 = async (
   rmdirSync(folderPath)
 
   soundFont.metaData.version = '3.1'
-  soundFont.sampleData = new Int16Array(sampleBuffer)
+  soundFont.sampleData = new Uint8Array(sampleBuffer)
   soundFont.presetData.sampleHeaders = sampleHeaders
   return new SoundFont3(Buffer.from(writeSoundFont(soundFont)))
 }

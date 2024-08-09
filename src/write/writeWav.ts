@@ -4,7 +4,7 @@ import { dataViewWriteString } from './utils'
 /**
  * Converts a pcm int16 audio data to WAV file as a buffer.
  * @param sampleRate {number} - sample rate in Hertz - eg: 44100 Hz.
- * @param pcm16Buffer {Int16Array} - pcm int16 audio data.
+ * @param pcm16Buffer {Uint8Array} - pcm int16 audio data.
  * @returns wavFileBuffer - WAV RIFF file as binary.
  */
 export function pcm16BufferToWav(sampleRate: number, pcm16Buffer: SampleData) {
