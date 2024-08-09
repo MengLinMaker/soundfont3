@@ -29,7 +29,8 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   let sampleBuffer = new Int8Array()
   let sampleOffset = 0
   for (const sample of soundFont.samples) {
-    // Decoding audio on main thread may block UI 
+    // Decoding audio on main thread may block UI.
+    // Unfortunately, AudioContext is undefined in Web Workers.
     const audioBuffer = await audioContext.decodeAudioData(
       new Int8Array(sample.data).buffer,
     )
