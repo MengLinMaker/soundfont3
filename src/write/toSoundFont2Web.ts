@@ -23,11 +23,13 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
   const soundFontVersion = Number(soundFont.metaData.version)
   if (soundFontVersion < 3) return _soundFont
 
+  const audioContext = new AudioContext()
+
   const sampleHeaders: SampleHeader[] = []
   let sampleBuffer = new Int8Array()
   let sampleOffset = 0
-  const audioContext = new AudioContext()
   for (const sample of soundFont.samples) {
+    // Decoding audio on main thread may block UI 
     const audioBuffer = await audioContext.decodeAudioData(
       new Int8Array(sample.data).buffer,
     )
@@ -48,6 +50,9 @@ export const toSoundFont2Web = async (_soundFont: SoundFont3) => {
     sampleOffset += wavBuffer.byteLength / 2 + padBuffer.byteLength
     sampleHeaders.push(sample.header)
   }
+
+  await audioContext.close()
+
   console.info(
     `Sample size: ${(sampleBuffer.byteLength / 10 ** 6).toFixed(3)} mb`,
   )
