@@ -30,7 +30,8 @@
     "release": "changeset publish",
     "docs:dev": "vitepress dev docs",
     "docs:start": "vitepress build docs && vitepress preview docs",
-    "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist"
+    "docs:deploy": "vitepress build docs && gh-pages -d docs/.vitepress/dist",
+    "sf3": "tsx ./scripts/toSf3.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
@@ -46,6 +47,7 @@
     "simple-git-hooks": "^2.11.1",
     "smplr": "^0.15.1",
     "tailwindcss": "^3.4.4",
+    "tsx": "4.19.0",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
     "vitepress": "^1.2.3",
@@ -62,5 +64,6 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": ["defaults"]
+  "browserslist": ["defaults"],
+  "type": "module"
 }
