@@ -47,26 +47,21 @@ export const toSoundFont3 = async (
 
   const soundFont = structuredClone(_soundFont) as never as SoundFont2Raw
   const soundFontVersion = Number(soundFont.metaData.version)
-
-  let audioType = 'wav'
-  let sampleToBuffer = (sampleRate: number, data: Uint8Array) =>
-    pcm16BufferToWav(sampleRate, data)
-  if (soundFontVersion >= 3 && soundFontVersion < 4) {
-    audioType = 'ogg'
-    sampleToBuffer = (_: number, data: Uint8Array) => Buffer.from(data)
-  }
+  if (soundFontVersion >= 3 && soundFontVersion < 4) return _soundFont
 
   const sampleHeaders: SampleHeader[] = []
   let sampleBuffer = Buffer.from('')
+
   soundFont.samples.map((sample: Sample) => {
     const fileName = `${folderPath}/${sample.header.name}`
-    const originalAudioBuffer = sampleToBuffer(
-      sample.header.sampleRate,
-      new Uint8Array(sample.data),
+    const data = soundFont.sampleData.slice(
+      2 * sample.header.start,
+      2 * sample.header.end,
     )
-    writeFileSync(`${fileName}.${audioType}`, originalAudioBuffer)
+    const wavFile = pcm16BufferToWav(sample.header.sampleRate, data)
+    writeFileSync(`${fileName}.wav`, wavFile)
     execSync(
-      `ffmpeg -y -i "${fileName}.${audioType}" -ar ${config.sampleRate} -ab ${config.bitrate}k -acodec lib${config.oggCompressionAlgorithm} "${fileName}.ogg"`,
+      `ffmpeg -y -i "${fileName}.wav" -ar ${config.sampleRate} -ab ${config.bitrate}k -acodec lib${config.oggCompressionAlgorithm} "${fileName}.ogg"`,
       {
         stdio: 'ignore',
       },
